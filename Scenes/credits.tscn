@@ -1,0 +1,101 @@
+[gd_scene load_steps=9 format=3 uid="uid://b46sxgjxrxnkm"]
+
+[ext_resource type="FontFile" uid="uid://bfrm17shhfj72" path="res://Resources/Font/SmoochSans-Regular.ttf" id="1_gryuy"]
+[ext_resource type="FontFile" uid="uid://dp6vmlq7c6mhh" path="res://Resources/Font/Orbitron-Regular.ttf" id="2_ccovl"]
+[ext_resource type="Script" path="res://Scripts/credits.gd" id="3_credits"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fw3xl"]
+font = ExtResource("1_gryuy")
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_pp8w2"]
+font = ExtResource("2_ccovl")
+font_size = 24
+font_color = Color(0.7254902, 0.7254902, 0.7254902, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0fjio"]
+font = ExtResource("2_ccovl")
+font_size = 22
+font_color = Color(0.7254902, 0.7254902, 0.7254902, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_eoamy"]
+font = ExtResource("2_ccovl")
+font_size = 24
+font_color = Color(0.7254902, 0.7254902, 0.7254902, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ktss0"]
+font = ExtResource("2_ccovl")
+font_size = 18
+
+[node name="Credits" type="Control" unique_id=58096257]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_credits")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1383371965]
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 720.0
+color = Color(0.050980393, 0.047058824, 0.047058824, 1)
+
+[node name="Title" type="VBoxContainer" parent="." unique_id=858408511]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -41.5
+offset_right = 106.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Company" type="HBoxContainer" parent="Title" unique_id=2127019836]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="Title/Company" unique_id=2029514212]
+layout_mode = 2
+text = "Pokémon"
+label_settings = SubResource("LabelSettings_fw3xl")
+
+[node name="Author_Year" type="HBoxContainer" parent="Title" unique_id=402671673]
+layout_mode = 2
+alignment = 1
+
+[node name="Year" type="Label" parent="Title/Author_Year" unique_id=2105279072]
+layout_mode = 2
+text = "2026"
+label_settings = SubResource("LabelSettings_pp8w2")
+
+[node name="Separator" type="Label" parent="Title/Author_Year" unique_id=620050419]
+layout_mode = 2
+text = "-"
+label_settings = SubResource("LabelSettings_0fjio")
+
+[node name="Author" type="Label" parent="Title/Author_Year" unique_id=1125745380]
+layout_mode = 2
+text = "Beltz"
+label_settings = SubResource("LabelSettings_eoamy")
+
+[node name="Disclaimer" type="Label" parent="." unique_id=980615812]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -486.0
+offset_top = -40.0
+offset_right = 486.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Este juego es un fan game sin fines de lucro. La historia presentada aquí no forma parte de la saga."
+label_settings = SubResource("LabelSettings_ktss0")

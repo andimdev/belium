@@ -1,0 +1,390 @@
+[gd_scene format=3 uid="uid://d1x0k074bljop"]
+
+[ext_resource type="Script" uid="uid://dptv0m4chxlod" path="res://Scripts/load_new_play.gd" id="1_menu"]
+[ext_resource type="FontFile" uid="uid://bfrm17shhfj72" path="res://Resources/Font/SmoochSans-Regular.ttf" id="2_1ykng"]
+[ext_resource type="AudioStream" uid="uid://13bxfaur4kwp" path="res://Resources/Audio/GUI/GUI_Click.wav" id="2_gui_click"]
+[ext_resource type="FontFile" uid="uid://dp6vmlq7c6mhh" path="res://Resources/Font/Orbitron-Regular.ttf" id="3_o4mdf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_normal"]
+content_margin_left = 48.0
+bg_color = Color(0.85098, 0.85098, 0.85098, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_pressed"]
+content_margin_left = 48.0
+bg_color = Color(0.886275, 0.886275, 0.886275, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_hover"]
+content_margin_left = 48.0
+bg_color = Color(0.929412, 0.929412, 0.929412, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_selection_stroke"]
+bg_color = Color(0.156863, 0.513726, 0.611765, 1)
+corner_radius_top_left = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_svnr0"]
+font = ExtResource("2_1ykng")
+font_size = 32
+font_color = Color(0.050980393, 0.047058824, 0.047058824, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_s2rua"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xjtu4"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_iy130"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dccmw"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_colwr"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5rbo8"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_u6q25"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_b7x5o"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ktss0"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fw3xl"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pp8w2"]
+font = ExtResource("3_o4mdf")
+font_size = 24
+font_color = Color(0.15686275, 0.5137255, 0.6117647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kqx4u"]
+font = ExtResource("3_o4mdf")
+font_size = 28
+
+[node name="Load_New_Play" type="Control" unique_id=1425297389]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="ColorRect" parent="." unique_id=555205359]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0352941, 0.0352941, 0.0352941, 1)
+
+[node name="MenuCenter" type="CenterContainer" parent="." unique_id=20214247]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu" type="VBoxContainer" parent="MenuCenter" unique_id=1067137597]
+custom_minimum_size = Vector2(666, 0)
+layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="ContinueButton" type="Button" parent="MenuCenter/Menu" unique_id=1485342978]
+custom_minimum_size = Vector2(666, 278)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("StyleBox_normal")
+theme_override_styles/pressed = SubResource("StyleBox_pressed")
+theme_override_styles/hover = SubResource("StyleBox_normal")
+theme_override_styles/focus = SubResource("StyleBox_hover")
+
+[node name="SelectionStroke" type="Panel" parent="MenuCenter/Menu/ContinueButton" unique_id=18279316]
+visible = false
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 12.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_selection_stroke")
+
+[node name="Title" type="Label" parent="MenuCenter/Menu/ContinueButton" unique_id=493116067]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 22.0
+offset_bottom = 65.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 34
+text = "Continuar"
+label_settings = SubResource("LabelSettings_svnr0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatsGrid" type="GridContainer" parent="MenuCenter/Menu/ContinueButton" unique_id=1449371053]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -236.5
+offset_top = -62.0
+offset_right = 236.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 0
+columns = 2
+
+[node name="ChapterLabel" type="Label" parent="MenuCenter/Menu/ContinueButton/StatsGrid" unique_id=1021525716]
+custom_minimum_size = Vector2(390, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0470588, 0.176471, 0.760784, 1)
+theme_override_font_sizes/font_size = 31
+text = "Capítulo:"
+label_settings = SubResource("LabelSettings_s2rua")
+
+[node name="ChapterValue" type="Label" parent="MenuCenter/Menu/ContinueButton/StatsGrid" unique_id=1290063852]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0470588, 0.176471, 0.760784, 1)
+theme_override_font_sizes/font_size = 31
+text = "—"
+label_settings = SubResource("LabelSettings_xjtu4")
+horizontal_alignment = 2
+
+[node name="PlayTimeLabel" type="Label" parent="MenuCenter/Menu/ContinueButton/StatsGrid" unique_id=326986480]
+custom_minimum_size = Vector2(390, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0470588, 0.176471, 0.760784, 1)
+theme_override_font_sizes/font_size = 31
+text = "Tiempo de Juego:"
+label_settings = SubResource("LabelSettings_iy130")
+
+[node name="PlayTimeValue" type="Label" parent="MenuCenter/Menu/ContinueButton/StatsGrid" unique_id=543229704]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0470588, 0.176471, 0.760784, 1)
+theme_override_font_sizes/font_size = 31
+text = "0:00"
+label_settings = SubResource("LabelSettings_dccmw")
+horizontal_alignment = 2
+
+[node name="MedalsLabel" type="Label" parent="MenuCenter/Menu/ContinueButton/StatsGrid" unique_id=1004259053]
+custom_minimum_size = Vector2(390, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0470588, 0.176471, 0.760784, 1)
+theme_override_font_sizes/font_size = 31
+text = "Medallas:"
+label_settings = SubResource("LabelSettings_colwr")
+
+[node name="MedalsValue" type="Label" parent="MenuCenter/Menu/ContinueButton/StatsGrid" unique_id=2094112070]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0470588, 0.176471, 0.760784, 1)
+theme_override_font_sizes/font_size = 31
+text = "0"
+label_settings = SubResource("LabelSettings_5rbo8")
+horizontal_alignment = 2
+
+[node name="PokedexLabel" type="Label" parent="MenuCenter/Menu/ContinueButton/StatsGrid" unique_id=1325067353]
+custom_minimum_size = Vector2(390, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0470588, 0.176471, 0.760784, 1)
+theme_override_font_sizes/font_size = 31
+text = "Pokédex:"
+label_settings = SubResource("LabelSettings_u6q25")
+
+[node name="PokedexValue" type="Label" parent="MenuCenter/Menu/ContinueButton/StatsGrid" unique_id=1235287182]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0470588, 0.176471, 0.760784, 1)
+theme_override_font_sizes/font_size = 31
+text = "0"
+label_settings = SubResource("LabelSettings_b7x5o")
+horizontal_alignment = 2
+
+[node name="NewGameButton" type="Button" parent="MenuCenter/Menu" unique_id=658730941]
+custom_minimum_size = Vector2(666, 92)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("StyleBox_normal")
+theme_override_styles/pressed = SubResource("StyleBox_pressed")
+theme_override_styles/hover = SubResource("StyleBox_normal")
+theme_override_styles/focus = SubResource("StyleBox_hover")
+alignment = 0
+
+[node name="Label" type="Label" parent="MenuCenter/Menu/NewGameButton" unique_id=225697887]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 48.0
+offset_top = -15.5
+offset_right = 238.0
+offset_bottom = 15.5
+grow_vertical = 2
+text = "Nueva Partida"
+label_settings = SubResource("LabelSettings_ktss0")
+
+[node name="SelectionStroke" type="Panel" parent="MenuCenter/Menu/NewGameButton" unique_id=402680845]
+visible = false
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 12.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_selection_stroke")
+
+[node name="OptionsButton" type="Button" parent="MenuCenter/Menu" unique_id=808753198]
+custom_minimum_size = Vector2(666, 92)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("StyleBox_normal")
+theme_override_styles/pressed = SubResource("StyleBox_pressed")
+theme_override_styles/hover = SubResource("StyleBox_normal")
+theme_override_styles/focus = SubResource("StyleBox_hover")
+alignment = 0
+
+[node name="Label" type="Label" parent="MenuCenter/Menu/OptionsButton" unique_id=417263648]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 48.0
+offset_top = -15.5
+offset_right = 172.0
+offset_bottom = 15.5
+grow_vertical = 2
+text = "Opciones"
+label_settings = SubResource("LabelSettings_fw3xl")
+
+[node name="SelectionStroke" type="Panel" parent="MenuCenter/Menu/OptionsButton" unique_id=1115000368]
+visible = false
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 12.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_selection_stroke")
+
+[node name="ExitButton" type="Button" parent="MenuCenter/Menu" unique_id=1076784709]
+custom_minimum_size = Vector2(666, 92)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("StyleBox_normal")
+theme_override_styles/pressed = SubResource("StyleBox_pressed")
+theme_override_styles/hover = SubResource("StyleBox_normal")
+theme_override_styles/focus = SubResource("StyleBox_hover")
+alignment = 0
+
+[node name="Label" type="Label" parent="MenuCenter/Menu/ExitButton" unique_id=1393798007]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 48.0
+offset_top = -15.5
+offset_right = 109.0
+offset_bottom = 15.5
+grow_vertical = 2
+text = "Salir"
+label_settings = SubResource("LabelSettings_pp8w2")
+
+[node name="SelectionStroke" type="Panel" parent="MenuCenter/Menu/ExitButton" unique_id=579393559]
+visible = false
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 12.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_selection_stroke")
+
+[node name="StatusLabel" type="Label" parent="." unique_id=1679680322]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -29.0
+offset_right = 400.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 19
+label_settings = SubResource("LabelSettings_kqx4u")
+horizontal_alignment = 1
+
+[node name="GUI_Click" type="AudioStreamPlayer" parent="." unique_id=220098865]
+stream = ExtResource("2_gui_click")
+bus = &"Screen_Title"

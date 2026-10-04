@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://c02hiuv7h6bs6"]
+
+[ext_resource type="Texture2D" uid="uid://o3m740uaj81d" path="res://Resources/Img/screen/title_1.png" id="1_title"]
+[ext_resource type="Script" uid="uid://8smtohcce55t" path="res://Scripts/title_screen.gd" id="3_screen_script"]
+[ext_resource type="Script" uid="uid://dup8rhrimqvug" path="res://Scripts/wind_particles.gd" id="4_wind_script"]
+[ext_resource type="Shader" uid="uid://cwafajjok8tgs" path="res://Shaders/eye_shadows.gdshader" id="5_eye_shadows"]
+[ext_resource type="AudioStream" uid="uid://blpnyvrgclynl" path="res://Resources/Audio/SFX/sinnohvation/Press_Start.ogg" id="6_5qx6m"]
+[ext_resource type="Shader" uid="uid://dov03vtiy35ne" path="res://Shaders/screen_glows.gdshader" id="6_screen_glows"]
+[ext_resource type="AudioStream" path="res://Resources/Audio/Pokemon/houndoom-mega.ogg" id="7_houndoom"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eye_shadows"]
+shader = ExtResource("5_eye_shadows")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_screen_glows"]
+shader = ExtResource("6_screen_glows")
+
+[sub_resource type="SystemFont" id="SystemFont_title"]
+font_names = PackedStringArray("Cambria")
+font_weight = 600
+subpixel_positioning = 0
+
+[node name="TitleScreen" type="Control" unique_id=2111352204]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_screen_script")
+
+[node name="BlackBackground" type="ColorRect" parent="." unique_id=893400380]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Cover" type="TextureRect" parent="." unique_id=938520965]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_title")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EyeShadows" type="ColorRect" parent="." unique_id=1817583406]
+material = SubResource("ShaderMaterial_eye_shadows")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AnimatedGlows" type="ColorRect" parent="." unique_id=1670627885]
+material = SubResource("ShaderMaterial_screen_glows")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WindParticles" type="Control" parent="." unique_id=1389182950]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_wind_script")
+
+[node name="PressStartLabel" type="Label" parent="." unique_id=1774435834]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -115.0
+offset_right = 210.0
+offset_bottom = -67.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.94, 0.91, 0.96, 1)
+theme_override_colors/font_shadow_color = Color(0.35, 0.02, 0.45, 0.85)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = SubResource("SystemFont_title")
+theme_override_font_sizes/font_size = 30
+text = "Presione START"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FadeFromBlack" type="ColorRect" parent="." unique_id=802211671]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Press_Start" type="AudioStreamPlayer" parent="." unique_id=1181887808]
+stream = ExtResource("6_5qx6m")
+autoplay = true
+bus = &"Screen_Title"
+
+[node name="HoundoomCry" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_houndoom")
+bus = &"Screen_Title"

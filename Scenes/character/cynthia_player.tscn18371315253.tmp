@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://cpaj8d8jl541f"]
+
+[ext_resource type="SpriteFrames" uid="uid://b2ic1fahsvk65" path="res://Resources/trainer/cynthia_grown_frames.tres" id="1_frames"]
+[ext_resource type="Script" uid="uid://b0thxmpxm2gx4" path="res://scripts/overworld/player_movement_state_machine.gd" id="2_roc7d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_feet"]
+size = Vector2(32, 44)
+
+[node name="CynthiaPlayer" type="CharacterBody2D" unique_id=1502901675]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=947376474]
+texture_filter = 1
+position = Vector2(0, -32)
+scale = Vector2(0.75, 0.75)
+sprite_frames = ExtResource("1_frames")
+animation = &"idle_down"
+frame_progress = 0.34799108
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=520633674]
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_feet")
+
+[node name="MovementStateMachine" type="Node" parent="." unique_id=1435271981]
+script = ExtResource("2_roc7d")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1511790203]
+position = Vector2(0, -24)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
