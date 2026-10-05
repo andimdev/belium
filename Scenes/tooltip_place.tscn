@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://djo16uxu3441q"]
+
+[ext_resource type="FontFile" uid="uid://dp6vmlq7c6mhh" path="res://Resources/Font/Orbitron-Regular.ttf" id="1_0of31"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_tooltip"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.992157, 0.992157, 0.992157, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.105882, 0.113725, 0.12549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.9)
+shadow_size = 5
+shadow_offset = Vector2(6, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_inner_border"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.760784, 0.788235, 0.823529, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_ktss0"]
+font = ExtResource("1_0of31")
+font_size = 20
+font_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+outline_size = 1
+outline_color = Color(0.74, 0.74, 0.74, 0.72)
+shadow_color = Color(0, 0, 0, 0.28)
+shadow_offset = Vector2(1, 2)
+
+[node name="TooltipPlace" type="Control" unique_id=1802001588]
+custom_minimum_size = Vector2(376, 100)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 376.0
+offset_bottom = 100.0
+mouse_filter = 2
+
+[node name="TooltipPanel" type="PanelContainer" parent="." unique_id=1803032897]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -16.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_tooltip")
+
+[node name="InnerBorder" type="Panel" parent="TooltipPanel" unique_id=1204261920]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_inner_border")
+
+[node name="ContentMargin" type="MarginContainer" parent="TooltipPanel" unique_id=2084475882]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="TooltipPanel/ContentMargin" unique_id=703296933]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_ktss0")
+vertical_alignment = 1

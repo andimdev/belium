@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/ui_root.gd" id="1_ui_root"]
+[ext_resource type="PackedScene" uid="uid://djo16uxu3441q" path="res://Scenes/tooltip_place.tscn" id="2_tooltip"]
+[ext_resource type="PackedScene" uid="uid://d0v4eoglrorwr" path="res://Scenes/menu.tscn" id="3_menu"]
+
+[node name="UIRoot" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_ui_root")
+
+[node name="Interface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TooltipPlace" parent="Interface" instance=ExtResource("2_tooltip")]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -112.0
+offset_right = 401.0
+offset_bottom = -12.0
+
+[node name="Menu" parent="Interface" instance=ExtResource("3_menu")]
+visible = false
+layout_mode = 1

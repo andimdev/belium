@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Scripts/menu_option.gd" id="1_option"]
+[ext_resource type="FontFile" uid="uid://bfrm17shhfj72" path="res://Resources/Font/SmoochSans-Regular.ttf" id="2_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_arrow"]
+font = ExtResource("2_font")
+font_size = 54
+font_color = Color(1, 1, 1, 1)
+outline_size = 6
+outline_color = Color(0.04, 0.035, 0.05, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("2_font")
+font_size = 28
+font_color = Color(1, 1, 1, 1)
+outline_size = 2
+outline_color = Color(0.12, 0.07, 0.14, 0.58)
+shadow_color = Color(0, 0, 0, 0.34)
+shadow_offset = Vector2(1, 2)
+
+[node name="MenuOption" type="Control"]
+custom_minimum_size = Vector2(190, 184)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 190.0
+offset_bottom = 184.0
+mouse_filter = 1
+script = ExtResource("1_option")
+
+[node name="SelectionArrow" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 4.0
+offset_top = 33.0
+offset_right = 45.0
+offset_bottom = 100.0
+mouse_filter = 2
+text = ">"
+label_settings = SubResource("LabelSettings_arrow")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Content" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 13
+alignment = 1
+
+[node name="IconButton" type="Button" parent="Content"]
+custom_minimum_size = Vector2(112, 112)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
+
+[node name="Icon" type="TextureRect" parent="Content/IconButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = -18.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitlePanel" type="PanelContainer" parent="Content"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Content/TitlePanel"]
+layout_mode = 2
+mouse_filter = 2
+text = "Opción"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+vertical_alignment = 1

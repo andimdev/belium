@@ -86,7 +86,8 @@ func _format_play_time(total_seconds: int) -> String:
 	var safe_seconds := maxi(total_seconds, 0)
 	var hours := safe_seconds / 3600
 	var minutes := (safe_seconds % 3600) / 60
-	return "%d:%02d" % [hours, minutes]
+	var seconds := safe_seconds % 60
+	return "%02d:%02d:%02d" % [hours, minutes, seconds]
 
 
 func _rebuild_focus_navigation() -> void:

@@ -4,6 +4,7 @@ extends Node
 
 signal save_created(save_data: Dictionary)
 signal save_loaded(save_data: Dictionary)
+signal save_updated(save_data: Dictionary)
 signal save_failed(reason: String)
 
 const SAVE_DIRECTORY := "user://Saved"
@@ -11,6 +12,19 @@ const IDENTITY_PATH := SAVE_DIRECTORY + "/player_identity.json"
 const SAVE_PATH := SAVE_DIRECTORY + "/save_slot_1.json"
 const SAVE_VERSION := 1
 const DEFAULT_MAP_ID := "map_001_leaftown_201_sandtown_202"
+
+var _active_save_data: Dictionary = {}
+var _play_time_seconds := 0.0
+var _tracking_play_time := false
+
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
+func _process(delta: float) -> void:
+	if _tracking_play_time:
+		_play_time_seconds += delta
 
 
 func has_save() -> bool:
@@ -26,6 +40,7 @@ func load_save(emit_signal: bool = true) -> Dictionary:
 		push_warning("SaveManager: el guardado no pertenece a la identidad local actual.")
 		return {}
 	save_data = _normalize_save_types(save_data)
+	_active_save_data = save_data.duplicate(true)
 
 	if emit_signal:
 		save_loaded.emit(save_data.duplicate(true))
@@ -58,6 +73,7 @@ func create_new_game() -> Dictionary:
 			"pokedex_seen": 0,
 			"current_map": DEFAULT_MAP_ID,
 			"spawn_point": "",
+			"player_position": {},
 		},
 	}
 
@@ -65,8 +81,69 @@ func create_new_game() -> Dictionary:
 		_fail("No se pudo escribir la nueva partida.")
 		return {}
 
+	_active_save_data = save_data.duplicate(true)
+	_play_time_seconds = 0.0
+	_tracking_play_time = false
 	save_created.emit(save_data.duplicate(true))
 	return save_data
+
+
+## Comienza a contar tiempo únicamente cuando la partida ya está dentro de un
+## mapa. Si se proporciona un guardado, continúa exactamente desde su valor.
+func start_play_session(save_data: Dictionary = {}) -> void:
+	var session_data := save_data.duplicate(true)
+	if session_data.is_empty():
+		session_data = _active_save_data.duplicate(true)
+	if session_data.is_empty():
+		session_data = load_save(false)
+	if session_data.is_empty() or not _is_valid_save(session_data):
+		return
+
+	_active_save_data = _normalize_save_types(session_data)
+	var progress: Dictionary = _active_save_data.get("progress", {})
+	_play_time_seconds = maxf(
+		float(progress.get("play_time_seconds", 0)),
+		0.0
+	)
+	_tracking_play_time = true
+
+
+func stop_play_session() -> void:
+	_tracking_play_time = false
+
+
+func get_play_time_seconds() -> int:
+	return maxi(floori(_play_time_seconds), 0)
+
+
+func get_active_save() -> Dictionary:
+	return _active_save_data.duplicate(true)
+
+
+## Actualiza sólo los campos proporcionados. El resto del progreso queda
+## intacto para inventario, equipo, medallas y sistemas futuros.
+func save_progress(progress_updates: Dictionary = {}) -> Dictionary:
+	var save_data := _active_save_data.duplicate(true)
+	if save_data.is_empty():
+		save_data = load_save(false)
+	if save_data.is_empty():
+		_fail("No existe una partida activa para guardar.")
+		return {}
+
+	var progress: Dictionary = save_data.get("progress", {}).duplicate(true)
+	for field: Variant in progress_updates:
+		progress[field] = progress_updates[field]
+	progress["play_time_seconds"] = get_play_time_seconds()
+	save_data["progress"] = progress
+	save_data["updated_at_utc"] = Time.get_datetime_string_from_system(true, true)
+
+	if not _write_json_atomic(SAVE_PATH, save_data):
+		_fail("No se pudo actualizar la partida guardada.")
+		return {}
+
+	_active_save_data = _normalize_save_types(save_data)
+	save_updated.emit(_active_save_data.duplicate(true))
+	return _active_save_data.duplicate(true)
 
 
 func get_save_directory_absolute() -> String:

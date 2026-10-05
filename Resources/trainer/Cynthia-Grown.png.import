@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfyh03eucrno1"
-path="res://.godot/imported/Cynthia-Grown.png-91ef24112716e0686041a4c7f2512c67.ctex"
+path="res://.godot/imported/Cynthia-Grown.png-c341507352d4b5169d53f88c053150d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/trainer/Cynthia-Grown.png"
-dest_files=["res://.godot/imported/Cynthia-Grown.png-91ef24112716e0686041a4c7f2512c67.ctex"]
+source_file="res://Resources/Trainer/Cynthia-Grown.png"
+dest_files=["res://.godot/imported/Cynthia-Grown.png-c341507352d4b5169d53f88c053150d7.ctex"]
 
 [params]
 

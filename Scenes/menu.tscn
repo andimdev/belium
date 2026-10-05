@@ -1,0 +1,252 @@
+[gd_scene format=3 uid="uid://d0v4eoglrorwr"]
+
+[ext_resource type="Script" uid="uid://dgfko2mdr4mmo" path="res://Scripts/menu.gd" id="1_menu"]
+[ext_resource type="Script" uid="uid://dpcr2610f8rlq" path="res://Scripts/menu_background.gd" id="2_background"]
+[ext_resource type="FontFile" uid="uid://bfrm17shhfj72" path="res://Resources/Font/SmoochSans-Regular.ttf" id="3_font"]
+[ext_resource type="PackedScene" path="res://Scenes/menu_option.tscn" id="4_option"]
+[ext_resource type="AudioStream" uid="uid://13bxfaur4kwp" path="res://Resources/Audio/GUI/GUI_Click.wav" id="5_gui_click"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_time"]
+bg_color = Color(0.980392, 0.980392, 0.992157, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 10
+shadow_color = Color(0.02, 0.02, 0.035, 0.58)
+shadow_size = 7
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_time_dark"]
+bg_color = Color(0.270588, 0.270588, 0.282353, 1)
+corner_radius_top_left = 20
+corner_radius_bottom_left = 20
+corner_detail = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_time_title"]
+font = ExtResource("3_font")
+font_size = 32
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_offset = Vector2(1, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_time_value"]
+font = ExtResource("3_font")
+font_size = 32
+font_color = Color(0.19, 0.19, 0.22, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_description"]
+content_margin_left = 24.0
+content_margin_top = 12.0
+content_margin_right = 24.0
+content_margin_bottom = 12.0
+bg_color = Color(0.985, 0.985, 0.99, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.86, 0.86, 0.89, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.04, 0.02, 0.06, 0.5)
+shadow_size = 7
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_description"]
+font = ExtResource("3_font")
+font_size = 24
+font_color = Color(0.1, 0.09, 0.12, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_menu_title"]
+font = ExtResource("3_font")
+font_size = 60
+font_color = Color(0.035, 0.025, 0.045, 0.92)
+outline_size = 2
+outline_color = Color(1, 1, 1, 0.12)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_footer"]
+bg_color = Color(0.025, 0.022, 0.035, 0.98)
+
+[node name="Menu" type="Control" unique_id=2020839109]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="Control" parent="." unique_id=1214645421]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_background")
+
+[node name="TimePanel" type="PanelContainer" parent="." unique_id=1470861992]
+layout_mode = 1
+offset_left = 30.0
+offset_top = 28.0
+offset_right = 322.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_time")
+
+[node name="TimeContent" type="Control" parent="TimePanel" unique_id=1927489272]
+custom_minimum_size = Vector2(292, 60)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DarkAccent" type="Panel" parent="TimePanel/TimeContent" unique_id=1731347369]
+layout_mode = 0
+offset_right = 122.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_time_dark")
+
+[node name="DarkDiagonal" type="Polygon2D" parent="TimePanel/TimeContent" unique_id=1112410774]
+color = Color(0.270588, 0.270588, 0.282353, 1)
+polygon = PackedVector2Array(120, 0, 152, 0, 122, 60)
+
+[node name="TimeTitle" type="Label" parent="TimePanel/TimeContent" unique_id=191150637]
+layout_mode = 0
+offset_left = 12.0
+offset_right = 119.0
+offset_bottom = 60.0
+text = "Tiempo"
+label_settings = SubResource("LabelSettings_time_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeValue" type="Label" parent="TimePanel/TimeContent" unique_id=2098629098]
+layout_mode = 0
+offset_left = 155.0
+offset_right = 276.0
+offset_bottom = 60.0
+text = "0:00"
+label_settings = SubResource("LabelSettings_time_value")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionPanel" type="PanelContainer" parent="." unique_id=592594689]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -570.0
+offset_top = 36.0
+offset_right = -30.0
+offset_bottom = 126.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_description")
+
+[node name="DescriptionMargin" type="MarginContainer" parent="DescriptionPanel" unique_id=1423854410]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 10
+
+[node name="Description" type="Label" parent="DescriptionPanel/DescriptionMargin" unique_id=1127269934]
+layout_mode = 2
+text = "Consulta el estado de tus Pokémon, cambia su orden o revisa sus movimientos."
+label_settings = SubResource("LabelSettings_description")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="MenuCenter" type="CenterContainer" parent="." unique_id=555523709]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 95.0
+offset_top = 130.0
+offset_bottom = -62.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuGrid" type="GridContainer" parent="MenuCenter" unique_id=1306512131]
+layout_mode = 2
+theme_override_constants/h_separation = 58
+theme_override_constants/v_separation = 18
+columns = 3
+
+[node name="Pokemon" parent="MenuCenter/MenuGrid" unique_id=1297599175 instance=ExtResource("4_option")]
+layout_mode = 2
+option_id = &"pokemon"
+title = "Pokémon"
+description = "Consulta el estado de tus Pokémon, cambia su orden o revisa sus movimientos."
+accent_color = Color(0.98, 0.075, 0.13, 1)
+
+[node name="Pokedex" parent="MenuCenter/MenuGrid" unique_id=867939437 instance=ExtResource("4_option")]
+layout_mode = 2
+option_id = &"pokedex"
+title = "Pokédex"
+description = "Revisa las especies de Pokémon que has visto y las que ya has capturado."
+accent_color = Color(0.93, 0.28, 0.04, 1)
+
+[node name="Bag" parent="MenuCenter/MenuGrid" unique_id=794240291 instance=ExtResource("4_option")]
+layout_mode = 2
+option_id = &"bag"
+title = "Mochila"
+description = "Organiza los objetos que llevas contigo y selecciona uno para utilizarlo."
+accent_color = Color(0.96, 0.67, 0.04, 1)
+
+[node name="Trainer" parent="MenuCenter/MenuGrid" unique_id=1897232937 instance=ExtResource("4_option")]
+layout_mode = 2
+option_id = &"trainer"
+title = "Entrenador"
+description = "Consulta los datos, las medallas y el progreso actual de tu entrenador."
+accent_color = Color(0.08, 0.62, 0.9, 1)
+
+[node name="Save" parent="MenuCenter/MenuGrid" unique_id=420935557 instance=ExtResource("4_option")]
+layout_mode = 2
+option_id = &"save"
+title = "Guardar"
+description = "Guarda el progreso actual de tu aventura para poder continuar más adelante."
+accent_color = Color(0.04, 0.76, 0.65, 1)
+
+[node name="Options" parent="MenuCenter/MenuGrid" unique_id=714100950 instance=ExtResource("4_option")]
+layout_mode = 2
+option_id = &"options"
+title = "Opciones"
+description = "Configura el sonido, los controles y otras preferencias generales del juego."
+accent_color = Color(0.38, 0.08, 0.86, 1)
+
+[node name="MenuTitle" type="Label" parent="." unique_id=2005337219]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -115.0
+offset_right = 296.0
+offset_bottom = -31.0
+grow_vertical = 0
+text = "MENÚ"
+label_settings = SubResource("LabelSettings_menu_title")
+vertical_alignment = 1
+
+[node name="Footer" type="Panel" parent="." unique_id=659396620]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_footer")
+
+[node name="GUI_Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_gui_click")
+bus = &"Map_Sound"
