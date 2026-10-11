@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Overworld/world_environment_manager.gd" id="1_manager"]
+[ext_resource type="Script" path="res://Scripts/Overworld/overworld_cloud_effect.gd" id="2_clouds"]
+[ext_resource type="Script" path="res://Scripts/Overworld/overworld_wind_effect.gd" id="3_wind"]
+
+[node name="WorldEnvironment" type="Node"]
+process_mode = 3
+script = ExtResource("1_manager")
+
+[node name="WorldTint" type="CanvasModulate" parent="."]
+color = Color(1, 1, 1, 1)
+
+[node name="Atmosphere" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Clouds" type="Control" parent="Atmosphere"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_clouds")
+
+[node name="Wind" type="Control" parent="Atmosphere"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_wind")

@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://b0thxmpxm2gx4" path="res://Scripts/Overworld/player_movement_state_machine.gd" id="2_roc7d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_feet"]
-size = Vector2(24, 8)
+size = Vector2(24, 11)
 
 [node name="CynthiaPlayer" type="CharacterBody2D" unique_id=1502901675]
 script = ExtResource("1_vexn7")
@@ -16,10 +16,9 @@ position = Vector2(0, -32)
 scale = Vector2(0.8, 0.8)
 sprite_frames = ExtResource("1_frames")
 animation = &"idle_down"
-frame_progress = 0.34799108
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=520633674]
-position = Vector2(0, -12)
+position = Vector2(0, -13.5)
 shape = SubResource("RectangleShape2D_feet")
 
 [node name="MovementStateMachine" type="Node" parent="." unique_id=1435271981]

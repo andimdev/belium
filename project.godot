@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SceneLoader="*res://Scripts/SceneLoader/scene_loader.gd"
 SaveManager="*res://Scripts/Save/save_manager.gd"
+WorldEnvironment="*res://Scenes/Overworld/world_environment.tscn"
 
 [display]
 
@@ -30,6 +31,10 @@ window/stretch/aspect="expand"
 [dotnet]
 
 project/assembly_name="belium"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/belium_dialogue_compiler/plugin.cfg")
 
 [physics]
 

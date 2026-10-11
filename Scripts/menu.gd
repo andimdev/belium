@@ -8,7 +8,9 @@ signal close_requested
 
 @onready var _menu_grid: GridContainer = $MenuCenter/MenuGrid
 @onready var _description_label: Label = \
-	$DescriptionPanel/DescriptionMargin/Description
+	$DescriptionPanel/DescriptionContent/DescriptionMargin/Description
+@onready var _description_icon: TextureRect = \
+	$DescriptionPanel/DescriptionContent/DescriptionIcon
 @onready var _time_value: Label = $TimePanel/TimeContent/TimeValue
 @onready var _gui_click: AudioStreamPlayer = $GUI_Click
 
@@ -70,6 +72,7 @@ func _select_option(option: MainMenuOption) -> void:
 	_selected_option = option
 	_selected_option.set_selected(true)
 	_description_label.text = option.description
+	_description_icon.texture = option.icon_texture
 
 
 func _on_option_selected(option: MainMenuOption) -> void:

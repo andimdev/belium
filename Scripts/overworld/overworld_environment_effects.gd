@@ -2,6 +2,9 @@ extends Node2D
 
 const GrassStepEffect := preload("res://Scripts/Overworld/grass_step_effect.gd")
 const PondWaterEffect := preload("res://Scripts/Overworld/pond_water_effect.gd")
+const TallGrassCut := preload("res://Resources/Tileset/tall_grass_cut.png")
+const TALL_GRASS_CUSTOM_DATA := &"is_tall_grass"
+const INVALID_GRASS_CELL := Vector2i(2147483647, 2147483647)
 
 signal active_camera_zone_changed(zone_id: StringName, display_name: String)
 
@@ -10,11 +13,10 @@ signal active_camera_zone_changed(zone_id: StringName, display_name: String)
 @export_node_path("TileMapLayer") var camera_bounds_layer_path: NodePath
 @export_node_path("Node") var camera_zones_root_path: NodePath
 @export var map_id: StringName
-@export var tall_grass_source_id := 0
-@export var tall_grass_atlas_coordinates := PackedVector2Array()
 @export var grass_foot_offset_y := -5.0
 @export var pond_water_rect := Rect2()
 @export_range(1.0, 2.0, 0.01) var camera_zoom_multiplier := 1.15
+@export_range(0.5, 3.0, 0.05) var interaction_distance_cells := 1.45
 
 var _player: Node2D
 var _tall_grass_layer: TileMapLayer
@@ -28,8 +30,7 @@ var _current_camera_bounds := Rect2()
 var _applied_camera_limits := Rect2()
 var _camera_follow_position := Vector2.ZERO
 var _camera_transition_tween: Tween
-var _last_grass_cell := Vector2i(2147483647, 2147483647)
-var _was_in_tall_grass := false
+var _grass_actor_states: Dictionary = {}
 
 
 func _ready() -> void:
@@ -246,6 +247,41 @@ func get_player() -> Node2D:
 	return _player
 
 
+func get_interactable_in_front() -> Node2D:
+	if not is_instance_valid(_player):
+		return null
+	var facing := Vector2.DOWN
+	var facing_value: Variant = _player.get("last_cardinal_direction")
+	if facing_value is Vector2 and not (facing_value as Vector2).is_zero_approx():
+		facing = (facing_value as Vector2).normalized()
+	var cell_size := maxf(_player.get("grid_cell_size"), 1.0)
+	var maximum_forward := cell_size * interaction_distance_cells
+	var maximum_side := cell_size * 0.72
+	var nearest: Node2D
+	var nearest_forward := INF
+	for candidate_value: Variant in get_tree().get_nodes_in_group(
+		&"dialogue_interactable"
+	):
+		var candidate := candidate_value as Node2D
+		if candidate == null or not is_ancestor_of(candidate) or not candidate.is_visible_in_tree():
+			continue
+		if candidate.has_method("can_interact_from") and not bool(
+			candidate.call("can_interact_from", _player)
+		):
+			continue
+		var offset := candidate.global_position - _player.global_position
+		var forward_distance := offset.dot(facing)
+		if forward_distance <= 0.0 or forward_distance > maximum_forward:
+			continue
+		var side_distance := absf(offset.cross(facing))
+		if side_distance > maximum_side:
+			continue
+		if forward_distance < nearest_forward:
+			nearest_forward = forward_distance
+			nearest = candidate
+	return nearest
+
+
 func save_current_game() -> Dictionary:
 	if not is_instance_valid(_player):
 		return {}
@@ -345,29 +381,106 @@ func _restore_saved_player_position(save_data: Dictionary) -> void:
 
 func _physics_process(_delta: float) -> void:
 	_update_camera_zone()
-	if not is_instance_valid(_player) or not is_instance_valid(_tall_grass_layer):
+
+
+func _process(_delta: float) -> void:
+	# Se actualiza después del movimiento de física, antes de dibujar el frame.
+	# Así el recorte cambia de celda en el mismo frame que los pies del actor.
+	_update_tall_grass_actors()
+
+
+func _update_tall_grass_actors() -> void:
+	if not is_instance_valid(_tall_grass_layer):
+		return
+	var active_actor_ids: Dictionary = {}
+	for candidate in get_tree().get_nodes_in_group(&"grid_movement_actor"):
+		var actor := candidate as Node2D
+		if actor == null or not is_ancestor_of(actor):
+			continue
+		var actor_id := actor.get_instance_id()
+		var state: Dictionary = _grass_actor_states.get(actor_id, {})
+		var foreground_value: Variant = state.get("foreground")
+		var foreground: Sprite2D
+		if is_instance_valid(foreground_value):
+			foreground = foreground_value as Sprite2D
+		if not is_instance_valid(foreground):
+			foreground = _create_grass_foreground(actor)
+			if foreground == null:
+				continue
+			state = {"foreground": foreground, "last_cell": INVALID_GRASS_CELL}
+		active_actor_ids[actor_id] = true
+		_update_actor_grass(actor, foreground, state)
+		_grass_actor_states[actor_id] = state
+
+	# Los recortes son hijos del sprite: desaparecen al eliminar al actor.
+	# Si sale de este mapa sin destruirse, también se retira su recorte.
+	for actor_id in _grass_actor_states.keys():
+		if active_actor_ids.has(actor_id):
+			continue
+		var foreground_value: Variant = _grass_actor_states[actor_id].get("foreground")
+		if is_instance_valid(foreground_value):
+			(foreground_value as Sprite2D).queue_free()
+		_grass_actor_states.erase(actor_id)
+
+
+func _create_grass_foreground(actor: Node2D) -> Sprite2D:
+	var visual := actor.get_node_or_null("AnimatedSprite2D") as Node2D
+	if visual == null:
+		for child in actor.find_children("*", "", true, false):
+			if child is AnimatedSprite2D or child is Sprite2D:
+				visual = child as Node2D
+				break
+	if visual == null:
+		return null
+
+	var foreground := Sprite2D.new()
+	foreground.name = "TallGrassFootOverlay"
+	foreground.texture = TallGrassCut
+	foreground.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	foreground.visible = false
+	# Un hijo se dibuja delante de su padre con el mismo Z. Conserva el orden
+	# del actor frente al entorno, sin elevar la hierba por encima de los árboles.
+	visual.add_child(foreground)
+	return foreground
+
+
+func _update_actor_grass(actor: Node2D, foreground: Sprite2D, state: Dictionary) -> void:
+	var visual := foreground.get_parent() as Node2D
+	if not visual.is_visible_in_tree() or not _tall_grass_layer.is_visible_in_tree():
+		foreground.hide()
+		state["last_cell"] = INVALID_GRASS_CELL
 		return
 
-	var foot_position := _player.global_position + Vector2(0.0, grass_foot_offset_y)
+	# El origen de grid_movement_actor es el apoyo de los pies, con independencia
+	# del tamaño, la animación o la escala interna de su imagen.
+	var foot_position := actor.global_position + Vector2(0.0, grass_foot_offset_y)
 	var local_foot_position := _tall_grass_layer.to_local(foot_position)
 	var current_cell := _tall_grass_layer.local_to_map(local_foot_position)
-	var is_in_tall_grass := _is_tall_grass_cell(current_cell)
+	if not _is_tall_grass_cell(current_cell):
+		foreground.hide()
+		state["last_cell"] = INVALID_GRASS_CELL
+		return
 
-	if is_in_tall_grass and (not _was_in_tall_grass or current_cell != _last_grass_cell):
+	# El recorte toma el tamaño y la transformación de la celda real. Su posición
+	# queda fija en esa celda hasta cambiar a la siguiente, sin deslizarse sobre
+	# la textura inferior ni heredar el escalado particular de Cynthia o un NPC.
+	var tile_scale := Vector2(_tall_grass_layer.tile_set.tile_size) / TallGrassCut.get_size()
+	foreground.global_transform = _tall_grass_layer.global_transform * Transform2D(
+		Vector2(tile_scale.x, 0.0),
+		Vector2(0.0, tile_scale.y),
+		_tall_grass_layer.map_to_local(current_cell)
+	)
+	foreground.show()
+	if current_cell != state["last_cell"]:
 		_spawn_grass_effect(current_cell)
-
-	_last_grass_cell = current_cell
-	_was_in_tall_grass = is_in_tall_grass
+	state["last_cell"] = current_cell
 
 
 func _is_tall_grass_cell(cell: Vector2i) -> bool:
-	if _tall_grass_layer.get_cell_source_id(cell) != tall_grass_source_id:
+	var tile_data := _tall_grass_layer.get_cell_tile_data(cell)
+	if tile_data == null:
 		return false
-	var atlas_coordinates := _tall_grass_layer.get_cell_atlas_coords(cell)
-	for configured_coordinates in tall_grass_atlas_coordinates:
-		if atlas_coordinates == Vector2i(configured_coordinates):
-			return true
-	return false
+	return bool(tile_data.get_custom_data(TALL_GRASS_CUSTOM_DATA))
 
 
 func _spawn_grass_effect(cell: Vector2i) -> void:

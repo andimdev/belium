@@ -17,7 +17,10 @@ signal activated(option_id: StringName)
 @onready var _selection_arrow: Label = $SelectionArrow
 
 var _is_selected := false
-var _scale_tween: Tween
+var _rotation_tween: Tween
+
+const SELECTED_ICON_ROTATION := deg_to_rad(45.0)
+const ICON_ROTATION_DURATION := 0.28
 
 
 func _ready() -> void:
@@ -28,7 +31,7 @@ func _ready() -> void:
 	icon_button.focus_exited.connect(_on_focus_exited)
 	icon_button.mouse_entered.connect(icon_button.grab_focus)
 	icon_button.pressed.connect(_on_pressed)
-	call_deferred("_prepare_visuals")
+	_prepare_visuals()
 
 
 func set_selected(value: bool) -> void:
@@ -44,7 +47,8 @@ func set_selected(value: bool) -> void:
 
 
 func _prepare_visuals() -> void:
-	icon_button.pivot_offset = icon_button.size * 0.5
+	_icon.pivot_offset = _icon.size * 0.5
+	_icon.rotation = SELECTED_ICON_ROTATION if _is_selected else 0.0
 	icon_button.add_theme_stylebox_override(
 		"normal",
 		_make_icon_style(accent_color, false)
@@ -102,16 +106,16 @@ func _make_title_style(highlighted: bool) -> StyleBoxFlat:
 
 
 func _animate_selection(value: bool) -> void:
-	if is_instance_valid(_scale_tween):
-		_scale_tween.kill()
-	_scale_tween = create_tween()
-	_scale_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_scale_tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	_scale_tween.tween_property(
-		icon_button,
-		"scale",
-		Vector2.ONE * (1.06 if value else 1.0),
-		0.2
+	if is_instance_valid(_rotation_tween):
+		_rotation_tween.kill()
+	_rotation_tween = create_tween()
+	_rotation_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_rotation_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	_rotation_tween.tween_property(
+		_icon,
+		"rotation",
+		SELECTED_ICON_ROTATION if value else 0.0,
+		ICON_ROTATION_DURATION
 	)
 
 

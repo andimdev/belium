@@ -3,10 +3,12 @@ extends Node
 
 @export var twinleaf_town_track: AudioStream
 @export var route_201_track: AudioStream
+@export var sandgem_town_track: AudioStream
 @export_range(0.1, 5.0, 0.1) var transition_duration := 1.0
 
 @onready var _track_a: AudioStreamPlayer = $TrackA
 @onready var _track_b: AudioStreamPlayer = $TrackB
+@onready var _track_c: AudioStreamPlayer = $TrackC
 
 var _environment: Node
 var _active_player: AudioStreamPlayer
@@ -92,6 +94,8 @@ func _get_track_for_zone(zone_id: StringName) -> AudioStream:
 			return twinleaf_town_track
 		&"route_201":
 			return route_201_track
+		&"sandgem_town":
+			return sandgem_town_track
 		_:
 			return null
 

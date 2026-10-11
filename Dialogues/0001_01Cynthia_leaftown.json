@@ -1,0 +1,13 @@
+{
+  "characterId": "01Cynthia",
+  "characterName": "Cynthia",
+  "dialogueColor": "#28839C",
+  "Npc001OldManHarry": {
+    "responseFirstDialogueEver": "Hola, *Harry*... Mi nombre es *Cynthia*. Este pueblo es muy bonito. Parece el lugar perfecto para descansar un poco antes de continuar mi viaje.",
+    "responses": {
+      "I_Content001": "Así es, y actualmente estoy viajando por la región... ¿Conoces alguna historia sobre el Pokémon que habita el _Lago Veraz_?",
+      "I_Content003": "Estoy al tanto de las leyendas... Aunque parece que muchas se contradicen entre sí. De igual manera, me intriga la idea de que un Pokémon legendario esté atento a los habitantes del pueblo y les ofrezca protección. Me pregunto si alguna vez alguien ha tenido la oportunidad de verlo.",
+      "I_Content006": "Es un poema muy bonito. Me hace recordar que los Pokémon y los humanos podemos aprender mucho unos de otros. Y sin importar el rol que tenemos en el mundo, la empatía y la compasión son valores muy importantes, tanto para los humanos como para los Pokémon."
+    }
+  }
+}

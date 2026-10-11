@@ -25,6 +25,7 @@ const INPUT_BINDINGS: Dictionary[StringName, Array] = {
 @export var sprite_feet_offset := Vector2.ZERO
 @export var center_camera_on_sprite := true
 @export var camera_focus_offset := Vector2.ZERO
+@export var character_id: StringName = &"01Cynthia"
 
 var facing_direction: StringName = &"down"
 var last_cardinal_direction := Vector2.DOWN
@@ -33,13 +34,18 @@ var movement_locked := false
 var _is_stepping := false
 var _step_target_global_position := Vector2.ZERO
 var _step_direction := Vector2.ZERO
+var _step_targets: Array[Vector2] = []
+var _requested_step_direction := Vector2.ZERO
 var _step_speed := 0.0
 var _step_wants_to_run := false
 var _queued_direction := Vector2.ZERO
 var _alternate_step_pose := false
+var _grid_origin := Vector2(10.0, 20.0)
+var _grid_origin_configured := false
 
 
 func _ready() -> void:
+	add_to_group(&"grid_movement_actor")
 	_ensure_default_input_actions()
 	_make_collision_shape_unique()
 	if not animated_sprite.frame_changed.is_connected(_refresh_visual_layout):
@@ -95,6 +101,40 @@ func _physics_process(delta: float) -> void:
 func configure_grid(world_cell_size: float) -> void:
 	grid_cell_size = maxf(world_cell_size, 1.0)
 	_configure_foot_collision()
+
+
+## Recibe la definición común de la rejilla sin mover al personaje. Cualquier
+## offset de colocación se corrige de forma visible durante el primer paso.
+func configure_movement_grid(world_cell_size: float, grid_origin: Vector2) -> void:
+	grid_cell_size = maxf(world_cell_size, 1.0)
+	_grid_origin = grid_origin
+	_grid_origin_configured = true
+	_configure_foot_collision()
+
+
+## Coloca el punto de apoyo en el centro horizontal del borde inferior de una
+## celda. El tamaño del sprite no interviene: todos los actores se alinean por
+## los pies sobre la línea del suelo, aunque sus imágenes sean distintas.
+func align_to_movement_grid(world_cell_size: float, grid_origin: Vector2) -> void:
+	configure_movement_grid(world_cell_size, grid_origin)
+	var relative_position := (global_position - _grid_origin) / grid_cell_size
+	global_position = _grid_origin + Vector2(
+		roundf(relative_position.x),
+		roundf(relative_position.y)
+	) * grid_cell_size
+
+	_is_stepping = false
+	_step_targets.clear()
+	_step_target_global_position = global_position
+	_step_direction = Vector2.ZERO
+	_requested_step_direction = Vector2.ZERO
+	_step_speed = 0.0
+	_step_wants_to_run = false
+	_queued_direction = Vector2.ZERO
+	velocity = Vector2.ZERO
+	_configure_foot_collision()
+	state_machine.update_state(Vector2.ZERO, false)
+	_update_animation()
 
 
 func is_grid_stepping() -> bool:
@@ -190,54 +230,161 @@ func _consume_movement_direction() -> Vector2:
 
 
 func _try_start_grid_step(direction: Vector2, wants_to_run: bool) -> void:
-	var motion := direction * grid_cell_size
-	if test_move(global_transform, motion):
+	var planned_targets := _build_corrected_step_targets(direction)
+	var traversable_targets: Array[Vector2] = []
+	var segment_start := global_position
+	for target in planned_targets:
+		if _would_collide_between(segment_start, target):
+			traversable_targets.clear()
+			break
+		traversable_targets.append(target)
+		segment_start = target
+
+	if traversable_targets.is_empty():
 		velocity = Vector2.ZERO
 		state_machine.update_state(Vector2.ZERO, false)
 		return
 
-	_step_direction = direction
-	_step_target_global_position = global_position + motion
 	var started_from_idle := state_machine.get_animation_prefix() == &"idle"
-	state_machine.update_state(direction, wants_to_run)
-	if started_from_idle:
-		_start_step_animation()
-	else:
-		# Al encadenar celdas con la tecla sostenida, no se reinicia ni se
-		# adelanta el frame: la animación conserva su cadencia configurada.
-		_update_animation()
-	_step_speed = state_machine.get_movement_speed()
+	_step_targets = traversable_targets
+	_requested_step_direction = direction
 	_step_wants_to_run = wants_to_run
-	velocity = direction * _step_speed
 	_is_stepping = true
-	grid_step_started.emit(global_position, _step_target_global_position, direction)
+	grid_step_started.emit(global_position, _step_targets.back(), direction)
+	_begin_next_step_segment(started_from_idle)
 
 
 func _advance_grid_step(delta: float) -> void:
 	var remaining_distance := global_position.distance_to(_step_target_global_position)
 	var movement_distance := _step_speed * delta
 	if movement_distance + 0.001 < remaining_distance:
-		global_position = global_position.move_toward(
+		var next_position := global_position.move_toward(
 			_step_target_global_position,
 			movement_distance
 		)
+		var collision := move_and_collide(next_position - global_position)
+		if collision != null:
+			_interrupt_grid_step_on_collision()
 		return
 
+	var final_motion := _step_target_global_position - global_position
+	if not final_motion.is_zero_approx():
+		var final_collision := move_and_collide(final_motion)
+		if final_collision != null:
+			_interrupt_grid_step_on_collision()
+			return
 	global_position = _step_target_global_position
-	var completed_direction := _step_direction
+	if not _step_targets.is_empty():
+		_begin_next_step_segment(false)
+		return
+
+	var completed_direction := _requested_step_direction
 	_is_stepping = false
 	_step_direction = Vector2.ZERO
+	_requested_step_direction = Vector2.ZERO
 	_step_speed = 0.0
 	_step_wants_to_run = false
 	velocity = Vector2.ZERO
 	grid_step_completed.emit(global_position, completed_direction)
 
 
+func _interrupt_grid_step_on_collision() -> void:
+	# Un NPC puede entrar en la trayectoria después de la comprobación inicial.
+	# En ese caso se detiene en el punto seguro alcanzado, sin atravesarlo ni
+	# teletransportarse. El próximo input corrige cualquier offset restante.
+	_is_stepping = false
+	_step_targets.clear()
+	_step_direction = Vector2.ZERO
+	_requested_step_direction = Vector2.ZERO
+	_step_speed = 0.0
+	_step_wants_to_run = false
+	velocity = Vector2.ZERO
+	state_machine.update_state(Vector2.ZERO, false)
+
+
+func _begin_next_step_segment(started_from_idle: bool) -> void:
+	while not _step_targets.is_empty():
+		var next_target: Vector2 = _step_targets.pop_front()
+		if global_position.distance_to(next_target) <= 0.001:
+			continue
+		_step_target_global_position = next_target
+		_step_direction = (next_target - global_position).normalized()
+		_update_facing_direction(_step_direction)
+		state_machine.update_state(_step_direction, _step_wants_to_run)
+		_step_speed = state_machine.get_movement_speed()
+		if started_from_idle:
+			_start_step_animation()
+		else:
+			# Los segmentos de corrección conservan el ritmo de la animación;
+			# sólo cambia la dirección cuando X e Y se corrigen por separado.
+			_update_animation()
+		velocity = _step_direction * _step_speed
+		return
+
+	_is_stepping = false
+	velocity = Vector2.ZERO
+
+
+func _build_corrected_step_targets(direction: Vector2) -> Array[Vector2]:
+	if not _grid_origin_configured:
+		return [global_position + direction * grid_cell_size]
+
+	var targets: Array[Vector2] = []
+	var cursor := global_position
+	var snapped_x := _nearest_grid_coordinate(cursor.x, _grid_origin.x)
+	var snapped_y := _nearest_grid_coordinate(cursor.y, _grid_origin.y)
+
+	if not is_zero_approx(direction.x):
+		# Antes de avanzar horizontalmente se corrige la fila, con un segmento
+		# vertical independiente. Así nunca aparece un salto diagonal.
+		if not is_equal_approx(cursor.y, snapped_y):
+			cursor = Vector2(cursor.x, snapped_y)
+			targets.append(cursor)
+		cursor.x = _next_grid_coordinate(
+			cursor.x,
+			_grid_origin.x,
+			direction.x
+		)
+		targets.append(cursor)
+	else:
+		# Para un paso vertical se centra primero la columna mediante un
+		# segmento horizontal y luego se avanza hasta la línea de suelo.
+		if not is_equal_approx(cursor.x, snapped_x):
+			cursor = Vector2(snapped_x, cursor.y)
+			targets.append(cursor)
+		cursor.y = _next_grid_coordinate(
+			cursor.y,
+			_grid_origin.y,
+			direction.y
+		)
+		targets.append(cursor)
+	return targets
+
+
+func _nearest_grid_coordinate(value: float, origin: float) -> float:
+	return origin + roundf((value - origin) / grid_cell_size) * grid_cell_size
+
+
+func _next_grid_coordinate(value: float, origin: float, direction: float) -> float:
+	var relative_value := (value - origin) / grid_cell_size
+	if is_equal_approx(relative_value, roundf(relative_value)):
+		return value + signf(direction) * grid_cell_size
+	var target_index := ceili(relative_value) if direction > 0.0 else floori(relative_value)
+	return origin + float(target_index) * grid_cell_size
+
+
+func _would_collide_between(from_position: Vector2, to_position: Vector2) -> bool:
+	var test_transform := global_transform
+	test_transform.origin = from_position
+	return test_move(test_transform, to_position - from_position)
+
+
 func set_control_enabled(enabled: bool) -> void:
 	if not enabled and _is_stepping:
-		global_position = _step_target_global_position
 		_is_stepping = false
+		_step_targets.clear()
 		_step_direction = Vector2.ZERO
+		_requested_step_direction = Vector2.ZERO
 		_step_speed = 0.0
 		grid_step_completed.emit(global_position, last_cardinal_direction)
 
@@ -271,6 +418,19 @@ func set_movement_locked(locked: bool) -> void:
 		state_machine.update_state(_step_direction, _step_wants_to_run)
 	else:
 		state_machine.update_state(Vector2.ZERO, false)
+	_update_animation()
+
+
+func face_toward(world_position: Vector2) -> void:
+	var direction := world_position - global_position
+	if direction.is_zero_approx():
+		return
+	if absf(direction.x) > absf(direction.y):
+		last_cardinal_direction = Vector2.RIGHT if direction.x > 0.0 else Vector2.LEFT
+	else:
+		last_cardinal_direction = Vector2.DOWN if direction.y > 0.0 else Vector2.UP
+	_update_facing_direction(last_cardinal_direction)
+	state_machine.update_state(Vector2.ZERO, false)
 	_update_animation()
 
 

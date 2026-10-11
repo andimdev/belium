@@ -1,0 +1,388 @@
+[gd_scene format=3 uid="uid://c2iuxyxklkjmg"]
+
+[ext_resource type="Script" uid="uid://b1gjg0ivqnwtd" path="res://Scripts/GUI/dialogue_panel.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://dp6vmlq7c6mhh" path="res://Resources/Font/Orbitron-Regular.ttf" id="2_dialogue_font"]
+[ext_resource type="FontFile" uid="uid://bfrm17shhfj72" path="res://Resources/Font/SmoochSans-Regular.ttf" id="3_cursor_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.992157, 0.992157, 0.992157, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.105882, 0.113725, 0.12549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.9)
+shadow_size = 5
+shadow_offset = Vector2(6, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_inner_border"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.760784, 0.788235, 0.823529, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_dialogue"]
+font = ExtResource("2_dialogue_font")
+font_size = 21
+font_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+outline_size = 1
+outline_color = Color(0.74, 0.74, 0.74, 0.72)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 0.28)
+shadow_offset = Vector2(1, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cursor"]
+font = ExtResource("3_cursor_font")
+font_size = 38
+outline_size = 5
+outline_color = Color(0.04, 0.035, 0.05, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBox_option_normal"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_option_selected"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.870588, 0.905882, 0.937255, 0.72)
+border_width_left = 2
+border_color = Color(0.105882, 0.113725, 0.12549, 0.72)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_hint"]
+font = ExtResource("2_dialogue_font")
+font_size = 12
+font_color = Color(0.25, 0.27, 0.3, 0.82)
+
+[sub_resource type="LabelSettings" id="LabelSettings_speaker"]
+font = ExtResource("2_dialogue_font")
+font_size = 17
+font_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+outline_size = 1
+outline_color = Color(0.74, 0.74, 0.74, 0.72)
+
+[node name="DialoguePanel" type="Control" unique_id=1461057354]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="MainDialogue" type="PanelContainer" parent="." unique_id=1465265738]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -150.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="InnerBorder" type="Panel" parent="MainDialogue" unique_id=162654981]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_inner_border")
+
+[node name="ContentMargin" type="MarginContainer" parent="MainDialogue" unique_id=388757755]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 18
+
+[node name="DialogueContent" type="Control" parent="MainDialogue/ContentMargin" unique_id=698226365]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SpeakerName" type="RichTextLabel" parent="MainDialogue/ContentMargin/DialogueContent"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 24.0
+grow_horizontal = 2
+mouse_filter = 2
+text = "Harry"
+focus_mode = 0
+theme_override_colors/default_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_outline_color = Color(0.74, 0.74, 0.74, 0.72)
+theme_override_constants/outline_size = 1
+theme_override_fonts/normal_font = ExtResource("2_dialogue_font")
+theme_override_font_sizes/normal_font_size = 17
+bbcode_enabled = true
+scroll_active = false
+vertical_alignment = 1
+
+[node name="DialogueText" type="RichTextLabel" parent="MainDialogue/ContentMargin/DialogueContent" unique_id=1082030586]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 24.0
+offset_right = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Dicen que los girasoles siempre encuentran la luz, incluso después de una noche especialmente larga. Quizá nosotros también podamos aprender algo de ellos. Cuando era joven, mi abuelo me enseñó que cada sendero puede llevarnos a un lugar inesperado si tenemos el valor de recorrerlo hasta el final."
+mouse_filter = 2
+focus_mode = 0
+theme_override_colors/default_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_outline_color = Color(0.74, 0.74, 0.74, 0.72)
+theme_override_constants/outline_size = 1
+theme_override_fonts/normal_font = ExtResource("2_dialogue_font")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
+scroll_active = false
+vertical_alignment = 1
+
+[node name="MoreIndicator" type="Label" parent="MainDialogue/ContentMargin/DialogueContent" unique_id=1062293465]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -35.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "..."
+label_settings = SubResource("LabelSettings_dialogue")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SidePanel" type="PanelContainer" parent="." unique_id=1064886035]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -370.0
+offset_top = -382.0
+offset_right = -20.0
+offset_bottom = -166.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="InnerBorder" type="Panel" parent="SidePanel" unique_id=729635344]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_inner_border")
+
+[node name="ContentMargin" type="MarginContainer" parent="SidePanel" unique_id=1802437809]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="Layout" type="VBoxContainer" parent="SidePanel/ContentMargin" unique_id=429576275]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="OptionsScroll" type="ScrollContainer" parent="SidePanel/ContentMargin/Layout" unique_id=680387212]
+custom_minimum_size = Vector2(0, 152)
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="Options" type="VBoxContainer" parent="SidePanel/ContentMargin/Layout/OptionsScroll" unique_id=1767726798]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Option1" type="HBoxContainer" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options" unique_id=367237879]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SelectionCursor" type="Label" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option1" unique_id=601795688]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+text = ">"
+label_settings = SubResource("LabelSettings_cursor")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="Button" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option1" unique_id=1199624803]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_focus_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_pressed_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_hover_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_fonts/font = ExtResource("2_dialogue_font")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_option_normal")
+theme_override_styles/pressed = SubResource("StyleBox_option_selected")
+theme_override_styles/hover = SubResource("StyleBox_option_selected")
+theme_override_styles/focus = SubResource("StyleBox_option_selected")
+text = "Preguntar por el jardín"
+alignment = 0
+
+[node name="Option2" type="HBoxContainer" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options" unique_id=1722359917]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SelectionCursor" type="Label" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option2" unique_id=1195306070]
+visible = false
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+text = ">"
+label_settings = SubResource("LabelSettings_cursor")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="Button" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option2" unique_id=1615704706]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_focus_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_pressed_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_hover_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_fonts/font = ExtResource("2_dialogue_font")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_option_normal")
+theme_override_styles/pressed = SubResource("StyleBox_option_selected")
+theme_override_styles/hover = SubResource("StyleBox_option_selected")
+theme_override_styles/focus = SubResource("StyleBox_option_selected")
+text = "Comentar sobre el clima"
+alignment = 0
+
+[node name="Option3" type="HBoxContainer" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options" unique_id=19002204]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SelectionCursor" type="Label" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option3" unique_id=1409580743]
+visible = false
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+text = ">"
+label_settings = SubResource("LabelSettings_cursor")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="Button" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option3" unique_id=678288408]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_focus_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_pressed_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_hover_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_fonts/font = ExtResource("2_dialogue_font")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_option_normal")
+theme_override_styles/pressed = SubResource("StyleBox_option_selected")
+theme_override_styles/hover = SubResource("StyleBox_option_selected")
+theme_override_styles/focus = SubResource("StyleBox_option_selected")
+text = "Despedirse"
+alignment = 0
+
+[node name="Option4" type="HBoxContainer" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options" unique_id=396413636]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SelectionCursor" type="Label" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option4" unique_id=2087661939]
+visible = false
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+text = ">"
+label_settings = SubResource("LabelSettings_cursor")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="Button" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option4" unique_id=1490089705]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_focus_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_pressed_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_hover_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_fonts/font = ExtResource("2_dialogue_font")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_option_normal")
+theme_override_styles/pressed = SubResource("StyleBox_option_selected")
+theme_override_styles/hover = SubResource("StyleBox_option_selected")
+theme_override_styles/focus = SubResource("StyleBox_option_selected")
+text = "Pedir un consejo"
+alignment = 0
+
+[node name="Option5" type="HBoxContainer" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options" unique_id=2068557121]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SelectionCursor" type="Label" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option5" unique_id=1918360251]
+visible = false
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+text = ">"
+label_settings = SubResource("LabelSettings_cursor")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="Button" parent="SidePanel/ContentMargin/Layout/OptionsScroll/Options/Option5" unique_id=1781222990]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_focus_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_pressed_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_colors/font_hover_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
+theme_override_fonts/font = ExtResource("2_dialogue_font")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBox_option_normal")
+theme_override_styles/pressed = SubResource("StyleBox_option_selected")
+theme_override_styles/hover = SubResource("StyleBox_option_selected")
+theme_override_styles/focus = SubResource("StyleBox_option_selected")
+text = "Guardar silencio"
+alignment = 0
+
+[node name="NavigationHint" type="Label" parent="SidePanel/ContentMargin/Layout" unique_id=884176223]
+layout_mode = 2
+text = "↑ ↓  elegir    Enter / F  confirmar"
+label_settings = SubResource("LabelSettings_hint")
+horizontal_alignment = 1

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://djo16uxu3441q"]
 
-[ext_resource type="FontFile" uid="uid://dp6vmlq7c6mhh" path="res://Resources/Font/Orbitron-Regular.ttf" id="1_0of31"]
+[ext_resource type="FontFile" uid="uid://dp6vmlq7c6mhh" path="res://Resources/Font/Orbitron-Regular.ttf" id="1_5awjq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_tooltip"]
 content_margin_left = 0.0
@@ -34,7 +34,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_ktss0"]
-font = ExtResource("1_0of31")
+font = ExtResource("1_5awjq")
 font_size = 20
 font_color = Color(0.0509804, 0.0470588, 0.0470588, 1)
 outline_size = 1

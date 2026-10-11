@@ -28,19 +28,19 @@ const INITIAL_SCENE_ID: StringName = &"initial_credits"
 ## transition acepta "none", "fade" o el nombre de un driver registrado.
 const INITIAL_SCENES: Dictionary = {
 	&"initial_credits": {
-		"path": "res://Scenes/credits.tscn",
+		"path": "res://Scenes/Interface/credits.tscn",
 		"category": SceneCategory.INTERFACE,
 		"transition": &"fade",
 		"threaded": false,
 	},
 	&"press_start": {
-		"path": "res://Scenes/press_start.tscn",
+		"path": "res://Scenes/Interface/press_start.tscn",
 		"category": SceneCategory.INTERFACE,
 		"transition": &"none",
 		"threaded": false,
 	},
 	&"load_new_play": {
-		"path": "res://Scenes/load_new_play.tscn",
+		"path": "res://Scenes/Interface/load_new_play.tscn",
 		"category": SceneCategory.INTERFACE,
 		"transition": &"fade",
 		"threaded": false,

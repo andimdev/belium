@@ -1,8 +1,10 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3]
 
-[ext_resource type="Script" path="res://Scripts/ui_root.gd" id="1_ui_root"]
-[ext_resource type="PackedScene" uid="uid://djo16uxu3441q" path="res://Scenes/tooltip_place.tscn" id="2_tooltip"]
-[ext_resource type="PackedScene" uid="uid://d0v4eoglrorwr" path="res://Scenes/menu.tscn" id="3_menu"]
+[ext_resource type="Script" uid="uid://d2pxnuhi2bycy" path="res://Scripts/ui_root.gd" id="1_ui_root"]
+[ext_resource type="PackedScene" uid="uid://djo16uxu3441q" path="res://Scenes/GUI/tooltip_place.tscn" id="2_tooltip"]
+[ext_resource type="PackedScene" uid="uid://d0v4eoglrorwr" path="res://Scenes/GUI/menu.tscn" id="3_menu"]
+[ext_resource type="PackedScene" uid="uid://c2iuxyxklkjmg" path="res://Scenes/GUI/dialogue_panel.tscn" id="4_dialogue_panel"]
+[ext_resource type="Script" path="res://Scripts/Dialogue/dialogue_runner.gd" id="5_dialogue_runner"]
 
 [node name="UIRoot" type="CanvasLayer"]
 layer = 100
@@ -27,3 +29,11 @@ offset_bottom = -12.0
 [node name="Menu" parent="Interface" instance=ExtResource("3_menu")]
 visible = false
 layout_mode = 1
+
+[node name="DialoguePanel" parent="Interface" instance=ExtResource("4_dialogue_panel")]
+visible = false
+layout_mode = 1
+
+[node name="DialogueRunner" type="Node" parent="."]
+script = ExtResource("5_dialogue_runner")
+panel_path = NodePath("../Interface/DialoguePanel")

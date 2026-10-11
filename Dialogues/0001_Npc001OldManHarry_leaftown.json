@@ -1,0 +1,89 @@
+{
+  "npcId": "Npc001OldManHarry",
+  "npcName": "Harry",
+  "dialogueColor": "#65584A",
+  "firstDialogueEver": "Ah, ¡Hola!. Es muy reconfortante ver una cara nueva en este pequeño pueblo. Me llamo *Harry*, y he vivido aquí toda mi vida. ¿Qué te trae por estos lares?",
+  "dialogs": {
+    "ChapterI": {
+      "01Cynthia": {
+        "Story": [
+          {
+            "resumeCheckpoint": false,
+            "dialogueId": "I_Content001",
+            "dialogue": "*Cynthia*... Es un nombre poderoso. Espero que tu estancia en este pueblo sea agradable.\n Veo que llevas contigo un equipo Pokémon. ¿Acaso eres una entrenadora?",
+            "closeDialogue": false
+          },
+          {
+            "resumeCheckpoint": true,
+            "dialogueId": "I_Content002",
+            "dialogue": "Conozco un par de historias sobre el _Lago Veraz_. ¿Quieres que te cuente alguna?",
+            "choices": [
+              {
+                "label": "Sí, por favor.",
+                "nextDialogueId": "I_Content003"
+              },
+              {
+                "label": "Tal vez más tarde.",
+                "nextDialogueId": "I_Content004"
+              },
+              {
+                "label": "No, gracias.",
+                "nextDialogueId": "I_Content005"
+              }
+            ],
+            "responses": {
+              "I_Content003": {
+                "dialogue": "Desde hace muchos años, se dice que un Pokémon legendario habita en el _Lago Veraz_. Se creía que este Pokémon tenía el poder de comunicarse y proteger a los habitantes del pueblo de las tormentas... Y aunque nadie lo ha visto en muchísimo tiempo, la leyenda sigue viva entre los habitantes del pueblo.",
+                "closeDialogue": false
+              },
+              "I_Content004": {
+                "dialogue": "Claro, no hay prisa. Cuando quieras escuchar la historia, solo házmelo saber.",
+                "closeDialogue": true
+              },
+              "I_Content005": {
+                "dialogue": "Está bien, no hay problema. Realmente son historias fascinantes, pero entiendo que no son para cualquiera.",
+                "reward": false,
+                "closeDialogue": true
+              }
+            }
+          },
+          {
+            "dialogueId": "I_Content006",
+            "dialogue": "Realmente, las leyendas del _Lago Veraz_ son tan fascinantes como misteriosas. Un cuento antiguo dice que el Pokémon legendario que habita allí puede comunicarse con los humanos a través de sueños y visiones. Algunos dicen haber tenido encuentros con él en persona.\n Aunque también recuerdo un poema antiguo que reza:\n 'En el _Lago Veraz_, donde el agua es clara y la luna brilla, un guardián duerme... Este enseñó a los humanos a sentir alegría, dolor y tristeza; y a través de sus lágrimas, el mundo aprendió sobre la empatía y la compasión'.",
+            "closeDialogue": false
+          },
+          {
+            "dialogueId": "I_Content007",
+            "dialogue": "Tienes mucha razón, *Cynthia*... Bueno, me alegra que hayas venido a este pueblo. Espero que tu estancia aquí sea agradable y que encuentres lo que buscas en tu viaje.",
+            "reward": true,
+            "closeDialogue": true
+          }
+        ],
+        "random": [
+          {
+            "dialogueId": "I_Random001",
+            "dialogue": "Los girasoles de mi jardín son un símbolo de esperanza y alegría. Me gusta pensar que, al igual que los girasoles, todos podemos encontrar la luz incluso en los momentos más oscuros.",
+            "closeDialogue": false
+          },
+          {
+            "dialogueId": "I_Random002",
+            "dialogue": "Me pregunto si algun día alguien podrá volver a ver al Pokémon legendario del _Lago Veraz_. Sería un encuentro que cambiaría la vida de cualquiera.",
+            "closeDialogue": false
+          },
+          {
+            "dialogueId": "I_Random003",
+            "dialogue": "Dicen que hay un lugar en Ciudad Marina con una vista espectacular... Nunca he tenido la oportunidad de ir, pero me encantaría visitarlo algún día.",
+            "closeDialogue": false
+          },
+          {
+            "dialogueId": "I_Random004",
+            "dialogue": "Hace días soñé que era un Pokémon y que podía volar por los cielos. Fue maravilloso, pero al despertar me di cuenta de que era solo un sueño. Aun así, me hizo reflexionar sobre la libertad y la belleza de la vida.",
+            "closeDialogue": false
+          }
+        ]
+      }
+    },
+    "ChapterII": {},
+    "ChapterIII": {}
+  }
+}

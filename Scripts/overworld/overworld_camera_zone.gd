@@ -5,12 +5,20 @@ extends Area2D
 ## mostrar la cámara. Su forma se edita con CollisionShape2D o
 ## CollisionPolygon2D hijos, sin participar en las colisiones del juego.
 
+## Identificador estable de la región; no es el nombre que ve el jugador.
 @export var zone_id: StringName
-@export var display_name := ""
+## Nombre que mostrará el aviso de ubicación del UIRoot.
+@export var display_name := "cam"
+## Rectángulo que puede mostrar la cámara, en píxeles locales de este Area2D.
+## Position es la esquina superior izquierda; Size es ancho y alto (no la esquina final).
+## Es independiente del RegionShape hijo, que solo detecta la entrada a la región.
+## Debe tener ancho y alto mayores que cero e incluir terreno realmente dibujado.
 @export var camera_bounds := Rect2()
 ## Filas que se excluyen del encuadre: X=izquierda, Y=arriba,
 ## Z=derecha, W=abajo. Con un borde de 8 filas, usar 5 deja visibles 3.
+## Con celdas de 20px, 5 excluye 100px. Usar 0 en conexiones con otra región.
 @export var hidden_boundary_rows := Vector4.ZERO
+## Segundos del cambio de encuadre al entrar caminando. Al iniciar el mapa es inmediato.
 @export_range(0.0, 8.0, 0.1) var transition_duration := 2
 
 

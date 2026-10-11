@@ -1,0 +1,22 @@
+{
+  "welcome_leaftown": {
+    "dialogueId": "00_welcome_leaftown",
+    "text": "Bienvenido a _Pueblo Hojaverde_, un lugar tranquilo y rodeado de naturaleza. Disfruta de tu estancia."
+  },
+  "tracks_trainers_201": {
+    "dialogueId": "01_tracks_trainers_201",
+    "text": "¡Pistas para entrenadores!\n Habla con todo el mundo, no se sabe qué historias interesantes podrías descubrir."
+  },
+  "pokemon_center_sandgem_town": {
+    "dialogueId": "02_pokemon_center_sandgem_town",
+    "text": "Centro Pokémon de _Pueblo Arena_. Aquí puedes curar a tus Pokémon y hablar con otros entrenadores."
+  },
+  "pokemon_mart_sandgem_town": {
+    "dialogueId": "03_pokemon_mart_sandgem_town",
+    "text": "Tienda Pokémon de _Pueblo Arena_. Compra Poké Balls, pociones y otros objetos útiles para tu aventura."
+  },
+  "lab_professor_rowan": {
+    "dialogueId": "04_lab_professor_rowan",
+    "text": "Laboratorio del Profesor *Serbal*."
+  }
+}
