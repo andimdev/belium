@@ -247,6 +247,18 @@ func get_player() -> Node2D:
 	return _player
 
 
+## Consulta semántica reutilizable por encuentros, VFX y lógica de mapa. La
+## posición recibida representa el apoyo de los pies del actor.
+func is_tall_grass_at_world_position(world_position: Vector2) -> bool:
+	if not is_instance_valid(_tall_grass_layer):
+		return false
+	var foot_position := world_position + Vector2(0.0, grass_foot_offset_y)
+	var local_foot_position := _tall_grass_layer.to_local(foot_position)
+	return _is_tall_grass_cell(
+		_tall_grass_layer.local_to_map(local_foot_position)
+	)
+
+
 func get_interactable_in_front() -> Node2D:
 	if not is_instance_valid(_player):
 		return null

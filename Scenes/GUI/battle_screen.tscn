@@ -1,0 +1,541 @@
+[gd_scene format=3 uid="uid://dqdm1foqojien"]
+
+[ext_resource type="Script" uid="uid://mm2kim8n5x15" path="res://Scripts/GUI/battle_screen.gd" id="1_battle_screen"]
+[ext_resource type="FontFile" uid="uid://bfrm17shhfj72" path="res://Resources/Font/SmoochSans-Regular.ttf" id="2_font"]
+
+[sub_resource type="Environment" id="Environment_battle"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
+ambient_light_source = 3
+ambient_light_color = Color(0.68, 0.75, 0.86, 1)
+ambient_light_energy = 0.4
+tonemap_mode = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_guide"]
+bg_color = Color(0.93, 0.95, 0.98, 0.74)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.0745098, 0.0823529, 0.101961, 0.9)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="LabelSettings" id="LabelSettings_guide"]
+font = ExtResource("2_font")
+font_size = 34
+font_color = Color(0.06, 0.07, 0.09, 1)
+outline_size = 2
+outline_color = Color(1, 1, 1, 0.82)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_command_panel"]
+bg_color = Color(0.976471, 0.980392, 0.988235, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.0745098, 0.0823529, 0.101961, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0, 0, 0, 0.28)
+shadow_size = 7
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_attack_normal"]
+bg_color = Color(0.78, 0.15, 0.16, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.22, 0.035, 0.04, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_attack_pressed"]
+bg_color = Color(0.58, 0.08, 0.1, 1)
+border_width_left = 3
+border_width_top = 5
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.16, 0.02, 0.03, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_attack_hover"]
+bg_color = Color(0.91, 0.24, 0.25, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.22, 0.035, 0.04, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_disabled"]
+bg_color = Color(0.4, 0.42, 0.46, 0.72)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.18, 0.19, 0.21, 0.8)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_focus"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 0.95)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_pokemon_normal"]
+bg_color = Color(0.16, 0.56, 0.26, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.025, 0.2, 0.075, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_pokemon_pressed"]
+bg_color = Color(0.09, 0.4, 0.17, 1)
+border_width_left = 3
+border_width_top = 5
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.015, 0.14, 0.05, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_pokemon_hover"]
+bg_color = Color(0.25, 0.69, 0.36, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.025, 0.2, 0.075, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_bag_normal"]
+bg_color = Color(0.94, 0.71, 0.12, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.32, 0.21, 0.015, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_bag_pressed"]
+bg_color = Color(0.76, 0.52, 0.055, 1)
+border_width_left = 3
+border_width_top = 5
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.26, 0.16, 0.01, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_bag_hover"]
+bg_color = Color(1, 0.82, 0.24, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.32, 0.21, 0.015, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_run_normal"]
+bg_color = Color(0.13, 0.42, 0.79, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.025, 0.13, 0.33, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_run_pressed"]
+bg_color = Color(0.075, 0.29, 0.6, 1)
+border_width_left = 3
+border_width_top = 5
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.015, 0.09, 0.24, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_run_hover"]
+bg_color = Color(0.22, 0.55, 0.93, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.025, 0.13, 0.33, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[node name="BattleScreen" type="Control" unique_id=1761499209]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_battle_screen")
+
+[node name="Background" type="Control" parent="." unique_id=2010290766]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FallbackColor" type="ColorRect" parent="Background" unique_id=829821084]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Texture" type="TextureRect" parent="Background" unique_id=1617659788]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BattleStage" type="Control" parent="." unique_id=991638385]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -180.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="EnemyGroundShadow" type="Polygon2D" parent="BattleStage"]
+polygon = PackedVector2Array(975, 342, 970, 347, 956, 351, 933, 355, 903, 358, 868, 359, 830, 360, 792, 359, 757, 358, 727, 355, 704, 351, 690, 347, 685, 342, 690, 337, 704, 333, 727, 329, 757, 326, 792, 325, 830, 324, 868, 325, 903, 326, 933, 329, 956, 333, 970, 337)
+color = Color(0.05, 0.08, 0.12, 0.18)
+
+[node name="BattleViewportMount" type="Control" parent="BattleStage" unique_id=2128410111]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BattleViewportContainer" type="SubViewportContainer" parent="BattleStage/BattleViewportMount"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="BattleViewport" type="SubViewport" parent="BattleStage/BattleViewportMount/BattleViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1080, 540)
+render_target_update_mode = 0
+own_world_3d = true
+
+[node name="BattleWorld3D" type="Node3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+environment = SubResource("Environment_battle")
+
+[node name="BattleCamera" type="Camera3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+current = true
+fov = 30.0
+
+[node name="KeyLight" type="DirectionalLight3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+rotation_degrees = Vector3(-42, -28, 0)
+light_color = Color(0.82, 0.9, 1, 1)
+light_energy = 0.85
+shadow_enabled = true
+
+[node name="FillLight" type="DirectionalLight3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+rotation_degrees = Vector3(-24, 142, 0)
+light_color = Color(0.58, 0.72, 1, 1)
+light_energy = 0.3
+
+[node name="FrontLight" type="DirectionalLight3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+rotation_degrees = Vector3(-8, 180, 0)
+light_color = Color(1, 0.78, 0.65, 1)
+light_energy = 0.16
+
+[node name="PlayerPokemonAnchor" type="Node3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+
+[node name="EnemyPokemonAnchor" type="Node3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+
+[node name="PresentationGuides" type="Control" parent="BattleStage" unique_id=1672133870]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlayerPrimary" type="PanelContainer" parent="BattleStage/PresentationGuides" unique_id=184646514]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.48
+anchor_right = 0.45
+anchor_bottom = 0.84
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_guide")
+
+[node name="Label" type="Label" parent="BattleStage/PresentationGuides/PlayerPrimary" unique_id=771614345]
+layout_mode = 2
+text = "Pokémon entrenador"
+label_settings = SubResource("LabelSettings_guide")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerSecondary" type="PanelContainer" parent="BattleStage/PresentationGuides" unique_id=704400444]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.27
+anchor_top = 0.37
+anchor_right = 0.58
+anchor_bottom = 0.67
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_guide")
+
+[node name="Label" type="Label" parent="BattleStage/PresentationGuides/PlayerSecondary" unique_id=103781339]
+layout_mode = 2
+text = "Pokémon aliado"
+label_settings = SubResource("LabelSettings_guide")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnemyPrimary" type="PanelContainer" parent="BattleStage/PresentationGuides" unique_id=102469966]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.56
+anchor_top = 0.08
+anchor_right = 0.97
+anchor_bottom = 0.44
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_guide")
+
+[node name="Label" type="Label" parent="BattleStage/PresentationGuides/EnemyPrimary" unique_id=1631063707]
+layout_mode = 2
+text = "Pokémon rival"
+label_settings = SubResource("LabelSettings_guide")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnemySecondary" type="PanelContainer" parent="BattleStage/PresentationGuides" unique_id=1386547201]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.43
+anchor_top = 0.22
+anchor_right = 0.74
+anchor_bottom = 0.52
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_guide")
+
+[node name="Label" type="Label" parent="BattleStage/PresentationGuides/EnemySecondary" unique_id=259383863]
+layout_mode = 2
+text = "Pokémon rival 2"
+label_settings = SubResource("LabelSettings_guide")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CommandPanel" type="PanelContainer" parent="." unique_id=1468702048]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -170.0
+offset_right = -20.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBox_command_panel")
+
+[node name="Content" type="MarginContainer" parent="CommandPanel" unique_id=1456684351]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="Commands" type="GridContainer" parent="CommandPanel/Content" unique_id=2055667168]
+layout_mode = 2
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 11
+columns = 2
+
+[node name="Attack" type="Button" parent="CommandPanel/Content/Commands" unique_id=655580967]
+custom_minimum_size = Vector2(0, 59)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Pokemon")
+focus_neighbor_top = NodePath("../Bag")
+focus_neighbor_right = NodePath("../Pokemon")
+focus_neighbor_bottom = NodePath("../Bag")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.015, 0.02, 0.8)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBox_attack_normal")
+theme_override_styles/pressed = SubResource("StyleBox_attack_pressed")
+theme_override_styles/hover = SubResource("StyleBox_attack_hover")
+theme_override_styles/disabled = SubResource("StyleBox_button_disabled")
+theme_override_styles/focus = SubResource("StyleBox_button_focus")
+text = "Atacar"
+
+[node name="Pokemon" type="Button" parent="CommandPanel/Content/Commands" unique_id=77928791]
+custom_minimum_size = Vector2(0, 59)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Attack")
+focus_neighbor_top = NodePath("../Run")
+focus_neighbor_right = NodePath("../Attack")
+focus_neighbor_bottom = NodePath("../Run")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.12, 0.045, 0.8)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBox_pokemon_normal")
+theme_override_styles/pressed = SubResource("StyleBox_pokemon_pressed")
+theme_override_styles/hover = SubResource("StyleBox_pokemon_hover")
+theme_override_styles/disabled = SubResource("StyleBox_button_disabled")
+theme_override_styles/focus = SubResource("StyleBox_button_focus")
+text = "Pokémon"
+
+[node name="Bag" type="Button" parent="CommandPanel/Content/Commands" unique_id=472017305]
+custom_minimum_size = Vector2(0, 59)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Run")
+focus_neighbor_top = NodePath("../Attack")
+focus_neighbor_right = NodePath("../Run")
+focus_neighbor_bottom = NodePath("../Attack")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.12, 0.09, 0.015, 1)
+theme_override_colors/font_focus_color = Color(0.12, 0.09, 0.015, 1)
+theme_override_colors/font_pressed_color = Color(0.12, 0.09, 0.015, 1)
+theme_override_colors/font_hover_color = Color(0.12, 0.09, 0.015, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 0.32)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBox_bag_normal")
+theme_override_styles/pressed = SubResource("StyleBox_bag_pressed")
+theme_override_styles/hover = SubResource("StyleBox_bag_hover")
+theme_override_styles/disabled = SubResource("StyleBox_button_disabled")
+theme_override_styles/focus = SubResource("StyleBox_button_focus")
+text = "Mochila"
+
+[node name="Run" type="Button" parent="CommandPanel/Content/Commands" unique_id=1964169228]
+custom_minimum_size = Vector2(0, 59)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Bag")
+focus_neighbor_top = NodePath("../Pokemon")
+focus_neighbor_right = NodePath("../Bag")
+focus_neighbor_bottom = NodePath("../Pokemon")
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.015, 0.08, 0.2, 0.8)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBox_run_normal")
+theme_override_styles/pressed = SubResource("StyleBox_run_pressed")
+theme_override_styles/hover = SubResource("StyleBox_run_hover")
+theme_override_styles/disabled = SubResource("StyleBox_button_disabled")
+theme_override_styles/focus = SubResource("StyleBox_button_focus")
+text = "Huir"
+
+[node name="PokemonCry" type="AudioStreamPlayer" parent="."]
+bus = &"Battle_Sound"

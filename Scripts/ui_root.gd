@@ -3,6 +3,15 @@ extends CanvasLayer
 
 signal menu_visibility_changed(is_open: bool)
 signal dialogue_visibility_changed(is_open: bool)
+signal battle_mode_changed(is_active: bool)
+signal battle_command_selected(command_id: StringName)
+
+enum InterfaceMode {
+	OVERWORLD,
+	MENU,
+	DIALOGUE,
+	BATTLE,
+}
 
 const MENU_MUSIC_VOLUME_FACTOR := 0.50
 const DIALOGUE_INDEX_ROOT := "res://Resources/Dialogue/Compiled/Indexes"
@@ -20,6 +29,9 @@ const DIALOGUE_INDEX_ROOT := "res://Resources/Dialogue/Compiled/Indexes"
 @onready var _location_label: Label = \
 	$Interface/TooltipPlace/TooltipPanel/ContentMargin/Label
 @onready var _menu: OverworldMenu = $Interface/Menu
+@onready var _battle_screen: BattleScreen = $Interface/BattleScreen
+@onready var _battle_transition_overlay: BattleTransitionOverlay = \
+	$Interface/BattleTransitionOverlay
 @onready var _dialogue_runner: DialogueRunner = $DialogueRunner
 
 var _environment: Node
@@ -38,17 +50,28 @@ var _active_dialogue_npc_id: StringName
 var _active_dialogue_character_id: StringName
 var _active_dialogue_place_id: StringName
 var _initial_zone_synced := false
+var _interface_mode := InterfaceMode.OVERWORLD
+var _world_environment_manager: Node
+var _battle_previous_environment_process_mode := Node.PROCESS_MODE_INHERIT
+var _battle_previous_player_movement_locked := false
+var _battle_previous_map_music_muted := false
+var _battle_previous_overworld_suspended := false
+var _battle_restore_location_tooltip := false
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_location_tooltip.visible = false
 	_menu.visible = false
+	_battle_screen.visible = false
+	_battle_transition_overlay.reset()
 	_menu.close_requested.connect(_close_menu)
 	_menu.option_activated.connect(_on_menu_option_activated)
+	_battle_screen.command_selected.connect(_on_battle_command_selected)
 	_dialogue_runner.conversation_finished.connect(_on_conversation_finished)
 	_dialogue_runner.effects_requested.connect(_on_dialogue_effects_requested)
 	_save_manager = get_node_or_null("/root/SaveManager")
+	_world_environment_manager = get_node_or_null("/root/WorldEnvironment")
 	_map_music_bus_index = AudioServer.get_bus_index(&"Map_Music")
 	_environment = get_parent()
 	if _environment == null or not _environment.has_signal(
@@ -77,7 +100,172 @@ func _process(delta: float) -> void:
 		_menu.set_play_time(_save_manager.call("get_play_time_seconds"))
 
 
+func get_interface_mode() -> int:
+	return _interface_mode
+
+
+func is_battle_mode_active() -> bool:
+	return _interface_mode == InterfaceMode.BATTLE
+
+
+func get_battle_screen() -> BattleScreen:
+	return _battle_screen
+
+
+func get_battle_transition_overlay() -> BattleTransitionOverlay:
+	return _battle_transition_overlay
+
+
+## Presenta el control 2D para batallas estándar. Un lado admite uno o dos
+## Pokémon; los diseños 3v1/4v1 se definirán cuando sus reglas estén cerradas.
+func show_battle_screen(
+	player_slots: int = 1,
+	enemy_slots: int = 1
+) -> bool:
+	if not _battle_screen.configure_slot_counts(player_slots, enemy_slots):
+		return false
+	if not enter_battle_mode():
+		return false
+	_battle_screen.visible = true
+	return true
+
+
+func hide_battle_screen() -> void:
+	if is_instance_valid(_battle_screen):
+		_battle_screen.visible = false
+	exit_battle_mode()
+
+
+func set_battle_background(texture: Texture2D) -> void:
+	_battle_screen.set_background_texture(texture)
+
+
+func set_battle_command_enabled(
+	command_id: StringName,
+	enabled: bool
+) -> void:
+	_battle_screen.set_command_enabled(command_id, enabled)
+
+
+## Entra en el estado modal de batalla sin crear todavía la presentación de
+## combate. show_battle_screen() coordina este método con la presentación.
+## Devuelve false si otra interfaz exclusiva sigue activa o si el mapa aún no
+## tiene un jugador válido que pueda bloquearse de forma segura.
+func enter_battle_mode() -> bool:
+	if is_battle_mode_active():
+		return true
+	if (
+		_interface_mode != InterfaceMode.OVERWORLD
+		or _menu_open
+		or _dialogue_runner.is_active()
+	):
+		push_warning(
+			"UIRoot: no se puede iniciar una batalla mientras otra interfaz modal está activa."
+		)
+		return false
+	if not is_instance_valid(_environment):
+		push_warning("UIRoot: no se puede suspender un mapa inexistente.")
+		return false
+	if not is_instance_valid(_player) and _environment.has_method("get_player"):
+		_player = _environment.call("get_player")
+	if (
+		not is_instance_valid(_player)
+		or not _player.has_method("set_movement_locked")
+	):
+		push_warning("UIRoot: no se puede iniciar una batalla sin bloquear al jugador.")
+		return false
+
+	_battle_previous_player_movement_locked = bool(_player.get("movement_locked"))
+	_battle_previous_environment_process_mode = _environment.process_mode
+	_battle_previous_map_music_muted = false
+	if _map_music_bus_index >= 0:
+		_battle_previous_map_music_muted = AudioServer.is_bus_mute(
+			_map_music_bus_index
+		)
+	_battle_previous_overworld_suspended = false
+	if (
+		is_instance_valid(_world_environment_manager)
+		and _world_environment_manager.has_method("is_overworld_suspended")
+	):
+		_battle_previous_overworld_suspended = bool(
+			_world_environment_manager.call("is_overworld_suspended")
+		)
+	_battle_restore_location_tooltip = _location_tooltip.visible
+
+	_interface_mode = InterfaceMode.BATTLE
+	if is_instance_valid(_location_tween):
+		_location_tween.kill()
+		_location_tween = null
+	_location_tooltip.visible = false
+	_player.call("set_movement_locked", true)
+	_environment.process_mode = Node.PROCESS_MODE_DISABLED
+	if (
+		is_instance_valid(_world_environment_manager)
+		and _world_environment_manager.has_method("set_overworld_suspended")
+	):
+		_world_environment_manager.call("set_overworld_suspended", true)
+	if _map_music_bus_index >= 0:
+		AudioServer.set_bus_mute(_map_music_bus_index, true)
+	battle_mode_changed.emit(true)
+	return true
+
+
+## Restaura el estado persistente capturado por enter_battle_mode(). Si había un
+## aviso de ubicación visible, vuelve a reproducirlo desde el inicio.
+## Es seguro llamar a este método más de una vez.
+func exit_battle_mode() -> void:
+	if is_instance_valid(_battle_screen):
+		_battle_screen.visible = false
+	if is_instance_valid(_battle_transition_overlay):
+		_battle_transition_overlay.reset()
+	_leave_battle_mode(true, true)
+
+
+func _leave_battle_mode(
+	emit_change: bool,
+	restore_interface: bool
+) -> void:
+	if not is_battle_mode_active():
+		return
+
+	if is_instance_valid(_environment):
+		_environment.process_mode = _battle_previous_environment_process_mode
+	if (
+		is_instance_valid(_world_environment_manager)
+		and _world_environment_manager.has_method("set_overworld_suspended")
+	):
+		_world_environment_manager.call(
+			"set_overworld_suspended",
+			_battle_previous_overworld_suspended
+		)
+	if _map_music_bus_index >= 0:
+		AudioServer.set_bus_mute(
+			_map_music_bus_index,
+			_battle_previous_map_music_muted
+		)
+	if is_instance_valid(_player) and _player.has_method("set_movement_locked"):
+		_player.call(
+			"set_movement_locked",
+			_battle_previous_player_movement_locked
+		)
+
+	_interface_mode = InterfaceMode.OVERWORLD
+	if (
+		restore_interface
+		and _battle_restore_location_tooltip
+		and not _location_label.text.is_empty()
+	):
+		show_location(_location_label.text)
+	_battle_restore_location_tooltip = false
+	if emit_change:
+		battle_mode_changed.emit(false)
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	# BattleScreen será responsable de sus propias acciones. UIRoot sólo evita
+	# que una tecla de combate abra a la vez el menú o un diálogo del mapa.
+	if is_battle_mode_active():
+		return
 	if event is not InputEventKey:
 		return
 	var key_event := event as InputEventKey
@@ -237,9 +425,14 @@ func _on_location_animation_finished() -> void:
 
 
 func _open_menu() -> void:
-	if _menu_open or _dialogue_runner.is_active():
+	if (
+		_interface_mode != InterfaceMode.OVERWORLD
+		or _menu_open
+		or _dialogue_runner.is_active()
+	):
 		return
 	_menu_open = true
+	_interface_mode = InterfaceMode.MENU
 	_time_refresh_elapsed = 0.0
 	if is_instance_valid(_player) and _player.has_method("set_movement_locked"):
 		_player.call("set_movement_locked", true)
@@ -258,6 +451,7 @@ func _close_menu() -> void:
 		return
 	_menu_open = false
 	_menu.visible = false
+	_interface_mode = InterfaceMode.OVERWORLD
 	if is_instance_valid(_player) and _player.has_method("set_movement_locked"):
 		_player.call("set_movement_locked", false)
 	_set_map_music_ducked(false)
@@ -277,6 +471,10 @@ func _on_menu_option_activated(option_id: StringName) -> void:
 		_menu.show_status_message("Partida guardada correctamente.")
 	else:
 		_menu.show_status_message("No se pudo guardar la partida.")
+
+
+func _on_battle_command_selected(command_id: StringName) -> void:
+	battle_command_selected.emit(command_id)
 
 
 func _set_map_music_ducked(ducked: bool) -> void:
@@ -308,6 +506,8 @@ func _set_map_music_bus_volume(volume_db: float) -> void:
 
 
 func _try_start_dialogue() -> bool:
+	if _interface_mode != InterfaceMode.OVERWORLD:
+		return false
 	if not is_instance_valid(_environment) or not _environment.has_method(
 		"get_interactable_in_front"
 	):
@@ -438,6 +638,7 @@ func _try_start_dialogue() -> bool:
 	if not _dialogue_runner.start(conversation, entry_node_id):
 		_release_dialogue_characters()
 		return false
+	_interface_mode = InterfaceMode.DIALOGUE
 	dialogue_visibility_changed.emit(true)
 	return true
 
@@ -474,6 +675,7 @@ func _try_start_object_dialogue(interactable: Node) -> bool:
 	if not _dialogue_runner.start(conversation):
 		_release_dialogue_characters()
 		return true
+	_interface_mode = InterfaceMode.DIALOGUE
 	dialogue_visibility_changed.emit(true)
 	return true
 
@@ -486,6 +688,8 @@ func _on_conversation_finished(
 		if _save_manager.has_method("record_dialogue_completed"):
 			_save_manager.call("record_dialogue_completed", conversation_id)
 	_release_dialogue_characters()
+	if _interface_mode == InterfaceMode.DIALOGUE:
+		_interface_mode = InterfaceMode.OVERWORLD
 	dialogue_visibility_changed.emit(false)
 
 
@@ -542,6 +746,7 @@ func _get_area_type(area_id: StringName) -> StringName:
 
 
 func _exit_tree() -> void:
+	_leave_battle_mode(false, false)
 	if _dialogue_runner.is_active():
 		_release_dialogue_characters()
 	if _menu_open and _map_music_bus_index >= 0:

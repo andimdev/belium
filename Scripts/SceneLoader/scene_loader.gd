@@ -21,6 +21,11 @@ enum SceneCategory {
 	OVERLAY,
 }
 
+## UIRoot usa la capa 100. Los overlays globales deben quedar por encima de la
+## interfaz del mapa y las transiciones, a su vez, por encima de todo lo demás.
+const OVERLAY_CANVAS_LAYER := 110
+const TRANSITION_CANVAS_LAYER := 120
+
 ## Cambia este identificador para definir qué interfaz abre al iniciar el juego.
 const INITIAL_SCENE_ID: StringName = &"initial_credits"
 
@@ -442,12 +447,12 @@ func _fail(scene_id: StringName, path: String, reason: String) -> void:
 func _build_persistent_layers() -> void:
 	_overlay_layer = CanvasLayer.new()
 	_overlay_layer.name = "SceneOverlays"
-	_overlay_layer.layer = 90
+	_overlay_layer.layer = OVERLAY_CANVAS_LAYER
 	add_child(_overlay_layer)
 
 	_transition_layer = CanvasLayer.new()
 	_transition_layer.name = "SceneTransitions"
-	_transition_layer.layer = 100
+	_transition_layer.layer = TRANSITION_CANVAS_LAYER
 	add_child(_transition_layer)
 
 	_fade_rect = ColorRect.new()

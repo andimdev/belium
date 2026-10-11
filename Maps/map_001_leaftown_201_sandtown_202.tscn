@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://8utq5fdnasp0" path="res://Scripts/Overworld/movement_grid_guide.gd" id="13_movement_grid"]
 [ext_resource type="PackedScene" path="res://Scenes/Overworld/dialogue_object.tscn" id="16_dialogue_object"]
 [ext_resource type="PackedScene" uid="uid://c0l27n75eawl3" path="res://Scenes/NPC/Pokemon/starly_shiny_overworld.tscn" id="20_2d8ct"]
+[ext_resource type="PackedScene" path="res://Scenes/Battle/battle_controller.tscn" id="21_battle_controller"]
 [ext_resource type="TileSet" path="res://Resources/Tileset/Map001/arbol_1.res" id="tiles_arbol_1"]
 [ext_resource type="TileSet" path="res://Resources/Tileset/Map001/arbol_adicional.res" id="tiles_arbol_adicional"]
 [ext_resource type="TileSet" path="res://Resources/Tileset/Map001/capa_adicional1_encima.res" id="tiles_capa_adicional1_encima"]
@@ -5330,6 +5331,8 @@ bus = &"Map_Music"
 bus = &"Map_Music"
 
 [node name="UIRoot" parent="." unique_id=995485480 instance=ExtResource("8_ui_root")]
+
+[node name="BattleController" parent="." unique_id=684681815 instance=ExtResource("21_battle_controller")]
 
 [node name="MovementGridGuide" type="TileMapLayer" parent="." unique_id=1054014117]
 z_index = 4096

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Battle/battle_controller.gd" id="1_controller"]
+[ext_resource type="Resource" path="res://Resources/Pokemon/3D/species/0376/metadata/0376_base.tres" id="2_metagross"]
+[ext_resource type="AudioStream" path="res://Resources/Audio/SFX/sinnohvation/Battle_Wild_Pokemon.ogg" id="3_music"]
+
+[node name="BattleController" type="Node"]
+process_mode = 3
+script = ExtResource("1_controller")
+wild_slot_0 = ExtResource("2_metagross")
+
+[node name="BattleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_music")
+bus = &"Battle_Music"

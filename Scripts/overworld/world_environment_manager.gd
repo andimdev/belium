@@ -35,6 +35,7 @@ var _clock_elapsed := 0.0
 var _scene_sync_elapsed := 0.0
 var _filter_tween: Tween
 var _environment_enabled := false
+var _overworld_suspended := false
 var _observed_scene: Node
 
 
@@ -52,7 +53,7 @@ func _process(delta: float) -> void:
 	if _scene_sync_elapsed >= SCENE_SYNC_INTERVAL:
 		_scene_sync_elapsed = 0.0
 		_sync_current_scene()
-	if not _environment_enabled:
+	if not _environment_enabled or _overworld_suspended:
 		return
 	_clock_elapsed += delta
 	if _clock_elapsed < CLOCK_REFRESH_INTERVAL:
@@ -88,6 +89,22 @@ func get_current_time_period() -> StringName:
 
 func get_current_weather_profile() -> Dictionary:
 	return _current_profile.duplicate(true)
+
+
+## Suspende únicamente la presentación ambiental del mapa mientras una interfaz
+## modal de pantalla completa (por ejemplo, una batalla) conserva el mapa vivo.
+## El perfil actual se mantiene y se vuelve a aplicar al reanudar.
+func set_overworld_suspended(suspended: bool) -> void:
+	if _overworld_suspended == suspended:
+		return
+	_overworld_suspended = suspended
+	_refresh_environment_activity()
+	if not suspended and _environment_enabled:
+		refresh_from_system_time(true, true)
+
+
+func is_overworld_suspended() -> bool:
+	return _overworld_suspended
 
 
 ## Registra una variación para una zona concreta. `overrides` puede contener
@@ -202,7 +219,11 @@ func _apply_active_profile(
 	period_changed: bool,
 	transition_duration: float
 ) -> void:
-	if not _environment_enabled or _current_period.is_empty():
+	if (
+		not _environment_enabled
+		or _overworld_suspended
+		or _current_period.is_empty()
+	):
 		return
 	var profile := _build_time_profile(_current_period)
 	var weather_id := DEFAULT_WEATHER
@@ -331,16 +352,22 @@ func _on_active_camera_zone_changed(
 
 func _set_environment_enabled(enabled: bool) -> void:
 	_environment_enabled = enabled
-	_atmosphere.visible = enabled
-	_clouds.set_process(enabled)
-	_wind.set_process(enabled)
-	if enabled:
+	_refresh_environment_activity()
+	if not enabled:
+		_world_tint.color = Color.WHITE
+
+
+func _refresh_environment_activity() -> void:
+	var active := _environment_enabled and not _overworld_suspended
+	_atmosphere.visible = active
+	_clouds.set_process(active)
+	_wind.set_process(active)
+	if active:
 		_clouds.call("reset_camera_tracking")
 		_wind.call("reset_camera_tracking")
-	if not enabled:
-		if is_instance_valid(_filter_tween):
-			_filter_tween.kill()
-		_world_tint.color = Color.WHITE
+	elif is_instance_valid(_filter_tween):
+		_filter_tween.kill()
+		_filter_tween = null
 
 
 func _get_weather_day_key() -> String:
