@@ -15,6 +15,7 @@ enum InterfaceMode {
 
 const MENU_MUSIC_VOLUME_FACTOR := 0.50
 const DIALOGUE_INDEX_ROOT := "res://Resources/Dialogue/Compiled/Indexes"
+const BATTLE_WEATHER_TRANSITION_DURATION := 5.0
 
 ## Raíz persistente de la interfaz del mapa. Los elementos que se agreguen a
 ## Interface permanecen en coordenadas de pantalla, independientes de la
@@ -24,6 +25,9 @@ const DIALOGUE_INDEX_ROOT := "res://Resources/Dialogue/Compiled/Indexes"
 @export_range(0.0, 10.0, 0.1) var location_visible_duration := 3.0
 @export_range(0.0, 2.0, 0.05) var location_exit_duration := 0.4
 @export var location_screen_margin := Vector2(25.0, 25.0)
+## Reloj del juego (Sky3D TimeOfDay) que muestra el menú. Si se deja vacío, se
+## busca un TimeOfDay dentro del mapa, que es el padre de este UIRoot.
+@export_node_path("TimeOfDay") var time_of_day_path: NodePath
 
 @onready var _location_tooltip: Control = $Interface/TooltipPlace
 @onready var _location_label: Label = \
@@ -35,6 +39,7 @@ const DIALOGUE_INDEX_ROOT := "res://Resources/Dialogue/Compiled/Indexes"
 @onready var _dialogue_runner: DialogueRunner = $DialogueRunner
 
 var _environment: Node
+var _time_of_day: TimeOfDay
 var _player: Node
 var _save_manager: Node
 var _location_tween: Tween
@@ -72,6 +77,14 @@ func _ready() -> void:
 	_dialogue_runner.effects_requested.connect(_on_dialogue_effects_requested)
 	_save_manager = get_node_or_null("/root/SaveManager")
 	_world_environment_manager = get_node_or_null("/root/WorldEnvironment")
+	if (
+		is_instance_valid(_world_environment_manager)
+		and _world_environment_manager.has_signal(&"weather_changed")
+	):
+		_world_environment_manager.connect(
+			&"weather_changed",
+			Callable(self, "_on_world_weather_changed")
+		)
 	_map_music_bus_index = AudioServer.get_bus_index(&"Map_Music")
 	_environment = get_parent()
 	if _environment == null or not _environment.has_signal(
@@ -87,10 +100,14 @@ func _ready() -> void:
 	# tenían una región activa antes de que se añadiera el UIRoot.
 	_sync_initial_location.call_deferred()
 	_initialize_map_bindings.call_deferred()
+	_sync_battle_weather.call_deferred(0.0)
 
 
 func _process(delta: float) -> void:
-	if not _menu_open or not is_instance_valid(_save_manager):
+	if not _menu_open:
+		return
+	_refresh_menu_clock()
+	if not is_instance_valid(_save_manager):
 		return
 	_time_refresh_elapsed += delta
 	if _time_refresh_elapsed < 0.2:
@@ -191,6 +208,7 @@ func enter_battle_mode() -> bool:
 			_world_environment_manager.call("is_overworld_suspended")
 		)
 	_battle_restore_location_tooltip = _location_tooltip.visible
+	_sync_battle_weather(0.0)
 
 	_interface_mode = InterfaceMode.BATTLE
 	if is_instance_valid(_location_tween):
@@ -355,6 +373,7 @@ func _sync_initial_location() -> void:
 
 
 func _initialize_map_bindings() -> void:
+	_bind_time_of_day()
 	if is_instance_valid(_environment) and _environment.has_method("get_player"):
 		_player = _environment.call("get_player")
 	if (
@@ -369,6 +388,51 @@ func _initialize_map_bindings() -> void:
 		"get_play_time_seconds"
 	):
 		_menu.set_play_time(_save_manager.call("get_play_time_seconds"))
+
+
+func _bind_time_of_day() -> void:
+	_time_of_day = get_node_or_null(time_of_day_path) as TimeOfDay
+	if _time_of_day == null and is_instance_valid(_environment):
+		_time_of_day = _find_time_of_day(_environment)
+	if _time_of_day == null:
+		push_warning("UIRoot: no se encontró un TimeOfDay; el menú mostrará el reloj del sistema.")
+
+
+func _find_time_of_day(root: Node) -> TimeOfDay:
+	var pending: Array[Node] = [root]
+	while not pending.is_empty():
+		var current: Node = pending.pop_back()
+		if current is TimeOfDay:
+			return current as TimeOfDay
+		pending.append_array(current.get_children())
+	return null
+
+
+## Pasa al menú la hora y la fecha del juego. Con Sky3D se lee su TimeOfDay (con
+## System Sync activo coincide con el reloj del sistema); sin él, se usa el reloj
+## del sistema.
+func _refresh_menu_clock() -> void:
+	var total_seconds := 0
+	var day := 1
+	var month := 1
+	if is_instance_valid(_time_of_day):
+		# current_time es un decimal en horas: 12:15:38 puede reconstruirse como
+		# 12:15:37,9999, así que se redondea con 1 ms de margen.
+		total_seconds = clampi(floori(_time_of_day.current_time * 3600.0 + 0.001), 0, 86399)
+		day = _time_of_day.day
+		month = _time_of_day.month
+	else:
+		var now := Time.get_datetime_dict_from_system()
+		total_seconds = int(now.hour) * 3600 + int(now.minute) * 60 + int(now.second)
+		day = int(now.day)
+		month = int(now.month)
+	_menu.set_game_clock(
+		total_seconds / 3600,
+		(total_seconds % 3600) / 60,
+		total_seconds % 60,
+		day,
+		month
+	)
 
 
 func _on_active_camera_zone_changed(
@@ -440,6 +504,7 @@ func _open_menu() -> void:
 		"get_play_time_seconds"
 	):
 		_menu.set_play_time(_save_manager.call("get_play_time_seconds"))
+	_refresh_menu_clock()
 	_menu.visible = true
 	_menu.focus_default_option()
 	_set_map_music_ducked(true)
@@ -475,6 +540,32 @@ func _on_menu_option_activated(option_id: StringName) -> void:
 
 func _on_battle_command_selected(command_id: StringName) -> void:
 	battle_command_selected.emit(command_id)
+
+
+func _on_world_weather_changed(
+	_weather_id: StringName,
+	profile: Dictionary
+) -> void:
+	var duration := 0.0
+	if is_battle_mode_active() and _battle_screen.visible:
+		duration = BATTLE_WEATHER_TRANSITION_DURATION
+	_battle_screen.apply_weather_profile(profile, duration)
+
+
+func _sync_battle_weather(transition_duration: float = 0.0) -> void:
+	if (
+		not is_instance_valid(_world_environment_manager)
+		or not _world_environment_manager.has_method(
+			"get_current_weather_profile"
+		)
+	):
+		return
+	var profile: Dictionary = _world_environment_manager.call(
+		"get_current_weather_profile"
+	)
+	if profile.is_empty():
+		return
+	_battle_screen.apply_weather_profile(profile, transition_duration)
 
 
 func _set_map_music_ducked(ducked: bool) -> void:

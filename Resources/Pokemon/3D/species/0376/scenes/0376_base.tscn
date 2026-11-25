@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3]
-
-[ext_resource type="Script" path="res://Scripts/Battle/pokemon_battler_3d.gd" id="1_battler"]
-[ext_resource type="PackedScene" path="res://Resources/Pokemon/3D/species/0376/runtime/0376_base.glb" id="2_model"]
-
-[node name="PokemonBattler3D" type="Node3D"]
-script = ExtResource("1_battler")
-
-[node name="Model" parent="." instance=ExtResource("2_model")]

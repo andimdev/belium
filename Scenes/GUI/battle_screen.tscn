@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://mm2kim8n5x15" path="res://Scripts/GUI/battle_screen.gd" id="1_battle_screen"]
 [ext_resource type="FontFile" uid="uid://bfrm17shhfj72" path="res://Resources/Font/SmoochSans-Regular.ttf" id="2_font"]
+[ext_resource type="Texture2D" uid="uid://vdlsvvbdcr4l" path="res://Resources/Img/Battle/background_1.jpg" id="2_sgpdc"]
+[ext_resource type="Texture2D" uid="uid://cfeibyfqwy3bg" path="res://Resources/Materials/Base/base_forest_large.png" id="3_enemy_base"]
+[ext_resource type="Script" uid="uid://baa3q6a34dohw" path="res://Scripts/Overworld/overworld_wind_effect.gd" id="4_battle_wind"]
 
 [sub_resource type="Environment" id="Environment_battle"]
 background_mode = 1
@@ -233,6 +236,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_battle_screen")
+background_texture = ExtResource("2_sgpdc")
 
 [node name="Background" type="Control" parent="." unique_id=2010290766]
 layout_mode = 1
@@ -243,17 +247,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="FallbackColor" type="ColorRect" parent="Background" unique_id=829821084]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
 [node name="Texture" type="TextureRect" parent="Background" unique_id=1617659788]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -261,6 +255,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+texture = ExtResource("2_sgpdc")
 expand_mode = 1
 stretch_mode = 6
 
@@ -269,69 +264,100 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -180.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="EnemyGroundShadow" type="Polygon2D" parent="BattleStage"]
-polygon = PackedVector2Array(975, 342, 970, 347, 956, 351, 933, 355, 903, 358, 868, 359, 830, 360, 792, 359, 757, 358, 727, 355, 704, 351, 690, 347, 685, 342, 690, 337, 704, 333, 727, 329, 757, 326, 792, 325, 830, 324, 868, 325, 903, 326, 933, 329, 956, 333, 970, 337)
+[node name="PlayerGroundBase" type="TextureRect" parent="BattleStage" unique_id=1795025223]
+layout_mode = 0
+offset_top = 520.0
+offset_right = 530.0
+offset_bottom = 706.0
+mouse_filter = 2
+texture = ExtResource("3_enemy_base")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EnemyGroundBase" type="TextureRect" parent="BattleStage" unique_id=1294422934]
+layout_mode = 0
+offset_left = 550.0
+offset_top = 301.0
+offset_right = 1080.0
+offset_bottom = 487.0
+mouse_filter = 2
+texture = ExtResource("3_enemy_base")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerGroundShadow" type="Polygon2D" parent="BattleStage" unique_id=1418710823]
+position = Vector2(265, 598)
 color = Color(0.05, 0.08, 0.12, 0.18)
+polygon = PackedVector2Array(196.1, 0, 181.2, 17.1, 138.7, 31.6, 75.1, 41.3, 0, 44.6, -75.1, 41.3, -138.7, 31.6, -181.2, 17.1, -196.1, 0, -181.2, -17.1, -138.7, -31.6, -75.1, -41.3, 0, -44.6, 75.1, -41.3, 138.7, -31.6, 181.2, -17.1)
+
+[node name="EnemyGroundShadow" type="Polygon2D" parent="BattleStage" unique_id=1808046015]
+position = Vector2(815, 380)
+color = Color(0.05, 0.08, 0.12, 0.18)
+polygon = PackedVector2Array(196.1, 0, 181.2, 17.1, 138.7, 31.6, 75.1, 41.3, 0, 44.6, -75.1, 41.3, -138.7, 31.6, -181.2, 17.1, -196.1, 0, -181.2, -17.1, -138.7, -31.6, -75.1, -41.3, 0, -44.6, 75.1, -41.3, 138.7, -31.6, 181.2, -17.1)
 
 [node name="BattleViewportMount" type="Control" parent="BattleStage" unique_id=2128410111]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="BattleViewportContainer" type="SubViewportContainer" parent="BattleStage/BattleViewportMount"]
+[node name="BattleViewportContainer" type="SubViewportContainer" parent="BattleStage/BattleViewportMount" unique_id=1900327971]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 stretch = true
 
-[node name="BattleViewport" type="SubViewport" parent="BattleStage/BattleViewportMount/BattleViewportContainer"]
+[node name="BattleViewport" type="SubViewport" parent="BattleStage/BattleViewportMount/BattleViewportContainer" unique_id=205491122]
+own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1080, 540)
-render_target_update_mode = 0
-own_world_3d = true
+size = Vector2i(1080, 900)
+render_target_update_mode = 4
 
-[node name="BattleWorld3D" type="Node3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport"]
+[node name="BattleWorld3D" type="Node3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport" unique_id=1726329264]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D" unique_id=7755411]
 environment = SubResource("Environment_battle")
 
-[node name="BattleCamera" type="Camera3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+[node name="BattleCamera" type="Camera3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D" unique_id=1075390663]
 current = true
 fov = 30.0
 
-[node name="KeyLight" type="DirectionalLight3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
-rotation_degrees = Vector3(-42, -28, 0)
+[node name="KeyLight" type="DirectionalLight3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D" unique_id=1344105219]
+transform = Transform3D(0.88294756, 0.31413782, -0.34888536, 0, 0.7431448, 0.6691306, 0.46947157, -0.59080726, 0.6561579, 0, 0, 0)
 light_color = Color(0.82, 0.9, 1, 1)
 light_energy = 0.85
 shadow_enabled = true
 
-[node name="FillLight" type="DirectionalLight3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
-rotation_degrees = Vector3(-24, 142, 0)
+[node name="FillLight" type="DirectionalLight3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D" unique_id=1973567014]
+transform = Transform3D(-0.7880108, -0.25041208, 0.5624347, 0, 0.9135454, 0.40673664, -0.61566144, 0.32051286, -0.7198836, 0, 0, 0)
 light_color = Color(0.58, 0.72, 1, 1)
 light_energy = 0.3
 
-[node name="FrontLight" type="DirectionalLight3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
-rotation_degrees = Vector3(-8, 180, 0)
+[node name="FrontLight" type="DirectionalLight3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D" unique_id=397861925]
+transform = Transform3D(-1, 1.21668995e-08, -8.657198e-08, 0, 0.99026805, 0.1391731, 8.742278e-08, 0.1391731, -0.99026805, 0, 0, 0)
 light_color = Color(1, 0.78, 0.65, 1)
 light_energy = 0.16
 
-[node name="PlayerPokemonAnchor" type="Node3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+[node name="PlayerPokemonAnchor" type="Node3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D" unique_id=180746300]
 
-[node name="EnemyPokemonAnchor" type="Node3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D"]
+[node name="EnemyPokemonAnchor" type="Node3D" parent="BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D" unique_id=1251693505]
 
 [node name="PresentationGuides" type="Control" parent="BattleStage" unique_id=1672133870]
 visible = false
@@ -412,6 +438,19 @@ text = "Pokémon rival 2"
 label_settings = SubResource("LabelSettings_guide")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BattleWind" type="Control" parent="." unique_id=1107910201]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_battle_wind")
+wisp_count = 0
+whirlwind_spawn_probability = 0.0
 
 [node name="CommandPanel" type="PanelContainer" parent="." unique_id=1468702048]
 visible = false
@@ -537,5 +576,5 @@ theme_override_styles/disabled = SubResource("StyleBox_button_disabled")
 theme_override_styles/focus = SubResource("StyleBox_button_focus")
 text = "Huir"
 
-[node name="PokemonCry" type="AudioStreamPlayer" parent="."]
+[node name="PokemonCry" type="AudioStreamPlayer" parent="." unique_id=824827588]
 bus = &"Battle_Sound"

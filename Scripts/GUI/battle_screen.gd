@@ -20,14 +20,26 @@ const ENEMY_DOUBLE_SECONDARY_RECT := Rect2(0.43, 0.22, 0.31, 0.30)
 @export_range(1, 2, 1) var player_slot_count := 1
 @export_range(1, 2, 1) var enemy_slot_count := 1
 @export var show_presentation_guides := false
+@export_group("Ground shadows")
+@export_range(0.1, 1.0, 0.01) var ground_shadow_width_ratio := 0.74
+@export_range(0.1, 1.0, 0.01) var ground_shadow_height_ratio := 0.48
 
-@onready var _fallback_background: ColorRect = $Background/FallbackColor
+@onready var _background: Control = $Background
+@onready var _fallback_background: ColorRect = \
+	get_node_or_null("Background/FallbackColor") as ColorRect
 @onready var _background_texture: TextureRect = $Background/Texture
+@onready var _battle_stage: Control = $BattleStage
+@onready var _player_ground_base: TextureRect = $BattleStage/PlayerGroundBase
+@onready var _enemy_ground_base: TextureRect = $BattleStage/EnemyGroundBase
+@onready var _player_ground_shadow: Polygon2D = $BattleStage/PlayerGroundShadow
+@onready var _enemy_ground_shadow: Polygon2D = $BattleStage/EnemyGroundShadow
 @onready var _viewport_mount: Control = $BattleStage/BattleViewportMount
 @onready var _viewport_container: SubViewportContainer = \
 	$BattleStage/BattleViewportMount/BattleViewportContainer
 @onready var _battle_viewport: SubViewport = \
 	$BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport
+@onready var _player_anchor: Node3D = \
+	$BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D/PlayerPokemonAnchor
 @onready var _enemy_anchor: Node3D = \
 	$BattleStage/BattleViewportMount/BattleViewportContainer/BattleViewport/BattleWorld3D/EnemyPokemonAnchor
 @onready var _battle_camera: Camera3D = \
@@ -51,16 +63,23 @@ const ENEMY_DOUBLE_SECONDARY_RECT := Rect2(0.43, 0.22, 0.31, 0.30)
 	$CommandPanel/Content/Commands/Run
 @onready var _command_panel: PanelContainer = $CommandPanel
 @onready var _cry_player: AudioStreamPlayer = $PokemonCry
+@onready var _battle_wind: Control = $BattleWind
 
 var _command_buttons: Dictionary = {}
+var _player_data: PokemonBattleVisualData
+var _player_battler: PokemonBattler3D
 var _enemy_data: PokemonBattleVisualData
 var _enemy_battler: PokemonBattler3D
 var _screen_tween: Tween
 var _command_tween: Tween
+var _weather_tween: Tween
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	visibility_changed.connect(_sync_wind_activity)
+	_player_ground_base.resized.connect(_sync_ground_shadows)
+	_enemy_ground_base.resized.connect(_sync_ground_shadows)
 	_configure_battle_camera()
 	_command_buttons = {
 		COMMAND_ATTACK: _attack_button,
@@ -73,6 +92,9 @@ func _ready() -> void:
 		button.pressed.connect(_emit_command.bind(command_id))
 		button.mouse_entered.connect(Callable(button, "grab_focus"))
 	_apply_background()
+	_sync_ground_shadows()
+	_set_battle_tint(Color.WHITE)
+	_sync_wind_activity()
 	set_presentation_guides_visible(show_presentation_guides)
 	hide_commands()
 	if not configure_slot_counts(player_slot_count, enemy_slot_count):
@@ -87,8 +109,40 @@ func set_background_texture(texture: Texture2D) -> void:
 
 func set_fallback_background_color(color: Color) -> void:
 	fallback_background_color = color
-	if is_node_ready():
+	if is_node_ready() and _fallback_background != null:
 		_fallback_background.color = color
+
+
+## Hereda la luz y la densidad atmosférica del mapa. La batalla reutiliza sólo
+## las estelas de viento: nubes y remolinos permanecen fuera de esta interfaz.
+func apply_weather_profile(
+	profile: Dictionary,
+	transition_duration: float = 0.0
+) -> void:
+	var target_tint: Color = profile.get("tint", Color.WHITE)
+	var target_wind_count := int(profile.get("wind_count", 0))
+	if is_instance_valid(_weather_tween):
+		_weather_tween.kill()
+		_weather_tween = null
+	_battle_wind.call(
+		"set_weather_profile",
+		target_wind_count,
+		0.0,
+		transition_duration
+	)
+	if transition_duration <= 0.0:
+		_set_battle_tint(target_tint)
+		return
+	_weather_tween = create_tween()
+	_weather_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_weather_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_weather_tween.tween_method(
+		_set_battle_tint,
+		_background.modulate,
+		target_tint,
+		transition_duration
+	)
+	_weather_tween.finished.connect(_on_weather_tween_finished)
 
 
 ## Admite los diseños estándar singles y dobles. Las composiciones 3v1/4v1 se
@@ -117,13 +171,28 @@ func get_viewport_mount() -> Control:
 	return _viewport_mount
 
 
+func prepare_battlers(
+	player_data: PokemonBattleVisualData,
+	enemy_data: PokemonBattleVisualData
+) -> bool:
+	if not await prepare_enemy(enemy_data):
+		return false
+	return await prepare_player(player_data)
+
+
 func prepare_enemy(enemy_data: PokemonBattleVisualData) -> bool:
 	if enemy_data == null or enemy_data.battler_scene == null:
+		_enemy_ground_base.visible = false
+		_enemy_ground_shadow.visible = false
 		return false
 	hide_commands()
 	modulate.a = 0.0
 	_cry_player.stop()
 	_cry_player.stream = enemy_data.cry
+	_enemy_anchor.position = enemy_data.enemy_position
+	_enemy_anchor.rotation_degrees = enemy_data.enemy_rotation_degrees
+	_enemy_ground_base.visible = true
+	_enemy_ground_shadow.visible = true
 	if (
 		_enemy_data != null
 		and _enemy_data.asset_id == enemy_data.asset_id
@@ -138,14 +207,46 @@ func prepare_enemy(enemy_data: PokemonBattleVisualData) -> bool:
 	if battler == null:
 		push_warning("BattleScreen: la escena rival no es PokemonBattler3D.")
 		return false
-	_enemy_anchor.position = enemy_data.enemy_position
-	_enemy_anchor.rotation_degrees = enemy_data.enemy_rotation_degrees
 	_enemy_anchor.add_child(battler)
 	_enemy_battler = battler
 	_enemy_battler.scale = Vector3.ONE * enemy_data.enemy_scale
 	await get_tree().process_frame
 	_enemy_battler.play_idle()
 	await _fit_enemy_to_height(enemy_data)
+	return true
+
+
+func prepare_player(player_data: PokemonBattleVisualData) -> bool:
+	if player_data == null or player_data.battler_scene == null:
+		_player_ground_base.visible = false
+		_player_ground_shadow.visible = false
+		return false
+	_player_anchor.position = player_data.player_position
+	_player_anchor.rotation_degrees = player_data.player_rotation_degrees
+	_player_ground_base.visible = true
+	_player_ground_shadow.visible = true
+	if (
+		_player_data != null
+		and _player_data.asset_id == player_data.asset_id
+		and is_instance_valid(_player_battler)
+	):
+		_player_battler.play_idle()
+		return true
+
+	_clear_player_battler()
+	_player_data = player_data
+	var battler := player_data.battler_scene.instantiate() as PokemonBattler3D
+	if battler == null:
+		push_warning(
+			"BattleScreen: la escena del Pokémon entrenador no es PokemonBattler3D."
+		)
+		return false
+	_player_anchor.add_child(battler)
+	_player_battler = battler
+	_player_battler.scale = Vector3.ONE * player_data.player_scale
+	await get_tree().process_frame
+	_player_battler.play_idle()
+	await _fit_player_to_height(player_data)
 	return true
 
 
@@ -221,11 +322,19 @@ func hide_commands() -> void:
 
 
 func get_enemy_visual_height_px() -> float:
-	if not is_instance_valid(_enemy_battler):
+	return _get_battler_visual_height_px(_enemy_battler)
+
+
+func get_player_visual_height_px() -> float:
+	return _get_battler_visual_height_px(_player_battler)
+
+
+func _get_battler_visual_height_px(battler: PokemonBattler3D) -> float:
+	if not is_instance_valid(battler):
 		return 0.0
 	var minimum_y := INF
 	var maximum_y := -INF
-	for world_point in _enemy_battler.get_visual_world_points():
+	for world_point in battler.get_visual_world_points():
 		if _battle_camera.is_position_behind(world_point):
 			continue
 		var screen_point := _battle_camera.unproject_position(world_point)
@@ -278,9 +387,52 @@ func _emit_command(command_id: StringName) -> void:
 
 
 func _apply_background() -> void:
-	_fallback_background.color = fallback_background_color
+	if _fallback_background != null:
+		_fallback_background.color = fallback_background_color
 	_background_texture.texture = background_texture
 	_background_texture.visible = background_texture != null
+
+
+func _sync_ground_shadows() -> void:
+	_sync_ground_shadow(_player_ground_base, _player_ground_shadow)
+	_sync_ground_shadow(_enemy_ground_base, _enemy_ground_shadow)
+
+
+func _sync_ground_shadow(base: Control, shadow: Polygon2D) -> void:
+	shadow.rotation = 0.0
+	var radius := base.size * Vector2(
+		ground_shadow_width_ratio,
+		ground_shadow_height_ratio
+	) * 0.5
+	var points := PackedVector2Array()
+	const SEGMENT_COUNT := 32
+	points.resize(SEGMENT_COUNT)
+	for point_index in range(SEGMENT_COUNT):
+		var angle := TAU * float(point_index) / float(SEGMENT_COUNT)
+		points[point_index] = Vector2(
+			cos(angle) * radius.x,
+			sin(angle) * radius.y
+		)
+	shadow.polygon = points
+
+
+func _set_battle_tint(color: Color) -> void:
+	# El panel de comandos queda fuera de estos dos contenedores para conservar
+	# su contraste incluso durante la noche.
+	_background.modulate = color
+	_battle_stage.modulate = color
+
+
+func _sync_wind_activity() -> void:
+	var active := is_visible_in_tree()
+	_battle_wind.visible = active
+	_battle_wind.set_process(active)
+	if active:
+		_battle_wind.call("reset_camera_tracking")
+
+
+func _on_weather_tween_finished() -> void:
+	_weather_tween = null
 
 
 func _configure_battle_camera() -> void:
@@ -292,19 +444,43 @@ func _configure_battle_camera() -> void:
 
 
 func _fit_enemy_to_height(enemy_data: PokemonBattleVisualData) -> void:
+	await _fit_battler_to_height(
+		_enemy_battler,
+		enemy_data.enemy_max_height_px,
+		enemy_data.enemy_height_fill_ratio
+	)
+
+
+func _fit_player_to_height(player_data: PokemonBattleVisualData) -> void:
+	await _fit_battler_to_height(
+		_player_battler,
+		player_data.player_max_height_px,
+		player_data.player_height_fill_ratio
+	)
+
+
+func _fit_battler_to_height(
+	battler: PokemonBattler3D,
+	maximum_height: float,
+	height_fill_ratio: float
+) -> void:
 	await get_tree().process_frame
-	var current_height := get_enemy_visual_height_px()
+	var current_height := _get_battler_visual_height_px(battler)
 	if current_height <= 0.0:
 		return
-	var target_height := (
-		enemy_data.enemy_max_height_px
-		* enemy_data.enemy_height_fill_ratio
-	)
-	_enemy_battler.scale *= target_height / current_height
+	var target_height := maximum_height * height_fill_ratio
+	battler.scale *= target_height / current_height
 	await get_tree().process_frame
-	var fitted_height := get_enemy_visual_height_px()
-	if fitted_height > enemy_data.enemy_max_height_px:
-		_enemy_battler.scale *= enemy_data.enemy_max_height_px / fitted_height
+	var fitted_height := _get_battler_visual_height_px(battler)
+	if fitted_height > maximum_height:
+		battler.scale *= maximum_height / fitted_height
+
+
+func _clear_player_battler() -> void:
+	if is_instance_valid(_player_battler):
+		_player_battler.queue_free()
+	_player_battler = null
+	_player_data = null
 
 
 func _clear_enemy_battler() -> void:

@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://Resources/Materials/3D/Textures/Window Texture.png" id="1_texture"]
+
+[resource]
+resource_name = "Shared Window"
+cull_mode = 2
+roughness = 0.25
+albedo_texture = ExtResource("1_texture")

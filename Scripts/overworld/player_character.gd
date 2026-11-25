@@ -85,6 +85,11 @@ func _physics_process(delta: float) -> void:
 
 	if _is_stepping:
 		_advance_grid_step(delta)
+		# Un encuentro puede bloquear el movimiento desde grid_step_completed.
+		# No se debe iniciar otro paso con la tecla todavía presionada en ese frame.
+		if movement_locked:
+			_update_animation()
+			return
 
 	if not _is_stepping:
 		var input_direction := _consume_movement_direction()

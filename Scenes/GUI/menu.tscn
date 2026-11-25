@@ -42,6 +42,11 @@ font = ExtResource("3_kaxfg")
 font_size = 32
 font_color = Color(0.19, 0.19, 0.22, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_time_date"]
+font = ExtResource("3_kaxfg")
+font_size = 24
+font_color = Color(0.36, 0.36, 0.4, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBox_description"]
 content_margin_left = 24.0
 content_margin_top = 12.0
@@ -123,32 +128,32 @@ script = ExtResource("2_yk6lk")
 layout_mode = 1
 offset_left = 30.0
 offset_top = 28.0
-offset_right = 322.0
-offset_bottom = 88.0
+offset_right = 370.0
+offset_bottom = 112.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBox_time")
 
 [node name="TimeContent" type="Control" parent="TimePanel" unique_id=1927489272]
-custom_minimum_size = Vector2(292, 60)
+custom_minimum_size = Vector2(340, 84)
 layout_mode = 2
 mouse_filter = 2
 
 [node name="DarkAccent" type="Panel" parent="TimePanel/TimeContent" unique_id=1731347369]
 layout_mode = 0
 offset_right = 122.0
-offset_bottom = 60.0
+offset_bottom = 84.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBox_time_dark")
 
 [node name="DarkDiagonal" type="Polygon2D" parent="TimePanel/TimeContent" unique_id=1112410774]
 color = Color(0.270588, 0.270588, 0.282353, 1)
-polygon = PackedVector2Array(120, 0, 152, 0, 122, 60)
+polygon = PackedVector2Array(120, 0, 162, 0, 122, 84)
 
 [node name="TimeTitle" type="Label" parent="TimePanel/TimeContent" unique_id=191150637]
 layout_mode = 0
 offset_left = 12.0
 offset_right = 119.0
-offset_bottom = 60.0
+offset_bottom = 84.0
 text = "Tiempo"
 label_settings = SubResource("LabelSettings_time_title")
 horizontal_alignment = 1
@@ -156,11 +161,23 @@ vertical_alignment = 1
 
 [node name="TimeValue" type="Label" parent="TimePanel/TimeContent" unique_id=2098629098]
 layout_mode = 0
-offset_left = 155.0
-offset_right = 276.0
-offset_bottom = 60.0
-text = "0:00"
+offset_left = 160.0
+offset_top = 6.0
+offset_right = 332.0
+offset_bottom = 48.0
+text = "00:00:00"
 label_settings = SubResource("LabelSettings_time_value")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DateValue" type="Label" parent="TimePanel/TimeContent" unique_id=1790020001]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 46.0
+offset_right = 332.0
+offset_bottom = 78.0
+text = "25 de noviembre"
+label_settings = SubResource("LabelSettings_time_date")
 horizontal_alignment = 1
 vertical_alignment = 1
 

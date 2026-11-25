@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://Resources/Materials/3D/Textures/Dirt Ground Path.png" id="1_path"]
+
+[node name="DirtGroundPath" type="Decal"]
+size = Vector3(2, 1, 2)
+texture_albedo = ExtResource("1_path")
+upper_fade = 0.0
+lower_fade = 0.0
+normal_fade = 0.5
+cull_mask = 524288
+distance_fade_enabled = true
+distance_fade_begin = 80.0
+distance_fade_length = 20.0
+editor_description = "Camino con transparencia real. Proyecta hacia abajo y solo sobre la capa de render 20 (Ground Decals). Ajusta Size para el ancho/largo, y la posición Y para que su caja abarque el suelo. Duplica esta escena para añadir tramos; no uses este PNG en Textures de Terrain3D."

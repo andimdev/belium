@@ -12,3 +12,10 @@ extends Resource
 @export var enemy_position := Vector3.ZERO
 @export var enemy_rotation_degrees := Vector3.ZERO
 @export_range(0.01, 100.0, 0.01) var enemy_scale := 1.0
+
+@export_group("Trainer presentation")
+@export_range(1.0, 320.0, 1.0) var player_max_height_px := 260.0
+@export_range(0.1, 1.0, 0.01) var player_height_fill_ratio := 0.95
+@export var player_position := Vector3.ZERO
+@export var player_rotation_degrees := Vector3(0.0, 180.0, 0.0)
+@export_range(0.01, 100.0, 0.01) var player_scale := 1.0

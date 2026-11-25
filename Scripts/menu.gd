@@ -4,6 +4,13 @@ extends Control
 signal option_activated(option_id: StringName)
 signal close_requested
 
+const MONTH_NAMES: Array[String] = [
+	"enero", "febrero", "marzo", "abril", "mayo", "junio",
+	"julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+]
+
+## Tiempo jugado. Ya no se muestra en el panel de tiempo (ahora va la hora del
+## juego), pero se conserva por si otra pantalla lo necesita.
 @export_range(0.0, 359999.0, 1.0) var play_time_seconds := 0.0
 
 @onready var _menu_grid: GridContainer = $MenuCenter/MenuGrid
@@ -12,6 +19,7 @@ signal close_requested
 @onready var _description_icon: TextureRect = \
 	$DescriptionPanel/DescriptionContent/DescriptionIcon
 @onready var _time_value: Label = $TimePanel/TimeContent/TimeValue
+@onready var _date_value: Label = $TimePanel/TimeContent/DateValue
 @onready var _gui_click: AudioStreamPlayer = $GUI_Click
 
 var _options: Array[MainMenuOption] = []
@@ -20,7 +28,6 @@ var _selected_option: MainMenuOption
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	_update_time_label()
 	for child in _menu_grid.get_children():
 		if child is not MainMenuOption:
 			continue
@@ -36,7 +43,14 @@ func _ready() -> void:
 
 func set_play_time(total_seconds: float) -> void:
 	play_time_seconds = maxf(total_seconds, 0.0)
-	_update_time_label()
+
+
+## Muestra la hora del juego (HH:MM:SS) y debajo el día y el mes, sin el año.
+func set_game_clock(hour: int, minute: int, second: int, day: int, month: int) -> void:
+	if not is_instance_valid(_time_value) or not is_instance_valid(_date_value):
+		return
+	_time_value.text = "%02d:%02d:%02d" % [hour, minute, second]
+	_date_value.text = "%d de %s" % [day, MONTH_NAMES[clampi(month, 1, 12) - 1]]
 
 
 func focus_default_option() -> void:
@@ -83,12 +97,3 @@ func _on_option_activated(option_id: StringName) -> void:
 	_gui_click.play()
 	option_activated.emit(option_id)
 
-
-func _update_time_label() -> void:
-	if not is_instance_valid(_time_value):
-		return
-	var total_minutes := floori(play_time_seconds / 60.0)
-	var hours := total_minutes / 60
-	var minutes := total_minutes % 60
-	var seconds := floori(play_time_seconds) % 60
-	_time_value.text = "%02d:%02d:%02d" % [hours, minutes, seconds]

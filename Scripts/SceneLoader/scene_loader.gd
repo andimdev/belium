@@ -56,6 +56,12 @@ const INITIAL_SCENES: Dictionary = {
 		"transition": &"fade",
 		"threaded": true,
 	},
+	&"map3d_001_test": {
+		"path": "res://Maps/map3D_001_test.tscn",
+		"category": SceneCategory.MAP,
+		"transition": &"fade",
+		"threaded": true,
+	},
 }
 
 const DEFAULT_OPTIONS: Dictionary = {
