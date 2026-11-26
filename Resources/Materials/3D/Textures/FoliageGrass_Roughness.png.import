@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btka38mnrv3xj"
-path.bptc="res://.godot/imported/dirt_road.png-bfc3ef7a4559f07231e6d37c108feb8c.bptc.ctex"
+uid="uid://bif2c0d27c50k"
+path.s3tc="res://.godot/imported/FoliageGrass_Roughness.png-c4171218568678a8846ba4a6bbb3fff3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,13 +11,13 @@ metadata={
 
 [deps]
 
-source_file="res://Resources/Materials/3D/Textures/dirt_road.png"
-dest_files=["res://.godot/imported/dirt_road.png-bfc3ef7a4559f07231e6d37c108feb8c.bptc.ctex"]
+source_file="res://Resources/Materials/3D/Textures/FoliageGrass_Roughness.png"
+dest_files=["res://.godot/imported/FoliageGrass_Roughness.png-c4171218568678a8846ba4a6bbb3fff3.s3tc.ctex"]
 
 [params]
 
 compress/mode=2
-compress/high_quality=true
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
@@ -38,4 +38,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
