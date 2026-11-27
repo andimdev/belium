@@ -8,7 +8,7 @@ signal new_game_created(save_data: Dictionary)
 ## todavía no exista una partida. Por ahora debe permanecer desactivado.
 @export var auto_start_story_without_menu := false
 
-const DEFAULT_MAP_ID: StringName = &"map_001_leaftown_201_sandtown_202"
+const DEFAULT_MAP_ID: StringName = &"map_001_3d"
 const GUI_CLICK_ACTION_GRACE_SECONDS := 0.15
 
 @onready var continue_button: Button = $MenuCenter/Menu/ContinueButton
@@ -194,9 +194,12 @@ func _load_game_map(save_data: Dictionary) -> void:
 
 	var progress: Dictionary = save_data.get("progress", {})
 	var map_id := StringName(str(progress.get("current_map", "")))
-	if map_id.is_empty() or not bool(scene_loader.call("has_scene", map_id)):
-		map_id = DEFAULT_MAP_ID
 	var spawn_point := StringName(str(progress.get("spawn_point", "")))
+	if map_id.is_empty() or not bool(scene_loader.call("has_scene", map_id)):
+		# Partidas guardadas en un mapa que ya no está registrado (p. ej. el 2D):
+		# se cargan en el mapa por defecto y en su punto de aparición inicial.
+		map_id = DEFAULT_MAP_ID
+		spawn_point = &""
 
 	var loaded: Variant = await scene_loader.call("load_map", map_id, spawn_point, {
 		"save_data": save_data.duplicate(true),

@@ -1,0 +1,88 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://77cwrsctyhm7"
+path="res://.godot/imported/cabin_4.glb-420858364ab4835ad33ad083c46d4463.scn"
+
+[deps]
+
+source_file="res://Resources/Materials/3D/Models/Buildings/Leaftown/cabin_4.glb"
+dest_files=["res://.godot/imported/cabin_4.glb-420858364ab4835ad33ad083c46d4463.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"Door Mat": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Resources/Materials/3D/Shared/Materials/door.tres",
+"use_external/path": "res://Resources/Materials/3D/Shared/Materials/door.tres"
+},
+"House Base Mat": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Resources/Materials/3D/Shared/Materials/house_base.tres",
+"use_external/path": "res://Resources/Materials/3D/Shared/Materials/house_base.tres"
+},
+"Inside Floor Mat": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Resources/Materials/3D/Shared/Materials/inside_floor.tres",
+"use_external/path": "res://Resources/Materials/3D/Shared/Materials/inside_floor.tres"
+},
+"Log Wall Mat": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Resources/Materials/3D/Shared/Materials/log_wall.tres",
+"use_external/path": "res://Resources/Materials/3D/Shared/Materials/log_wall.tres"
+},
+"Plank Mat": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Resources/Materials/3D/Shared/Materials/plank.tres",
+"use_external/path": "res://Resources/Materials/3D/Shared/Materials/plank.tres"
+},
+"Top House Mat": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Resources/Materials/3D/Shared/Materials/top_house.tres",
+"use_external/path": "res://Resources/Materials/3D/Shared/Materials/top_house.tres"
+},
+"Window Glow Mat": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Resources/Materials/3D/Shared/Materials/window_glow.tres",
+"use_external/path": "res://Resources/Materials/3D/Shared/Materials/window_glow.tres"
+},
+"Window Mat": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://Resources/Materials/3D/Shared/Materials/window.tres",
+"use_external/path": "res://Resources/Materials/3D/Shared/Materials/window.tres"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=0
+gltf/texture_map_mode=1

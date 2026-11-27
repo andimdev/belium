@@ -156,4 +156,3 @@ func _finish(completed: bool) -> void:
 	_current_choices.clear()
 	_current_effects_committed = false
 	conversation_finished.emit(finished_id, completed)
-

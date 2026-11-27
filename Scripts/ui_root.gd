@@ -33,9 +33,6 @@ const BATTLE_WEATHER_TRANSITION_DURATION := 5.0
 @onready var _location_label: Label = \
 	$Interface/TooltipPlace/TooltipPanel/ContentMargin/Label
 @onready var _menu: OverworldMenu = $Interface/Menu
-@onready var _battle_screen: BattleScreen = $Interface/BattleScreen
-@onready var _battle_transition_overlay: BattleTransitionOverlay = \
-	$Interface/BattleTransitionOverlay
 @onready var _dialogue_runner: DialogueRunner = $DialogueRunner
 
 var _environment: Node
@@ -68,11 +65,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_location_tooltip.visible = false
 	_menu.visible = false
-	_battle_screen.visible = false
-	_battle_transition_overlay.reset()
 	_menu.close_requested.connect(_close_menu)
 	_menu.option_activated.connect(_on_menu_option_activated)
-	_battle_screen.command_selected.connect(_on_battle_command_selected)
 	_dialogue_runner.conversation_finished.connect(_on_conversation_finished)
 	_dialogue_runner.effects_requested.connect(_on_dialogue_effects_requested)
 	_save_manager = get_node_or_null("/root/SaveManager")
@@ -125,43 +119,15 @@ func is_battle_mode_active() -> bool:
 	return _interface_mode == InterfaceMode.BATTLE
 
 
-func get_battle_screen() -> BattleScreen:
-	return _battle_screen
-
-
-func get_battle_transition_overlay() -> BattleTransitionOverlay:
-	return _battle_transition_overlay
-
-
 ## Presenta el control 2D para batallas estándar. Un lado admite uno o dos
 ## Pokémon; los diseños 3v1/4v1 se definirán cuando sus reglas estén cerradas.
 func show_battle_screen(
 	player_slots: int = 1,
 	enemy_slots: int = 1
 ) -> bool:
-	if not _battle_screen.configure_slot_counts(player_slots, enemy_slots):
-		return false
 	if not enter_battle_mode():
 		return false
-	_battle_screen.visible = true
 	return true
-
-
-func hide_battle_screen() -> void:
-	if is_instance_valid(_battle_screen):
-		_battle_screen.visible = false
-	exit_battle_mode()
-
-
-func set_battle_background(texture: Texture2D) -> void:
-	_battle_screen.set_background_texture(texture)
-
-
-func set_battle_command_enabled(
-	command_id: StringName,
-	enabled: bool
-) -> void:
-	_battle_screen.set_command_enabled(command_id, enabled)
 
 
 ## Entra en el estado modal de batalla sin crear todavía la presentación de
@@ -232,10 +198,6 @@ func enter_battle_mode() -> bool:
 ## aviso de ubicación visible, vuelve a reproducirlo desde el inicio.
 ## Es seguro llamar a este método más de una vez.
 func exit_battle_mode() -> void:
-	if is_instance_valid(_battle_screen):
-		_battle_screen.visible = false
-	if is_instance_valid(_battle_transition_overlay):
-		_battle_transition_overlay.reset()
 	_leave_battle_mode(true, true)
 
 
@@ -547,9 +509,6 @@ func _on_world_weather_changed(
 	profile: Dictionary
 ) -> void:
 	var duration := 0.0
-	if is_battle_mode_active() and _battle_screen.visible:
-		duration = BATTLE_WEATHER_TRANSITION_DURATION
-	_battle_screen.apply_weather_profile(profile, duration)
 
 
 func _sync_battle_weather(transition_duration: float = 0.0) -> void:
@@ -563,9 +522,6 @@ func _sync_battle_weather(transition_duration: float = 0.0) -> void:
 	var profile: Dictionary = _world_environment_manager.call(
 		"get_current_weather_profile"
 	)
-	if profile.is_empty():
-		return
-	_battle_screen.apply_weather_profile(profile, transition_duration)
 
 
 func _set_map_music_ducked(ducked: bool) -> void:

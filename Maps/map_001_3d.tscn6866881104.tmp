@@ -1,0 +1,1702 @@
+[gd_scene format=3 uid="uid://bta33td2o5s1o"]
+
+[ext_resource type="Texture2D" uid="uid://bx5poxitmx1au" path="res://Maps/map_001_3d_data/grass_ground.tres" id="1_e5mtw"]
+[ext_resource type="PackedScene" uid="uid://b7ent4uu3xmte" path="res://Resources/Materials/3D/Models/Vegetation/tall_grass.glb" id="1_gufa7"]
+[ext_resource type="PackedScene" uid="uid://y7r4j1npoxr5" path="res://Resources/Materials/3D/Models/Buildings/Leaftown/cabin_1.glb" id="1_ouc1k"]
+[ext_resource type="Shader" uid="uid://cvd0x7lon1ur6" path="res://addons/sky_3d/shaders/SkyMaterial.gdshader" id="1_wjhn8"]
+[ext_resource type="Texture2D" uid="uid://cfqk60lpl5ljv" path="res://addons/sky_3d/assets/resources/SNoise.tres" id="2_7p1g2"]
+[ext_resource type="Texture2D" uid="uid://1t8i8gg5kwmp" path="res://Maps/map_001_3d_data/dirt_ground.tres" id="2_mtjmn"]
+[ext_resource type="Texture2D" uid="uid://cecwdqjol0ckd" path="res://addons/sky_3d/assets/textures/noiseClouds.png" id="3_d408n"]
+[ext_resource type="Texture2D" uid="uid://2r8ylu6rg5dp" path="res://addons/sky_3d/assets/thirdparty/textures/moon/MoonMap.png" id="4_e5mtw"]
+[ext_resource type="Texture2D" uid="uid://djpfuyxkryegn" path="res://addons/sky_3d/assets/textures/noise.jpg" id="5_mtjmn"]
+[ext_resource type="Texture2D" uid="uid://bm7dot7t7u1q4" path="res://addons/sky_3d/assets/thirdparty/textures/milkyway/StarField.jpg" id="6_7yt3t"]
+[ext_resource type="Texture2D" uid="uid://c1vwcdcdvb74a" path="res://addons/sky_3d/assets/thirdparty/textures/milkyway/Milkyway.jpg" id="7_40paa"]
+[ext_resource type="Script" uid="uid://deo0gxkmk2ahd" path="res://addons/sky_3d/src/Sky3D.gd" id="8_cv4p5"]
+[ext_resource type="Script" uid="uid://b4tkplvh7fq40" path="res://addons/sky_3d/src/SkyDome.gd" id="9_p1eac"]
+[ext_resource type="Script" uid="uid://cjmkcj8hwm7ts" path="res://addons/sky_3d/src/TimeOfDay.gd" id="10_xs85h"]
+[ext_resource type="PackedScene" uid="uid://77cwrsctyhm7" path="res://Resources/Materials/3D/Models/Buildings/Leaftown/cabin_4.glb" id="15_40paa"]
+[ext_resource type="PackedScene" uid="uid://dgue8dvflqkeh" path="res://Scenes/Character/cynthia_player_3d.tscn" id="17_7yt3t"]
+[ext_resource type="Script" uid="uid://ch5scaylxqajq" path="res://Scripts/Overworld/fixed_follow_camera_3d.gd" id="18_40paa"]
+[ext_resource type="PackedScene" uid="uid://bfnvydaqi61kq" path="res://Resources/Materials/3D/Models/Props/mailbox.glb" id="20_p1eac"]
+[ext_resource type="PackedScene" uid="uid://bxvu45k6lga0d" path="res://Scenes/ui_root.tscn" id="21_xs85h"]
+[ext_resource type="Material" uid="uid://21twgde4hnvy" path="res://Resources/Materials/3D/Shared/Materials/water_pond.tres" id="22_1uhyg"]
+[ext_resource type="PackedScene" uid="uid://xk4phqkh3h5r" path="res://Resources/Materials/3D/Models/Vegetation/tree_1.glb" id="22_dybxd"]
+[ext_resource type="PackedScene" uid="uid://d0uk644cgymtg" path="res://Resources/Materials/3D/Models/Props/leaftown_pond.glb" id="22_jr2ik"]
+[ext_resource type="PackedScene" uid="uid://0oyjx8xqnal4" path="res://Resources/Pokemon/3D/pm0376/pm0376.glb" id="24_do0q7"]
+[ext_resource type="PackedScene" uid="uid://d3cb8y4wv0qjn" path="res://Resources/Pokemon/3D/pm0445/pm0445.glb" id="25_dv1rp"]
+[ext_resource type="Texture2D" uid="uid://bblkrg5ce6r1d" path="res://Resources/Materials/3D/Textures/dirt_road_leaftown.png" id="30_dirt_road_leaftown"]
+[ext_resource type="Script" uid="uid://ixi2vpntv678" path="res://Scripts/Overworld/door_entrance.gd" id="31_door_entrance"]
+[ext_resource type="Texture2D" uid="uid://bawxnhabxe5n4" path="res://Resources/Materials/3D/Textures/FoliageGrass_albedo_height.png" id="32_fg_albedo"]
+[ext_resource type="Texture2D" uid="uid://cwrypmqdxx4op" path="res://Resources/Materials/3D/Textures/FoliageGrass_normal_roughness.png" id="33_fg_normal"]
+[ext_resource type="Texture2D" uid="uid://ps6p57vxmr1k" path="res://Maps/map_001_3d_data/flat_normal_256.png" id="34_flat_normal_256"]
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_21bym"]
+_shader_parameters = {
+&"bias_distance": null,
+&"blend_sharpness": null,
+&"depth_blur": null,
+&"distant_normal_scale": null,
+&"flat_terrain_normals": null,
+&"general_uniforms": null,
+&"ground_level": null,
+&"mipmap_bias": null,
+&"mipmaps": null,
+&"private": null,
+&"region_blend": null
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8hht0"]
+cull_mode = 2
+vertex_color_use_as_albedo = true
+roughness = 0.8
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_do0q7"]
+name = "tall_grass"
+scene_file = ExtResource("1_gufa7")
+density = 10.0
+material_override = SubResource("StandardMaterial3D_8hht0")
+last_lod = 3
+last_shadow_lod = 3
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_0oe1h"]
+name = "FoliageGrass_albedo_height"
+albedo_texture = ExtResource("32_fg_albedo")
+normal_texture = ExtResource("33_fg_normal")
+uv_scale = 1.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_k213q"]
+name = "Dirt Ground"
+id = 1
+albedo_texture = ExtResource("2_mtjmn")
+normal_texture = ExtResource("34_flat_normal_256")
+uv_scale = 0.25
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_xs85h"]
+name = "Grass Ground"
+id = 2
+albedo_texture = ExtResource("1_e5mtw")
+normal_texture = ExtResource("34_flat_normal_256")
+
+[sub_resource type="Terrain3DAssets" id="Terrain3DAssets_fw3xl"]
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_do0q7")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_0oe1h"), SubResource("Terrain3DTextureAsset_k213q"), SubResource("Terrain3DTextureAsset_xs85h")])
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k213q"]
+shader = ExtResource("1_wjhn8")
+shader_parameter/sky_visible = true
+shader_parameter/color_correction = Vector2(0, 3)
+shader_parameter/ground_color = Color(0.3, 0.3, 0.3, 1)
+shader_parameter/horizon_offset = 0.0
+shader_parameter/atm_darkness = 0.5
+shader_parameter/atm_sun_intensity = 18.0
+shader_parameter/atm_day_tint = Color(0.807843, 0.909804, 1, 1)
+shader_parameter/atm_horizon_light_tint = Color(0.980392, 0.635294, 0.462745, 1)
+shader_parameter/atm_night_tint = Color(0.168627, 0.2, 0.25098, 1)
+shader_parameter/atm_level_params = Vector3(1, 0, 0)
+shader_parameter/atm_thickness = 0.7
+shader_parameter/atm_beta_ray = Vector3(5.804544e-06, 1.3562913e-05, 3.311258e-05)
+shader_parameter/atm_beta_mie = Vector3(3.038e-08, 3.038e-08, 3.038e-08)
+shader_parameter/sun_light_color = Color(0.98, 0.523, 0.294, 1)
+shader_parameter/sun_disk_color = Color(0.996094, 0.541334, 0.140076, 1)
+shader_parameter/sun_disk_intensity = 30.0
+shader_parameter/sun_disk_size = 0.02
+shader_parameter/atm_sun_mie_tint = Color(1, 1, 1, 1)
+shader_parameter/atm_sun_mie_intensity = 1.0
+shader_parameter/atm_sun_partial_mie_phase = Vector3(0.36, 1.64, 1.6)
+shader_parameter/moon_color = Color(1, 1, 1, 1)
+shader_parameter/moon_texture = ExtResource("4_e5mtw")
+shader_parameter/moon_texture_alignment = Vector3(7, 1.4, 4.8)
+shader_parameter/moon_texture_flip_u = false
+shader_parameter/moon_texture_flip_v = false
+shader_parameter/moon_size = 0.07
+shader_parameter/atm_moon_mie_tint = Color(0.137255, 0.184314, 0.292196, 1)
+shader_parameter/atm_moon_mie_intensity = 0.20243558561429378
+shader_parameter/atm_moon_partial_mie_phase = Vector3(0.36, 1.64, 1.6)
+shader_parameter/starmap_color = Color(0.709804, 0.709804, 0.709804, 0.854902)
+shader_parameter/starmap_texture = ExtResource("7_40paa")
+shader_parameter/starmap_flip_u = false
+shader_parameter/starmap_flip_v = false
+shader_parameter/starmap_alignment = Vector3(2.68288, -0.25891, 0.40101)
+shader_parameter/star_rotation_offset = 9.38899
+shader_parameter/star_rotation = -13.654432734418737
+shader_parameter/star_tilt = -1.2915436464758039
+shader_parameter/star_field_color = Color(1, 1, 1, 1)
+shader_parameter/star_field_texture = ExtResource("6_7yt3t")
+shader_parameter/star_scintillation = 0.75
+shader_parameter/star_scintillation_speed = 0.01
+shader_parameter/noise_tex = ExtResource("5_mtjmn")
+shader_parameter/clouds_night_color = Color(0.090196, 0.094118, 0.129412, 1)
+shader_parameter/cirrus_visible = true
+shader_parameter/cirrus_intensity = 2.0
+shader_parameter/cirrus_coverage = 0.5
+shader_parameter/cirrus_thickness = 1.7
+shader_parameter/cirrus_absorption = 2.0
+shader_parameter/cirrus_sky_tint_fade = 0.5
+shader_parameter/cirrus_size = 1.0
+shader_parameter/cirrus_uv = Vector2(0.16, 0.11)
+shader_parameter/cirrus_position1 = Vector2(0.5579866, 0.5579866)
+shader_parameter/cirrus_position2 = Vector2(0.5579866, 0.5579866)
+shader_parameter/cirrus_texture = ExtResource("2_7p1g2")
+shader_parameter/cumulus_visible = true
+shader_parameter/cumulus_intensity = 0.6
+shader_parameter/cumulus_coverage = 0.55
+shader_parameter/cumulus_thickness = 0.0243
+shader_parameter/cumulus_absorption = 2.0
+shader_parameter/cumulus_noise_freq = 2.7
+shader_parameter/cumulus_sky_tint_fade = 0.0
+shader_parameter/cumulus_size = 0.5
+shader_parameter/cumulus_position = Vector2(7.789198, 7.789198)
+shader_parameter/cumulus_texture = ExtResource("3_d408n")
+shader_parameter/cumulus_partial_mie_phase = Vector3(0.957564, 1.042436, 0.412)
+shader_parameter/cumulus_mie_intensity = 1.0
+shader_parameter/show_azimuthal_grid = false
+shader_parameter/azimuthal_grid_color = Color(0.87058824, 0.72156864, 0.5294118, 1)
+shader_parameter/azimuthal_grid_rotation_offset = 0.03
+shader_parameter/show_equatorial_grid = false
+shader_parameter/equatorial_grid_color = Color(0, 0.75, 1, 1)
+shader_parameter/equatorial_grid_rotation_offset = 0.03
+shader_parameter/moon_matrix = Basis(-0.26259488, -0.92752725, -0.26596418, -0.053094678, 0.2891095, -0.95582247, 0.96344423, -0.23687279, -0.12516545)
+
+[sub_resource type="Sky" id="Sky_do0q7"]
+sky_material = SubResource("ShaderMaterial_k213q")
+
+[sub_resource type="Environment" id="Environment_dv1rp"]
+background_mode = 2
+sky = SubResource("Sky_do0q7")
+ambient_light_source = 3
+ambient_light_color = Color(0.23515604, 0.27890667, 0.35, 1)
+ambient_light_sky_contribution = 0.7
+reflected_light_source = 2
+tonemap_mode = 3
+tonemap_white = 6.0
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_0oe1h"]
+
+[sub_resource type="GDScript" id="GDScript_1uhyg"]
+script/source = "extends Node
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_door_lucas"]
+size = Vector3(1, 1.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_door_barry"]
+size = Vector3(1, 1.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_door_house1"]
+size = Vector3(1, 1.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_door_house2"]
+size = Vector3(1, 1.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fw3xl"]
+albedo_color = Color(0.2, 0.5019608, 0.8, 1)
+roughness = 0.3
+uv1_triplanar_sharpness = 0.99999934
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ktss0"]
+material = SubResource("StandardMaterial3D_fw3xl")
+size = Vector2(15, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0fjio"]
+size = Vector3(4.2440753, 4.947998, 5.1495876)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ktss0"]
+size = Vector3(4.2313766, 5.451721, 5.1309657)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fw3xl"]
+size = Vector3(1.0046387, 2.383667, 0.74975586)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pp8w2"]
+size = Vector3(70.87352, 5.5555725, 21.302742)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cfwot"]
+size = Vector3(6.6250305, 5.5360107, 18.124931)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eoamy"]
+size = Vector3(27.352165, 5.5460587, 14.756989)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2x3sq"]
+size = Vector3(21.87555, 5.529602, 13.98777)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cminx"]
+size = Vector3(71.12112, 5.4120026, 20.87497)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mi0gk"]
+size = Vector3(6.3706665, 5.5863647, 18.239235)
+
+[node name="Map001_3D" type="Node3D" unique_id=1091201349]
+
+[node name="Terrain" type="Terrain3D" parent="." unique_id=35102209]
+data_directory = "res://Maps/map_001_3d_data"
+material = SubResource("Terrain3DMaterial_21bym")
+assets = SubResource("Terrain3DAssets_fw3xl")
+collision_mode = 4
+render_layers = 2148007937
+displacement_sharpness = 0.5
+top_level = true
+metadata/_edit_lock_ = true
+
+[node name="Sky" type="WorldEnvironment" parent="." unique_id=927744019]
+environment = SubResource("Environment_dv1rp")
+camera_attributes = SubResource("CameraAttributesPractical_0oe1h")
+script = ExtResource("8_cv4p5")
+current_time = 23.23433333332725
+update_interval = 0.064
+skydome_energy = 3.0
+wind_direction = 2.35619451204804
+metadata/_custom_type_script = "uid://deo0gxkmk2ahd"
+
+[node name="SunLight" type="DirectionalLight3D" parent="Sky" unique_id=915098441]
+transform = Transform3D(0.74471766, -0.66079843, -0.09349329, 0, 0.14009011, -0.99013877, 0.6673796, 0.7373738, 0.10432759, -0.09349329, -0.99013877, 0.10432759)
+light_color = Color(0.98, 0.523, 0.294, 1)
+light_energy = 0.0
+
+[node name="MoonLight" type="DirectionalLight3D" parent="Sky" unique_id=1170852975]
+transform = Transform3D(0, -0.26790878, 0.9634443, -0.46719423, -0.85183376, -0.23687282, 0.8841547, -0.45011562, -0.12516545, 0.9634443, -0.23687282, -0.12516545)
+light_color = Color(0.572549, 0.776471, 0.956863, 1)
+light_energy = 0.0
+
+[node name="SkyDome" type="Node" parent="Sky" unique_id=407247249]
+script = ExtResource("9_p1eac")
+exposure = 3.0
+sun_azimuth = -3.8722773
+sun_altitude = -3.0010402
+moon_azimuth = -1.4416053
+moon_altitude = -1.8099421
+fog_density = 0.01
+fog_rayleigh_depth = 0.0934091
+wind_direction = 2.35619451204804
+
+[node name="TimeOfDay" type="Node" parent="Sky" unique_id=1957572454]
+script = ExtResource("10_xs85h")
+dome_path = NodePath("../SkyDome")
+update_interval = 0.064
+current_time = 23.23433333332725
+month = 12
+year = 2026
+
+[node name="World" type="Node" parent="." unique_id=508036353]
+
+[node name="Leaftown" type="Node" parent="World" unique_id=34155144]
+
+[node name="Buildings" type="Node3D" parent="World/Leaftown" unique_id=1241258499]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="Leaftown" type="Node3D" parent="World/Leaftown/Buildings" unique_id=1698774918]
+
+[node name="lucas_dawn_house" parent="World/Leaftown/Buildings/Leaftown" unique_id=1500983968 instance=ExtResource("1_ouc1k")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.25, 0.001, 18.354)
+script = SubResource("GDScript_1uhyg")
+
+[node name="barry_house" parent="World/Leaftown/Buildings/Leaftown" unique_id=1052920641 instance=ExtResource("1_ouc1k")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 16.237, 0.001, -4.646)
+
+[node name="house_1" parent="World/Leaftown/Buildings/Leaftown" unique_id=1530485638 instance=ExtResource("15_40paa")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.238, 0.001, -4.649)
+
+[node name="house_2" parent="World/Leaftown/Buildings/Leaftown" unique_id=2046462042 instance=ExtResource("15_40paa")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 16.248, 0.001, 18.36)
+
+[node name="Doors" type="Node3D" parent="World/Leaftown" unique_id=1790010001]
+editor_description = "Puertas de las cabañas. Cada DoorEntrance (Area3D) tiene una caja hija sobre la baldosa frente a su puerta: esa caja es el disparador. Anima Door_Open/Door_Close de su casa."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="Leaftown" type="Node3D" parent="World/Leaftown/Doors" unique_id=1406485167]
+
+[node name="DoorLucasDawnHouse" type="Area3D" parent="World/Leaftown/Doors/Leaftown" unique_id=1790010002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 18)
+monitoring = false
+monitorable = false
+script = ExtResource("31_door_entrance")
+house_path = NodePath("../../../Buildings/Leaftown/lucas_dawn_house")
+player_path = NodePath("../../../../../CynthiaPlayer3D")
+
+[node name="Trigger" type="CollisionShape3D" parent="World/Leaftown/Doors/Leaftown/DoorLucasDawnHouse" unique_id=1790010012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_door_lucas")
+
+[node name="DoorBarryHouse" type="Area3D" parent="World/Leaftown/Doors/Leaftown" unique_id=1790010003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -5)
+monitoring = false
+monitorable = false
+script = ExtResource("31_door_entrance")
+house_path = NodePath("../../../Buildings/Leaftown/barry_house")
+player_path = NodePath("../../../../../CynthiaPlayer3D")
+
+[node name="Trigger" type="CollisionShape3D" parent="World/Leaftown/Doors/Leaftown/DoorBarryHouse" unique_id=1790010013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_door_barry")
+
+[node name="DoorHouse1" type="Area3D" parent="World/Leaftown/Doors/Leaftown" unique_id=1790010004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -5)
+monitoring = false
+monitorable = false
+script = ExtResource("31_door_entrance")
+house_path = NodePath("../../../Buildings/Leaftown/house_1")
+player_path = NodePath("../../../../../CynthiaPlayer3D")
+
+[node name="Trigger" type="CollisionShape3D" parent="World/Leaftown/Doors/Leaftown/DoorHouse1" unique_id=1790010014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_door_house1")
+
+[node name="DoorHouse2" type="Area3D" parent="World/Leaftown/Doors/Leaftown" unique_id=1790010005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 18)
+monitoring = false
+monitorable = false
+script = ExtResource("31_door_entrance")
+house_path = NodePath("../../../Buildings/Leaftown/house_2")
+player_path = NodePath("../../../../../CynthiaPlayer3D")
+
+[node name="Trigger" type="CollisionShape3D" parent="World/Leaftown/Doors/Leaftown/DoorHouse2" unique_id=1790010015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_door_house2")
+
+[node name="Lights" type="Node3D" parent="World/Leaftown" unique_id=714613925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="Leaftown" type="Node3D" parent="World/Leaftown/Lights" unique_id=519377035]
+
+[node name="LucasDawnHouseLights" type="Node3D" parent="World/Leaftown/Lights/Leaftown" unique_id=597365330]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28450584, 0, 0)
+
+[node name="Light1" type="SpotLight3D" parent="World/Leaftown/Lights/Leaftown/LucasDawnHouseLights" unique_id=1103187659]
+transform = Transform3D(-4.371139e-08, -0.5, 0.8660254, 0, 0.8660254, 0.5, -1, 2.1855694e-08, -3.7855173e-08, 1.9038773, 2.5325327, 18.883919)
+light_color = Color(1, 0.76862746, 0.48235294, 1)
+light_energy = 0.583
+light_indirect_energy = 1.139
+light_volumetric_fog_energy = 2.53
+light_size = 0.13
+light_specular = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_transmittance_bias = -3.011
+shadow_opacity = 0.36
+shadow_blur = 10.0
+spot_range = 4.0372243
+spot_attenuation = -3.0
+spot_angle = 63.94818
+spot_angle_attenuation = 3.8637445
+
+[node name="Light2" type="SpotLight3D" parent="World/Leaftown/Lights/Leaftown/LucasDawnHouseLights" unique_id=1679434944]
+transform = Transform3D(-4.371139e-08, -0.5, 0.8660254, 0, 0.8660254, 0.5, -1, 2.1855694e-08, -3.7855173e-08, 1.8998926, 2.5325327, 18.986742)
+light_color = Color(1, 0.76862746, 0.48235294, 1)
+light_energy = 0.583
+light_indirect_energy = 1.139
+light_volumetric_fog_energy = 2.53
+light_size = 0.13
+light_specular = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_transmittance_bias = -3.011
+shadow_opacity = 0.36
+shadow_blur = 10.0
+spot_range = 4.101523
+spot_attenuation = -3.0
+spot_angle = 68.3046
+spot_angle_attenuation = 3.8637445
+
+[node name="BarryHouseLights" type="Node3D" parent="World/Leaftown/Lights/Leaftown" unique_id=326244483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.573013, 0, -22.899502)
+
+[node name="Light1" type="SpotLight3D" parent="World/Leaftown/Lights/Leaftown/BarryHouseLights" unique_id=516345384]
+transform = Transform3D(-4.371139e-08, -0.5, 0.8660254, 0, 0.8660254, 0.5, -1, 2.1855694e-08, -3.7855173e-08, 1.9038773, 2.5325327, 18.883919)
+light_color = Color(1, 0.76862746, 0.48235294, 1)
+light_energy = 0.583
+light_indirect_energy = 1.139
+light_volumetric_fog_energy = 2.53
+light_size = 0.13
+light_specular = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_transmittance_bias = -3.011
+shadow_opacity = 0.36
+shadow_blur = 10.0
+spot_range = 4.0372243
+spot_attenuation = -3.0
+spot_angle = 63.94818
+spot_angle_attenuation = 3.8637445
+
+[node name="Light2" type="SpotLight3D" parent="World/Leaftown/Lights/Leaftown/BarryHouseLights" unique_id=1180474959]
+transform = Transform3D(-4.371139e-08, -0.5, 0.8660254, 0, 0.8660254, 0.5, -1, 2.1855694e-08, -3.7855173e-08, 1.8998926, 2.5325327, 18.986742)
+light_color = Color(1, 0.76862746, 0.48235294, 1)
+light_energy = 0.583
+light_indirect_energy = 1.139
+light_volumetric_fog_energy = 2.53
+light_size = 0.13
+light_specular = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_transmittance_bias = -3.011
+shadow_opacity = 0.36
+shadow_blur = 10.0
+spot_range = 4.101523
+spot_attenuation = -3.0
+spot_angle = 68.3046
+spot_angle_attenuation = 3.8637445
+
+[node name="House1Lights" type="Node3D" parent="World/Leaftown/Lights/Leaftown" unique_id=1433323864]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28897, 0, -22.899502)
+
+[node name="Light1" type="SpotLight3D" parent="World/Leaftown/Lights/Leaftown/House1Lights" unique_id=257592975]
+transform = Transform3D(-4.371139e-08, -0.5, 0.8660254, 0, 0.8660254, 0.5, -1, 2.1855694e-08, -3.7855173e-08, 1.9038773, 2.5325327, 18.883919)
+light_color = Color(1, 0.76862746, 0.48235294, 1)
+light_energy = 0.583
+light_indirect_energy = 1.139
+light_volumetric_fog_energy = 2.53
+light_size = 0.13
+light_specular = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_transmittance_bias = -3.011
+shadow_opacity = 0.36
+shadow_blur = 10.0
+spot_range = 4.0372243
+spot_attenuation = -3.0
+spot_angle = 63.94818
+spot_angle_attenuation = 3.8637445
+
+[node name="Light2" type="SpotLight3D" parent="World/Leaftown/Lights/Leaftown/House1Lights" unique_id=1749427486]
+transform = Transform3D(-4.371139e-08, -0.5, 0.8660254, 0, 0.8660254, 0.5, -1, 2.1855694e-08, -3.7855173e-08, 1.8998926, 2.5325327, 18.986742)
+light_color = Color(1, 0.76862746, 0.48235294, 1)
+light_energy = 0.583
+light_indirect_energy = 1.139
+light_volumetric_fog_energy = 2.53
+light_size = 0.13
+light_specular = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_transmittance_bias = -3.011
+shadow_opacity = 0.36
+shadow_blur = 10.0
+spot_range = 4.101523
+spot_attenuation = -3.0
+spot_angle = 68.3046
+spot_angle_attenuation = 3.8637445
+
+[node name="House2Lights" type="Node3D" parent="World/Leaftown/Lights/Leaftown" unique_id=1985957915]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.619531, 0, 0.23004723)
+
+[node name="Light1" type="SpotLight3D" parent="World/Leaftown/Lights/Leaftown/House2Lights" unique_id=1003545025]
+transform = Transform3D(-4.371139e-08, -0.5, 0.8660254, 0, 0.8660254, 0.5, -1, 2.1855694e-08, -3.7855173e-08, 1.9038773, 2.5325327, 18.883919)
+light_color = Color(1, 0.76862746, 0.48235294, 1)
+light_energy = 0.583
+light_indirect_energy = 1.139
+light_volumetric_fog_energy = 2.53
+light_size = 0.13
+light_specular = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_transmittance_bias = -3.011
+shadow_opacity = 0.36
+shadow_blur = 10.0
+spot_range = 4.0372243
+spot_attenuation = -3.0
+spot_angle = 63.94818
+spot_angle_attenuation = 3.8637445
+
+[node name="Light2" type="SpotLight3D" parent="World/Leaftown/Lights/Leaftown/House2Lights" unique_id=153547209]
+transform = Transform3D(-4.371139e-08, -0.5, 0.8660254, 0, 0.8660254, 0.5, -1, 2.1855694e-08, -3.7855173e-08, 1.8998926, 2.5325327, 18.986742)
+light_color = Color(1, 0.76862746, 0.48235294, 1)
+light_energy = 0.583
+light_indirect_energy = 1.139
+light_volumetric_fog_energy = 2.53
+light_size = 0.13
+light_specular = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_transmittance_bias = -3.011
+shadow_opacity = 0.36
+shadow_blur = 10.0
+spot_range = 4.101523
+spot_attenuation = -3.0
+spot_angle = 68.3046
+spot_angle_attenuation = 3.8637445
+
+[node name="Props" type="Node3D" parent="World/Leaftown" unique_id=2123468436]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="Leaftown" type="Node3D" parent="World/Leaftown/Props" unique_id=1634647996]
+
+[node name="MailboxLucasDawnHouse" parent="World/Leaftown/Props/Leaftown" unique_id=776600561 instance=ExtResource("20_p1eac")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.12759048, 0, 16.0033)
+
+[node name="MailboxBarryHouse" parent="World/Leaftown/Props/Leaftown" unique_id=653379467 instance=ExtResource("20_p1eac")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 15.480745, 0, -0.9959683)
+
+[node name="leaftown_pond" parent="World/Leaftown/Props/Leaftown" unique_id=1383447032 instance=ExtResource("22_jr2ik")]
+transform = Transform3D(-3.934025e-08, 0, 0.9, 0, 0.9, 0, -0.9, 0, -3.934025e-08, -13.138, 0.01, 7.323)
+
+[node name="LeaftownPondWater" type="MeshInstance3D" parent="World/Leaftown/Props/Leaftown" unique_id=1174079520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.174087, -0.18436241, 7.1280975)
+material_override = ExtResource("22_1uhyg")
+mesh = SubResource("PlaneMesh_ktss0")
+
+[node name="Vegetation" type="Node3D" parent="World/Leaftown" unique_id=215969076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="Leaftown" type="Node3D" parent="World/Leaftown/Vegetation" unique_id=1193261199]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 0, 0)
+
+[node name="Trees" type="Node3D" parent="World/Leaftown/Vegetation/Leaftown" unique_id=2048364735]
+
+[node name="tree_1" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2093318151 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4362501, 0.059722424, -12.076869)
+script = SubResource("GDScript_1uhyg")
+
+[node name="tree_2" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=509884762 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4362501, 0.059722424, -14.6330385)
+
+[node name="tree_3" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=823316733 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1903639, 0.059722424, -12.076869)
+
+[node name="tree_4" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1917788613 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1903639, 0.059722424, -14.6330385)
+
+[node name="tree_5" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1369394721 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9052355, 0.059722424, -12.076869)
+
+[node name="tree_6" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1485745298 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9052355, 0.059722424, -14.6330385)
+
+[node name="tree_7" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=161610441 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.531849, 0.059722424, -12.076869)
+
+[node name="tree_8" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1973296441 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.531849, 0.059722424, -14.6330385)
+
+[node name="tree_9" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1433114086 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9052355, 0.059722424, -17.54187)
+
+[node name="tree_10" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1630315627 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9052355, 0.059722424, -20.098042)
+
+[node name="tree_11" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=664547376 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.531849, 0.059722424, -17.54187)
+
+[node name="tree_12" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=904791548 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.531849, 0.059722424, -20.098042)
+
+[node name="tree_13" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1068142355 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3346244, 0.059722424, -17.54187)
+
+[node name="tree_14" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=393242933 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3346244, 0.059722424, -20.098042)
+
+[node name="tree_15" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=602988843 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.291989, 0.059722424, -17.54187)
+
+[node name="tree_16" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1198798916 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.291989, 0.059722424, -20.098042)
+
+[node name="tree_17" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=414787326 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9052355, 0.059722424, -23.005413)
+
+[node name="tree_18" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1811661621 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9052355, 0.059722424, -25.561583)
+
+[node name="tree_19" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1108330227 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.531849, 0.059722424, -23.005413)
+
+[node name="tree_20" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=594182437 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.531849, 0.059722424, -25.561583)
+
+[node name="tree_21" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1273530081 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3346244, 0.059722424, -23.005413)
+
+[node name="tree_22" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1011671375 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3346244, 0.059722424, -25.561583)
+
+[node name="tree_23" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=755291122 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.291989, 0.059722424, -23.005413)
+
+[node name="tree_24" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1578180148 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.291989, 0.059722424, -25.561583)
+
+[node name="tree_25" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=180141802 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.391357, 0.059722424, -12.076869)
+
+[node name="tree_26" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1804872776 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.391357, 0.059722424, -14.6330385)
+
+[node name="tree_27" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1801324697 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.01797, 0.059722424, -12.076869)
+
+[node name="tree_28" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=593149056 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.01797, 0.059722424, -14.6330385)
+
+[node name="tree_29" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=439534852 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -12.076869)
+
+[node name="tree_30" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=770291402 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -14.6330385)
+
+[node name="tree_31" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=10912281 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -12.076869)
+
+[node name="tree_32" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1825867643 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -14.6330385)
+
+[node name="tree_33" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1177262004 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -17.54187)
+
+[node name="tree_34" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=451839144 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -20.098042)
+
+[node name="tree_35" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1112010557 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -17.54187)
+
+[node name="tree_36" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1229381692 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -20.098042)
+
+[node name="tree_73" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1643989846 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -1.2320827)
+
+[node name="tree_74" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1721802113 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -3.7882519)
+
+[node name="tree_75" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1698229162 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -1.2320827)
+
+[node name="tree_76" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=867295210 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -3.7882519)
+
+[node name="tree_77" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1343199325 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -6.6970835)
+
+[node name="tree_78" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=543027700 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -9.253255)
+
+[node name="tree_79" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1979156892 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -6.6970835)
+
+[node name="tree_80" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1291298799 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -9.253255)
+
+[node name="tree_81" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=630793671 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -1.2320827)
+
+[node name="tree_82" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=604828213 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -3.7882519)
+
+[node name="tree_83" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1144069758 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -1.2320827)
+
+[node name="tree_84" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=219135842 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -3.7882519)
+
+[node name="tree_85" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=244998388 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -6.6970835)
+
+[node name="tree_86" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1144309588 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -9.253255)
+
+[node name="tree_87" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1352635654 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -6.6970835)
+
+[node name="tree_88" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=42833120 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -9.253255)
+
+[node name="tree_89" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1157336154 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -12.052948)
+
+[node name="tree_90" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=182772017 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -14.609118)
+
+[node name="tree_91" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=360012378 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -12.052948)
+
+[node name="tree_92" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1595416510 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -14.609118)
+
+[node name="tree_93" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=995538625 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -17.517948)
+
+[node name="tree_94" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=765320028 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -20.074121)
+
+[node name="tree_95" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1627888730 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -17.517948)
+
+[node name="tree_96" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=213954792 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -20.074121)
+
+[node name="tree_97" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=598803056 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -1.2388897)
+
+[node name="tree_98" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1656923734 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -3.7950604)
+
+[node name="tree_99" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2043844639 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -1.2388897)
+
+[node name="tree_100" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=578062361 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -3.7950604)
+
+[node name="tree_101" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=79629749 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -6.7038903)
+
+[node name="tree_102" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2015239456 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -9.260063)
+
+[node name="tree_103" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=619622005 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -6.7038903)
+
+[node name="tree_104" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1978160495 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -9.260063)
+
+[node name="tree_113" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=777554560 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, 9.619072)
+
+[node name="tree_114" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=196023389 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, 7.062904)
+
+[node name="tree_115" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1054642832 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, 9.619072)
+
+[node name="tree_116" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=202256499 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, 7.062904)
+
+[node name="tree_117" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1748156611 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, 4.1540723)
+
+[node name="tree_118" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1729720335 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, 1.5979011)
+
+[node name="tree_119" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1293423325 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, 4.1540723)
+
+[node name="tree_120" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=778202638 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, 1.5979011)
+
+[node name="tree_121" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2061582291 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, 9.619072)
+
+[node name="tree_122" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=775797803 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, 7.062904)
+
+[node name="tree_123" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=433875899 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, 9.619072)
+
+[node name="tree_124" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1981607872 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, 7.062904)
+
+[node name="tree_125" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1928723034 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, 4.1540723)
+
+[node name="tree_126" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=997214516 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, 1.5979011)
+
+[node name="tree_139" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2115791852 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.355866, 0.059722424, -1.2320827)
+
+[node name="tree_140" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=161432193 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.355866, 0.059722424, -3.7882519)
+
+[node name="tree_143" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1050215121 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.355866, 0.059722424, -6.6970835)
+
+[node name="tree_144" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=895000238 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.355866, 0.059722424, -9.253255)
+
+[node name="tree_145" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=786872735 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.066301, 0.059722424, -1.2320827)
+
+[node name="tree_146" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=371543336 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.066301, 0.059722424, -3.7882519)
+
+[node name="tree_147" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=588217459 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.066301, 0.059722424, -6.6970835)
+
+[node name="tree_148" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=78961539 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.066301, 0.059722424, -9.253255)
+
+[node name="tree_127" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=992588451 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, 4.1540723)
+
+[node name="tree_128" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=355480833 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, 1.5979011)
+
+[node name="tree_129" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1984277936 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, 9.612266)
+
+[node name="tree_130" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1638747654 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, 7.0560956)
+
+[node name="tree_131" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=379103927 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, 9.612266)
+
+[node name="tree_132" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=975063791 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, 7.0560956)
+
+[node name="tree_133" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=4486231 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, 4.1472654)
+
+[node name="tree_134" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1399706134 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, 1.5910927)
+
+[node name="tree_135" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1797429457 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, 4.1472654)
+
+[node name="tree_136" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1867934967 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, 1.5910927)
+
+[node name="tree_137" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=150062138 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, 20.642673)
+
+[node name="tree_138" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1624199572 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, 17.756485)
+
+[node name="tree_141" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=481704171 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, 20.642673)
+
+[node name="tree_142" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1714858040 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, 17.756485)
+
+[node name="tree_149" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=925818630 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, 14.941223)
+
+[node name="tree_150" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=810531586 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, 12.385052)
+
+[node name="tree_151" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1098333145 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, 14.941223)
+
+[node name="tree_152" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=524732445 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, 12.385052)
+
+[node name="tree_169" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=412097951 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.376593, 0.059722424, 20.642673)
+
+[node name="tree_170" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1328173676 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.376593, 0.059722424, 17.756485)
+
+[node name="tree_171" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1030676167 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.003205, 0.059722424, 20.642673)
+
+[node name="tree_172" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=761655968 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.003205, 0.059722424, 17.756485)
+
+[node name="tree_173" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=612746595 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.376593, 0.059722424, 14.941223)
+
+[node name="tree_174" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=241458740 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.376593, 0.059722424, 12.385052)
+
+[node name="tree_175" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1885915352 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.003205, 0.059722424, 14.941223)
+
+[node name="tree_176" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1068187358 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.003205, 0.059722424, 12.385052)
+
+[node name="tree_153" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=9249758 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, 20.642673)
+
+[node name="tree_154" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=484609825 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, 17.756485)
+
+[node name="tree_155" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1436800988 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, 20.642673)
+
+[node name="tree_156" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1371407994 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, 17.756485)
+
+[node name="tree_157" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2021908854 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, 14.941223)
+
+[node name="tree_158" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=784824129 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, 12.385052)
+
+[node name="tree_159" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1879022680 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, 14.941223)
+
+[node name="tree_160" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2030984963 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, 12.385052)
+
+[node name="tree_161" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1119309116 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, 20.635864)
+
+[node name="tree_162" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=952154295 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, 17.749676)
+
+[node name="tree_163" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1754399068 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, 20.635864)
+
+[node name="tree_164" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1147550624 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, 17.749676)
+
+[node name="tree_165" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=424656318 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, 14.934416)
+
+[node name="tree_166" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=52908984 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, 12.3782425)
+
+[node name="tree_167" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=784343558 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, 14.934416)
+
+[node name="tree_168" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=543035180 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, 12.3782425)
+
+[node name="tree_105" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=979211637 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -12.109638)
+
+[node name="tree_106" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=779267387 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -14.66581)
+
+[node name="tree_107" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1888694304 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -12.109638)
+
+[node name="tree_108" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2056068653 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -14.66581)
+
+[node name="tree_109" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1842768088 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -17.574638)
+
+[node name="tree_110" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=847350096 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -20.13081)
+
+[node name="tree_111" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=247154435 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -17.574638)
+
+[node name="tree_112" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1498133525 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -20.13081)
+
+[node name="tree_273" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1842824509 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -23.029547)
+
+[node name="tree_274" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=570221417 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.06989, 0.059722424, -25.58572)
+
+[node name="tree_275" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1113742371 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -23.029547)
+
+[node name="tree_276" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=681123134 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6965, 0.059722424, -25.58572)
+
+[node name="tree_277" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=190510908 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -23.086235)
+
+[node name="tree_278" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1767525456 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.549004, 0.059722424, -25.642406)
+
+[node name="tree_279" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=799470305 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -23.086235)
+
+[node name="tree_280" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=406700359 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.17561, 0.059722424, -25.642406)
+
+[node name="tree_37" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1650404299 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.492981, 0.059722424, -17.54187)
+
+[node name="tree_38" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=689002086 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.492981, 0.059722424, -20.098042)
+
+[node name="tree_39" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1603998319 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1195965, 0.059722424, -17.54187)
+
+[node name="tree_40" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1079768328 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1195965, 0.059722424, -20.098042)
+
+[node name="tree_41" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=732385929 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -23.005413)
+
+[node name="tree_42" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=774650709 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.732842, 0.059722424, -25.561583)
+
+[node name="tree_43" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1797776184 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -23.005413)
+
+[node name="tree_44" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=229109553 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.359455, 0.059722424, -25.561583)
+
+[node name="tree_45" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=359307440 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.492981, 0.059722424, -23.005413)
+
+[node name="tree_46" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=27178134 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.492981, 0.059722424, -25.561583)
+
+[node name="tree_47" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1053888157 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1195965, 0.059722424, -23.005413)
+
+[node name="tree_48" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=927655948 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1195965, 0.059722424, -25.561583)
+
+[node name="tree_49" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=931204738 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.011448, 0.059722424, -12.076869)
+
+[node name="tree_50" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1037580226 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.011448, 0.059722424, -14.6330385)
+
+[node name="tree_51" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=224186848 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.384834, 0.059722424, -12.076869)
+
+[node name="tree_52" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=233786456 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.384834, 0.059722424, -14.6330385)
+
+[node name="tree_53" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=593181822 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, -12.076869)
+
+[node name="tree_54" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2089954236 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, -14.6330385)
+
+[node name="tree_55" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1311117401 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, -12.076869)
+
+[node name="tree_56" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=232582060 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, -14.6330385)
+
+[node name="tree_57" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1325435793 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, -17.54187)
+
+[node name="tree_58" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1697860652 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, -20.098042)
+
+[node name="tree_59" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=230537740 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, -17.54187)
+
+[node name="tree_60" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=274216629 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, -20.098042)
+
+[node name="tree_61" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1401008339 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.909825, 0.059722424, -17.54187)
+
+[node name="tree_62" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1523058000 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.909825, 0.059722424, -20.098042)
+
+[node name="tree_63" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=957958922 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.283209, 0.059722424, -17.54187)
+
+[node name="tree_64" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1453065657 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.283209, 0.059722424, -20.098042)
+
+[node name="tree_65" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=416005563 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, -23.005413)
+
+[node name="tree_66" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=440723454 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, -25.561583)
+
+[node name="tree_67" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1369241539 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, -23.005413)
+
+[node name="tree_68" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=964088315 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, -25.561583)
+
+[node name="tree_69" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=142549932 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.909825, 0.059722424, -23.005413)
+
+[node name="tree_70" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=701462457 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.909825, 0.059722424, -25.561583)
+
+[node name="tree_71" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1895961263 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.283209, 0.059722424, -23.005413)
+
+[node name="tree_72" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2049664284 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.283209, 0.059722424, -25.561583)
+
+[node name="tree_299" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2001662687 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.411617, 0.059722424, -12.076869)
+
+[node name="tree_300" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=602993179 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.411617, 0.059722424, -14.6330385)
+
+[node name="tree_301" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=586894000 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7850065, 0.059722424, -12.076869)
+
+[node name="tree_302" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=901550279 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7850065, 0.059722424, -14.6330385)
+
+[node name="tree_303" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2070975112 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.309998, 0.059722424, -17.54187)
+
+[node name="tree_304" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=440521992 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.309998, 0.059722424, -20.098042)
+
+[node name="tree_305" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1437063920 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.68338, 0.059722424, -17.54187)
+
+[node name="tree_306" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1061886212 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.68338, 0.059722424, -20.098042)
+
+[node name="tree_307" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=243304581 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.309998, 0.059722424, -23.005413)
+
+[node name="tree_308" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=954897849 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.309998, 0.059722424, -25.561583)
+
+[node name="tree_309" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=472984209 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.68338, 0.059722424, -23.005413)
+
+[node name="tree_310" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=267427580 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.68338, 0.059722424, -25.561583)
+
+[node name="tree_335" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=48524124 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.792141, 0.059722424, -12.076869)
+
+[node name="tree_336" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=58083144 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.792141, 0.059722424, -14.6330385)
+
+[node name="tree_337" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1197009140 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165527, 0.059722424, -12.076869)
+
+[node name="tree_338" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=97632906 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165527, 0.059722424, -14.6330385)
+
+[node name="tree_339" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1474127759 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, -17.54187)
+
+[node name="tree_340" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2026701136 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, -20.098042)
+
+[node name="tree_341" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1324725275 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, -17.54187)
+
+[node name="tree_342" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=767757303 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, -20.098042)
+
+[node name="tree_343" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1747059221 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, -23.005413)
+
+[node name="tree_344" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1738251724 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, -25.561583)
+
+[node name="tree_345" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=601825802 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, -23.005413)
+
+[node name="tree_346" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=663079873 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, -25.561583)
+
+[node name="tree_347" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1894207499 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.792141, 0.059722424, 36.913757)
+
+[node name="tree_348" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1414062309 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.792141, 0.059722424, 34.35759)
+
+[node name="tree_349" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=920938626 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165527, 0.059722424, 36.913757)
+
+[node name="tree_350" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2080684834 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165527, 0.059722424, 34.35759)
+
+[node name="tree_351" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=252202206 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, 31.448761)
+
+[node name="tree_352" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=744320574 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, 28.892588)
+
+[node name="tree_353" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1843809247 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, 31.448761)
+
+[node name="tree_354" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1857344865 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, 28.892588)
+
+[node name="tree_355" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1497241361 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, 25.985216)
+
+[node name="tree_356" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=654664566 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, 23.429047)
+
+[node name="tree_357" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=141018779 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, 25.985216)
+
+[node name="tree_358" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2087879007 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, 23.429047)
+
+[node name="tree_359" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=761776206 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.792141, 0.059722424, 20.75019)
+
+[node name="tree_360" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1792136014 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.792141, 0.059722424, 18.194021)
+
+[node name="tree_361" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1721383382 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165527, 0.059722424, 20.75019)
+
+[node name="tree_362" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1409128766 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165527, 0.059722424, 18.194021)
+
+[node name="tree_363" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1246826455 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, 15.285196)
+
+[node name="tree_364" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1723965130 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, 12.729023)
+
+[node name="tree_365" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=179840215 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, 15.285196)
+
+[node name="tree_366" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=623969563 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, 12.729023)
+
+[node name="tree_377" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=699098333 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, 10.115413)
+
+[node name="tree_378" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1372949474 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, 10.115413)
+
+[node name="tree_367" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=356458741 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.792141, 0.059722424, -1.4442852)
+
+[node name="tree_368" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1811234951 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.792141, 0.059722424, -4.0004535)
+
+[node name="tree_369" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=20143033 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165527, 0.059722424, -1.4442852)
+
+[node name="tree_375" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1285688533 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.792141, 0.059722424, 1.3984071)
+
+[node name="tree_376" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1262862450 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165527, 0.059722424, 1.3984071)
+
+[node name="tree_370" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=53953584 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.165527, 0.059722424, -4.0004535)
+
+[node name="tree_371" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1174568144 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, -6.9092793)
+
+[node name="tree_372" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1420639288 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.69052, 0.059722424, -9.465452)
+
+[node name="tree_373" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1040382180 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, -6.9092793)
+
+[node name="tree_374" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1306975131 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0639, 0.059722424, -9.465452)
+
+[node name="tree_225" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1857872002 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4362501, 0.059722424, 37.08308)
+
+[node name="tree_226" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=642201575 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4362501, 0.059722424, 34.52691)
+
+[node name="tree_227" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1146377286 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1903639, 0.059722424, 37.08308)
+
+[node name="tree_228" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=836236712 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1903639, 0.059722424, 34.52691)
+
+[node name="tree_229" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2096442677 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3346244, 0.059722424, 31.61808)
+
+[node name="tree_230" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1452008719 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3346244, 0.059722424, 29.06191)
+
+[node name="tree_231" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=100645344 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.291989, 0.059722424, 31.61808)
+
+[node name="tree_232" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1945752140 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.291989, 0.059722424, 29.06191)
+
+[node name="tree_233" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=626253744 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3346244, 0.059722424, 26.154535)
+
+[node name="tree_234" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=297460835 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3346244, 0.059722424, 23.59837)
+
+[node name="tree_235" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=516662628 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.291989, 0.059722424, 26.154535)
+
+[node name="tree_236" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1126617059 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.291989, 0.059722424, 23.59837)
+
+[node name="tree_237" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=136955113 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.011448, 0.059722424, 37.08308)
+
+[node name="tree_238" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=314639635 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.011448, 0.059722424, 34.52691)
+
+[node name="tree_239" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=197377051 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.384834, 0.059722424, 37.08308)
+
+[node name="tree_240" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=482960830 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.384834, 0.059722424, 34.52691)
+
+[node name="tree_241" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=875566162 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, 37.08308)
+
+[node name="tree_242" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=493627836 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, 34.52691)
+
+[node name="tree_243" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1339067359 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, 37.08308)
+
+[node name="tree_244" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1951455179 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, 34.52691)
+
+[node name="tree_245" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1668993086 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, 31.61808)
+
+[node name="tree_246" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=218040954 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, 29.06191)
+
+[node name="tree_247" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=230206225 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, 31.61808)
+
+[node name="tree_248" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1477011777 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, 29.06191)
+
+[node name="tree_249" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1070961795 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.909825, 0.059722424, 31.61808)
+
+[node name="tree_250" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=230289879 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.909825, 0.059722424, 29.06191)
+
+[node name="tree_251" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=279444784 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.283209, 0.059722424, 31.61808)
+
+[node name="tree_252" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=364649760 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.283209, 0.059722424, 29.06191)
+
+[node name="tree_253" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1628864147 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, 26.154535)
+
+[node name="tree_254" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=81417488 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.669964, 0.059722424, 23.59837)
+
+[node name="tree_255" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1740974223 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, 26.154535)
+
+[node name="tree_256" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=770713493 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.043351, 0.059722424, 23.59837)
+
+[node name="tree_257" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1131565721 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.909825, 0.059722424, 26.154535)
+
+[node name="tree_258" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1660924557 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.909825, 0.059722424, 23.59837)
+
+[node name="tree_259" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1272803040 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.283209, 0.059722424, 26.154535)
+
+[node name="tree_260" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1966047605 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.283209, 0.059722424, 23.59837)
+
+[node name="tree_323" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1832163765 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.411617, 0.059722424, 37.08308)
+
+[node name="tree_324" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1558954977 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.411617, 0.059722424, 34.52691)
+
+[node name="tree_325" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=362596216 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7850065, 0.059722424, 37.08308)
+
+[node name="tree_326" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1783347850 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.7850065, 0.059722424, 34.52691)
+
+[node name="tree_327" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1767800804 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.309998, 0.059722424, 31.61808)
+
+[node name="tree_328" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1931383574 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.309998, 0.059722424, 29.06191)
+
+[node name="tree_329" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1021760011 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.68338, 0.059722424, 31.61808)
+
+[node name="tree_330" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=124531950 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.68338, 0.059722424, 29.06191)
+
+[node name="tree_331" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1591599866 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.309998, 0.059722424, 26.154535)
+
+[node name="tree_332" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1433417982 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.309998, 0.059722424, 23.59837)
+
+[node name="tree_333" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=930202571 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.68338, 0.059722424, 26.154535)
+
+[node name="tree_334" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=553301438 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.68338, 0.059722424, 23.59837)
+
+[node name="tree_177" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=761101389 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.716671, 0.059722424, 37.061287)
+
+[node name="tree_178" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1550870869 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.716671, 0.059722424, 34.50512)
+
+[node name="tree_179" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=906619366 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.343287, 0.059722424, 37.061287)
+
+[node name="tree_180" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1029771540 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.343287, 0.059722424, 34.50512)
+
+[node name="tree_181" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1751726007 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.05816, 0.059722424, 37.061287)
+
+[node name="tree_182" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=524781415 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.05816, 0.059722424, 34.50512)
+
+[node name="tree_183" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=437936380 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.684772, 0.059722424, 37.061287)
+
+[node name="tree_184" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1076949788 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.684772, 0.059722424, 34.50512)
+
+[node name="tree_185" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1749818745 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.05816, 0.059722424, 31.596287)
+
+[node name="tree_186" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=453311394 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.05816, 0.059722424, 29.040117)
+
+[node name="tree_187" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1267128615 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.684772, 0.059722424, 31.596287)
+
+[node name="tree_188" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=347933865 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.684772, 0.059722424, 29.040117)
+
+[node name="tree_189" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=221544024 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.818295, 0.059722424, 31.596287)
+
+[node name="tree_190" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1148656789 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.818295, 0.059722424, 29.040117)
+
+[node name="tree_191" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=673771422 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.44491, 0.059722424, 31.596287)
+
+[node name="tree_192" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=563950244 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.44491, 0.059722424, 29.040117)
+
+[node name="tree_193" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1321813759 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.05816, 0.059722424, 26.132746)
+
+[node name="tree_194" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1376674594 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.05816, 0.059722424, 23.576576)
+
+[node name="tree_195" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=511275666 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.684772, 0.059722424, 26.132746)
+
+[node name="tree_196" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=533036000 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.684772, 0.059722424, 23.576576)
+
+[node name="tree_197" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1583473776 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.818295, 0.059722424, 26.132746)
+
+[node name="tree_198" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1907317925 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.818295, 0.059722424, 23.576576)
+
+[node name="tree_199" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1837261160 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.44491, 0.059722424, 26.132746)
+
+[node name="tree_200" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1335135917 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.44491, 0.059722424, 23.576576)
+
+[node name="tree_201" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=902607944 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.141474, 0.059722424, 37.061287)
+
+[node name="tree_202" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1830709527 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.141474, 0.059722424, 34.50512)
+
+[node name="tree_203" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1586186837 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.76809, 0.059722424, 37.061287)
+
+[node name="tree_204" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=86962331 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.76809, 0.059722424, 34.50512)
+
+[node name="tree_205" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=539216749 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.482962, 0.059722424, 37.061287)
+
+[node name="tree_206" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1081161196 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.482962, 0.059722424, 34.50512)
+
+[node name="tree_207" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=303368639 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.10957, 0.059722424, 37.061287)
+
+[node name="tree_208" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1624048861 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.10957, 0.059722424, 34.50512)
+
+[node name="tree_209" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1206012542 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.482962, 0.059722424, 31.596287)
+
+[node name="tree_210" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1262037691 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.482962, 0.059722424, 29.040117)
+
+[node name="tree_211" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1519468835 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.10957, 0.059722424, 31.596287)
+
+[node name="tree_212" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=959336297 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.10957, 0.059722424, 29.040117)
+
+[node name="tree_213" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=605352160 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.243097, 0.059722424, 31.596287)
+
+[node name="tree_214" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=237129952 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.243097, 0.059722424, 29.040117)
+
+[node name="tree_215" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=380345709 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.869714, 0.059722424, 31.596287)
+
+[node name="tree_216" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=989882960 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.869714, 0.059722424, 29.040117)
+
+[node name="tree_217" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=123834341 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.482962, 0.059722424, 26.132746)
+
+[node name="tree_218" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=2054831317 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.482962, 0.059722424, 23.576576)
+
+[node name="tree_219" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=92434902 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.10957, 0.059722424, 26.132746)
+
+[node name="tree_220" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=968301542 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.10957, 0.059722424, 23.576576)
+
+[node name="tree_221" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1968564099 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.243097, 0.059722424, 26.132746)
+
+[node name="tree_222" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1771576680 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.243097, 0.059722424, 23.576576)
+
+[node name="tree_223" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=936562573 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.869714, 0.059722424, 26.132746)
+
+[node name="tree_224" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1840841767 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.869714, 0.059722424, 23.576576)
+
+[node name="tree_311" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1303922089 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7413065, 0.059722424, 37.061287)
+
+[node name="tree_312" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=430367816 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7413065, 0.059722424, 34.50512)
+
+[node name="tree_313" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1118306652 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3679166, 0.059722424, 37.061287)
+
+[node name="tree_314" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=289995843 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3679166, 0.059722424, 34.50512)
+
+[node name="tree_315" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=383657815 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.842926, 0.059722424, 31.596287)
+
+[node name="tree_316" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1243296992 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.842926, 0.059722424, 29.040117)
+
+[node name="tree_317" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=194853671 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469542, 0.059722424, 31.596287)
+
+[node name="tree_318" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1529975144 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469542, 0.059722424, 29.040117)
+
+[node name="tree_319" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=52149529 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.842926, 0.059722424, 26.132746)
+
+[node name="tree_320" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1054881637 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.842926, 0.059722424, 23.576576)
+
+[node name="tree_321" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=602525570 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469542, 0.059722424, 26.132746)
+
+[node name="tree_322" parent="World/Leaftown/Vegetation/Leaftown/Trees" unique_id=1692219668 instance=ExtResource("22_dybxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469542, 0.059722424, 23.576576)
+
+[node name="Roads" type="Node3D" parent="World/Leaftown" unique_id=270606621]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="Leaftown" type="Node3D" parent="World/Leaftown/Roads" unique_id=130642637]
+
+[node name="DirtRoad" type="Decal" parent="World/Leaftown/Roads/Leaftown" unique_id=1947263815]
+editor_description = "Camino de tierra de Leaftown: los 156 decales combinados en una sola textura (dirt_road_leaftown.png). El borde exterior oscuro esta horneado en la textura. Proyecta hacia abajo solo sobre la capa de render 20 (Ground Decals)."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4898257, 0, 7.9204874)
+size = Vector3(24.845583, 1, 31.53736)
+texture_albedo = ExtResource("30_dirt_road_leaftown")
+normal_fade = 0.5
+upper_fade = 0.0
+lower_fade = 0.0
+distance_fade_enabled = true
+distance_fade_begin = 80.0
+distance_fade_length = 20.0
+cull_mask = 524288
+
+[node name="Collisions" type="Node3D" parent="World/Leaftown" unique_id=815120717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="LeafTown" type="StaticBody3D" parent="World/Leaftown/Collisions" unique_id=290906796]
+
+[node name="CollisionLucasDawnHouse" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=2051198431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1333206, 2.3476634, 19.02941)
+shape = SubResource("BoxShape3D_0fjio")
+
+[node name="CollisionBarryHouse" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=1190599623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.118593, 2.3476634, -3.9823809)
+shape = SubResource("BoxShape3D_0fjio")
+
+[node name="CollisionHouse1" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=720525994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0928192, 2.2258606, -3.9834986)
+shape = SubResource("BoxShape3D_ktss0")
+
+[node name="CollisionHouse2" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=2146247204]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.104826, 2.2258606, 19.03809)
+shape = SubResource("BoxShape3D_ktss0")
+
+[node name="CollisionMailboxLucasDawn" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=1151791197]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11047363, 0.6918335, 16.060474)
+shape = SubResource("BoxShape3D_fw3xl")
+
+[node name="CollisionMailboxBarry" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=551673618]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.438185, 0.6918335, -1.0427728)
+shape = SubResource("BoxShape3D_fw3xl")
+
+[node name="TreesRegionA1" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=142232630]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5647278, 2.2777863, -24.923195)
+shape = SubResource("BoxShape3D_pp8w2")
+
+[node name="TreesRegionA2" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=1384625868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.1362, 2.2680054, -5.186245)
+shape = SubResource("BoxShape3D_cfwot")
+
+[node name="TreesRegionB1" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=2084571865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.560757, 2.2730293, -6.8784943)
+shape = SubResource("BoxShape3D_eoamy")
+
+[node name="TreesRegionB2" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=1178516842]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.079323, 2.264801, 7.489952)
+shape = SubResource("BoxShape3D_2x3sq")
+
+[node name="TreesRegionB3" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=1669730989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.32949, 2.0543594, 21.89429)
+shape = SubResource("BoxShape3D_eoamy")
+
+[node name="TreesRegionC1" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=868393154]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4683113, 2.2060013, 39.754566)
+shape = SubResource("BoxShape3D_cminx")
+
+[node name="TreesRegionC2" type="CollisionShape3D" parent="World/Leaftown/Collisions/LeafTown" unique_id=2089442110]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.149956, 2.2931824, 20.261646)
+shape = SubResource("BoxShape3D_mi0gk")
+
+[node name="CynthiaPlayer3D" parent="." unique_id=1820316947 instance=ExtResource("17_7yt3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.965, 10, -4.426)
+camera_path = NodePath("../CameraRig/Camera3D")
+terrain_path = NodePath("../Terrain")
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=1594532556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+script = ExtResource("18_40paa")
+target_path = NodePath("../CynthiaPlayer3D")
+metadata/map_north = Vector3(1, 0, 0)
+metadata/map_south = Vector3(-1, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=808269373]
+transform = Transform3D(0, 0.7071068, -0.7071068, 0, 0.7071068, 0.7071068, 1, 0, 0, -12, 12, 0)
+current = true
+fov = 42.0
+near = 0.1
+far = 256.0
+
+[node name="UIRoot" parent="." unique_id=1155229013 instance=ExtResource("21_xs85h")]
+location_enter_duration = null
+location_visible_duration = null
+location_exit_duration = null
+location_screen_margin = null
+time_of_day_path = null
+
+[node name="pm0376_00_00_20461_rangeattack02_loop_gfbanm" parent="." unique_id=112137372 instance=ExtResource("24_do0q7")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -0.961, 10.001, 10.343)
+
+[node name="pm0445" parent="." unique_id=1302230184 instance=ExtResource("25_dv1rp")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -1.769, 10.001, 5.583)

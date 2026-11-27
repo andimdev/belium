@@ -1,18 +1,16 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bxvu45k6lga0d"]
 
 [ext_resource type="Script" uid="uid://d2pxnuhi2bycy" path="res://Scripts/ui_root.gd" id="1_ui_root"]
 [ext_resource type="PackedScene" uid="uid://djo16uxu3441q" path="res://Scenes/GUI/tooltip_place.tscn" id="2_tooltip"]
 [ext_resource type="PackedScene" uid="uid://d0v4eoglrorwr" path="res://Scenes/GUI/menu.tscn" id="3_menu"]
 [ext_resource type="PackedScene" uid="uid://c2iuxyxklkjmg" path="res://Scenes/GUI/dialogue_panel.tscn" id="4_dialogue_panel"]
-[ext_resource type="Script" path="res://Scripts/Dialogue/dialogue_runner.gd" id="5_dialogue_runner"]
-[ext_resource type="PackedScene" path="res://Scenes/GUI/battle_screen.tscn" id="6_battle_screen"]
-[ext_resource type="Script" path="res://Scripts/Battle/battle_transition_overlay.gd" id="7_transition"]
+[ext_resource type="Script" uid="uid://cuj25uy2ksn2i" path="res://Scripts/Dialogue/dialogue_runner.gd" id="5_dialogue_runner"]
 
-[node name="UIRoot" type="CanvasLayer"]
+[node name="UIRoot" type="CanvasLayer" unique_id=1595116367]
 layer = 100
 script = ExtResource("1_ui_root")
 
-[node name="Interface" type="Control" parent="."]
+[node name="Interface" type="Control" parent="." unique_id=184517254]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,38 +19,21 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TooltipPlace" parent="Interface" instance=ExtResource("2_tooltip")]
+[node name="TooltipPlace" parent="Interface" unique_id=890572983 instance=ExtResource("2_tooltip")]
 layout_mode = 0
 offset_left = 25.0
 offset_top = -112.0
 offset_right = 401.0
 offset_bottom = -12.0
 
-[node name="Menu" parent="Interface" instance=ExtResource("3_menu")]
+[node name="Menu" parent="Interface" unique_id=62728553 instance=ExtResource("3_menu")]
 visible = false
 layout_mode = 1
 
-[node name="DialoguePanel" parent="Interface" instance=ExtResource("4_dialogue_panel")]
+[node name="DialoguePanel" parent="Interface" unique_id=1122173239 instance=ExtResource("4_dialogue_panel")]
 visible = false
 layout_mode = 1
 
-[node name="BattleScreen" parent="Interface" instance=ExtResource("6_battle_screen")]
-visible = false
-layout_mode = 1
-
-[node name="BattleTransitionOverlay" type="ColorRect" parent="Interface"]
-visible = false
-modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-script = ExtResource("7_transition")
-
-[node name="DialogueRunner" type="Node" parent="."]
+[node name="DialogueRunner" type="Node" parent="." unique_id=482245704]
 script = ExtResource("5_dialogue_runner")
 panel_path = NodePath("../Interface/DialoguePanel")

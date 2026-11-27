@@ -16,7 +16,7 @@ const IDENTITY_PATH := SAVE_DIRECTORY + "/player_identity.json"
 const SAVE_PATH := SAVE_DIRECTORY + "/save_slot_1.json"
 const PRE_SAVE_PATH := SAVE_DIRECTORY + "/pre_save_slot_1.json"
 const SAVE_VERSION := 2
-const DEFAULT_MAP_ID := "map_001_leaftown_201_sandtown_202"
+const DEFAULT_MAP_ID := "map_001_3d"
 const DEFAULT_CHAPTER_ID := "ChapterI"
 
 var _active_save_data: Dictionary = {}

@@ -45,11 +45,11 @@ func set_play_time(total_seconds: float) -> void:
 	play_time_seconds = maxf(total_seconds, 0.0)
 
 
-## Muestra la hora del juego (HH:MM:SS) y debajo el día y el mes, sin el año.
-func set_game_clock(hour: int, minute: int, second: int, day: int, month: int) -> void:
+## Muestra la hora del juego (HH:MM) y debajo el día y el mes, sin el año.
+func set_game_clock(hour: int, minute: int, _second: int, day: int, month: int) -> void:
 	if not is_instance_valid(_time_value) or not is_instance_valid(_date_value):
 		return
-	_time_value.text = "%02d:%02d:%02d" % [hour, minute, second]
+	_time_value.text = "%02d:%02d" % [hour, minute]
 	_date_value.text = "%d de %s" % [day, MONTH_NAMES[clampi(month, 1, 12) - 1]]
 
 

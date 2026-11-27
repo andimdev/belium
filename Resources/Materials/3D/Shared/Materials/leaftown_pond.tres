@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://Shaders/leaftown_pond.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" uid="uid://beha8x61e7jqr" path="res://Resources/Materials/3D/Models/leaftown_pond_estanque_hojaverde_baked.png" id="2_albedo"]
+[ext_resource type="Texture2D" uid="uid://bvf7tac6yeky4" path="res://Resources/Materials/3D/Models/leaftown_pond_estanque_hojaverde_normal.png" id="3_normal"]
+[ext_resource type="Texture2D" uid="uid://bge67lvdk33av" path="res://Resources/Materials/3D/Models/leaftown_pond_estanque_hojaverde_roughness.png" id="4_rough"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/albedo_texture = ExtResource("2_albedo")
+shader_parameter/normal_texture = ExtResource("3_normal")
+shader_parameter/roughness_texture = ExtResource("4_rough")

@@ -50,14 +50,8 @@ const INITIAL_SCENES: Dictionary = {
 		"transition": &"fade",
 		"threaded": false,
 	},
-	&"map_001_leaftown_201_sandtown_202": {
-		"path": "res://Maps/map_001_leaftown_201_sandtown_202.tscn",
-		"category": SceneCategory.MAP,
-		"transition": &"fade",
-		"threaded": true,
-	},
-	&"map3d_001_test": {
-		"path": "res://Maps/map3D_001_test.tscn",
+	&"map_001_3d": {
+		"path": "res://Maps/map_001_3d.tscn",
 		"category": SceneCategory.MAP,
 		"transition": &"fade",
 		"threaded": true,
